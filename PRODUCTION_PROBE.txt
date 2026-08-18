@@ -1,5 +1,5 @@
-checked_sha=5c701fdf1a659cf398718943885b4bffd474de11
+checked_sha=e6f3458983e8b37e9290391eefdf33d32381a8b4
 http_status=200
 has_addAddressBtn=yes
-has_BCBA_Certification_Number=yes
-checked_at=2026-08-18T17:05:30Z
+has_BCBA_Certification_Number=no
+checked_at=2026-08-18T17:12:45Z
