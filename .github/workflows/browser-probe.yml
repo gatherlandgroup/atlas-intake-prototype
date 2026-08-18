@@ -9,10 +9,12 @@ permissions:
 
 jobs:
   probe:
-    if: ${{ !contains(github.event.head_commit.message, '[browser-probe-result]') }}
+    if: ${{ !contains(github.event.head_commit.message, '[probe-result]') && !contains(github.event.head_commit.message, '[browser-probe-result]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Render production in headless Chrome
         shell: bash
         run: |
@@ -33,11 +35,12 @@ jobs:
           fi
           echo "checked_sha=$GITHUB_SHA" >> BROWSER_PROBE.txt
           echo "checked_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> BROWSER_PROBE.txt
-      - name: Commit browser probe result
+      - name: Commit browser probe result safely
         shell: bash
         run: |
           git config user.name "atlas-browser-probe"
           git config user.email "actions@users.noreply.github.com"
           git add BROWSER_PROBE.txt production.png 2>/dev/null || git add BROWSER_PROBE.txt
           git commit -m "[browser-probe-result] Record rendered production state" || exit 0
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
