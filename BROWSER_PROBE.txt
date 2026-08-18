@@ -1,7 +1,7 @@
-checked_sha=0e4c09c22c159be348200ae8d28004d4f6433541
-checked_at=2026-08-18T17:17:59.632Z
+checked_sha=cb3d8e7997a4d6b80b16024fa2c6e8d58ccbf0d6
+checked_at=2026-08-18T17:23:23.986Z
 chrome=/usr/bin/google-chrome
-requested_url=https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=0e4c09c22c159be348200ae8d28004d4f6433541
+requested_url=https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=cb3d8e7997a4d6b80b16024fa2c6e8d58ccbf0d6
 has_visible_add_button=false
 has_certification=false
 has_old_npi=false
@@ -10,4 +10,4 @@ error_box_visible=false
 body_chars=0
 page_title=
 final_url=
-browser_errors=["console: Error: Prototype source payload was not found.\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=0e4c09c22c159be348200ae8d28004d4f6433541:23:25","console: Failed to load resource: the server responded with a status of 404 ()","fatal: page.waitForSelector: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator('#addAddressBtn') to be visible\n\n    at [stdin]:35:16"]
+browser_errors=["console: InvalidCharacterError: Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=cb3d8e7997a4d6b80b16024fa2c6e8d58ccbf0d6:1:20664\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=cb3d8e7997a4d6b80b16024fa2c6e8d58ccbf0d6:1:21126","console: Failed to load resource: the server responded with a status of 404 ()","fatal: page.waitForSelector: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator('#addAddressBtn') to be visible\n\n    at [stdin]:35:16"]
