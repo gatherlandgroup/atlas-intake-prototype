@@ -1,0 +1,43 @@
+name: Browser probe
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    if: ${{ !contains(github.event.head_commit.message, '[browser-probe-result]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render production in headless Chrome
+        shell: bash
+        run: |
+          set +e
+          URL="https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=${GITHUB_SHA}"
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          echo "chrome=$CHROME" > BROWSER_PROBE.txt
+          if [ -z "$CHROME" ]; then
+            echo "chrome_missing=yes" >> BROWSER_PROBE.txt
+          else
+            "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=7000 --dump-dom "$URL" > rendered.html 2>chrome.err
+            "$CHROME" --headless --no-sandbox --disable-gpu --window-size=1440,1100 --virtual-time-budget=7000 --screenshot=production.png "$URL" >/dev/null 2>&1
+            echo "has_visible_add_button=$(grep -q '>+ Add another address<' rendered.html && echo yes || echo no)" >> BROWSER_PROBE.txt
+            echo "has_certification=$(grep -q 'Certification #1-23-45678' rendered.html && echo yes || echo no)" >> BROWSER_PROBE.txt
+            echo "has_old_npi=$(grep -q 'NPI on profile' rendered.html && echo yes || echo no)" >> BROWSER_PROBE.txt
+            echo "rendered_bytes=$(wc -c < rendered.html)" >> BROWSER_PROBE.txt
+            echo "chrome_errors=$(wc -l < chrome.err)" >> BROWSER_PROBE.txt
+          fi
+          echo "checked_sha=$GITHUB_SHA" >> BROWSER_PROBE.txt
+          echo "checked_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> BROWSER_PROBE.txt
+      - name: Commit browser probe result
+        shell: bash
+        run: |
+          git config user.name "atlas-browser-probe"
+          git config user.email "actions@users.noreply.github.com"
+          git add BROWSER_PROBE.txt production.png 2>/dev/null || git add BROWSER_PROBE.txt
+          git commit -m "[browser-probe-result] Record rendered production state" || exit 0
+          git push
