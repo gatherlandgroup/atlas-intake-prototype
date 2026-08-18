@@ -1,0 +1,16 @@
+checked_at=2026-08-18T17:38:29.517Z
+url=https://atlasintakeinteractiveprototype.vercel.app/?v=3367eba597e899413c50c69d28ae7c583c81c72e
+final_url=https://atlasintakeinteractiveprototype.vercel.app/?v=3367eba597e899413c50c69d28ae7c583c81c72e
+title=Atlas Intake — Interactive Prototype
+add_button=true
+card_created=true
+type_selector=true
+location_input=true
+address_input=true
+remove_works=true
+certification=true
+old_npi=false
+background_nav=true
+ten_sections=true
+passed=true
+fatal=
