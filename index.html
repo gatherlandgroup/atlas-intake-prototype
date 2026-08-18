@@ -140,7 +140,10 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             </div>
             <div class="grid2">
               <label class="small">Client's full legal name<input class="field" value="Sample Client"></label>
-              <label class="small">Date of birth<input type="date" class="field" value="2017-05-14"></label>
+              <div class="grid2">
+                <label class="small">Date of birth<input id="dateOfBirth" type="date" class="field" value="2017-05-14"></label>
+                <label class="small">Age<input id="childAge" class="field" value="9 years" readonly aria-live="polite"></label>
+              </div>
               <label class="small">Medicaid ID<input class="field" value="••••••••••"></label>
               <label class="small">Sex / gender as documented<select class="field"><option>Female</option><option>Male</option><option>Other documented value</option></select></label>
             </div>
@@ -150,9 +153,31 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
               <button type="button" class="btn" id="addAddressBtn" style="width:max-content">+ Add another address</button>
             </div>
             <hr>
-            <div class="between">
-              <div><strong class="small">Lead Analyst</strong><p class="small muted">Alex Morgan, BCBA · Certification #1-23-45678</p></div>
-              <span class="badge">From profile</span>
+            <div class="stack">
+              <div class="between">
+                <div><h2>Caregivers / Legal Guardians</h2><p class="small muted">Add everyone involved in legal decisions or direct participation in treatment.</p></div>
+                <button type="button" class="btn" id="addCaregiverBtn">+ Add caregiver</button>
+              </div>
+              <div id="caregiverList" class="stack"></div>
+            </div>
+            <hr>
+            <div class="stack">
+              <div class="between">
+                <div><h2>Lead Analyst</h2><p class="small muted">Loaded from the profile and available for selection or editing.</p></div>
+                <span class="badge">From profile</span>
+              </div>
+              <label class="small">Select analyst
+                <select id="leadAnalystSelect" class="field">
+                  <option value="alex">Alex Morgan, BCBA</option>
+                  <option value="jamie">Jamie Lee, BCBA</option>
+                  <option value="manual">Enter analyst manually</option>
+                </select>
+              </label>
+              <div class="grid3">
+                <label class="small">Analyst name<input id="leadAnalystName" class="field" value="Alex Morgan"></label>
+                <label class="small">Credentials<input id="leadAnalystCredentials" class="field" value="BCBA"></label>
+                <label class="small">Certification number<input id="leadAnalystCertification" class="field" value="1-23-45678"></label>
+              </div>
             </div>
           </div>
 
@@ -960,6 +985,69 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     btn.disabled=true;
   }));
 
+  const dateOfBirth = document.getElementById('dateOfBirth');
+  const childAge = document.getElementById('childAge');
+  function updateChildAge(){
+    if(!dateOfBirth.value){
+      childAge.value='';
+      return;
+    }
+    const [year, month, day] = dateOfBirth.value.split('-').map(Number);
+    const today = new Date();
+    let age = today.getFullYear() - year;
+    const birthdayHasPassed = today.getMonth() + 1 > month || (today.getMonth() + 1 === month && today.getDate() >= day);
+    if(!birthdayHasPassed) age -= 1;
+    childAge.value = age >= 0 ? `${age} ${age === 1 ? 'year' : 'years'}` : '';
+  }
+  dateOfBirth.addEventListener('input', updateChildAge);
+  dateOfBirth.addEventListener('change', updateChildAge);
+  updateChildAge();
+
+  const caregiverList = document.getElementById('caregiverList');
+  const addCaregiverBtn = document.getElementById('addCaregiverBtn');
+  let caregiverCount = 0;
+  function addCaregiver(initial = {}){
+    caregiverCount += 1;
+    const card = document.createElement('div');
+    card.className = 'card alt stack caregiver-row';
+    card.innerHTML = `
+      <div class="between"><strong class="small">Caregiver / Legal Guardian ${caregiverCount}</strong><button type="button" class="btn ghost removeCaregiverBtn">Remove</button></div>
+      <div class="grid3">
+        <label class="small">Name<input class="field caregiverName" placeholder="Full name"></label>
+        <label class="small">Relationship<input class="field caregiverRelationship" placeholder="e.g., Parent or Grandparent"></label>
+        <label class="small">Legal guardian<select class="field caregiverGuardian"><option value="Yes">Yes</option><option value="No">No</option></select></label>
+        <label class="small">Phone<input type="tel" class="field caregiverPhone" placeholder="Phone number"></label>
+        <label class="small">Email<input type="email" class="field caregiverEmail" placeholder="Email address"></label>
+        <label class="small">Participates directly in treatment<select class="field caregiverParticipates"><option value="Yes">Yes</option><option value="No">No</option></select></label>
+      </div>`;
+    card.querySelector('.caregiverName').value = initial.name || '';
+    card.querySelector('.caregiverRelationship').value = initial.relationship || '';
+    card.querySelector('.caregiverGuardian').value = initial.guardian || 'Yes';
+    card.querySelector('.caregiverPhone').value = initial.phone || '';
+    card.querySelector('.caregiverEmail').value = initial.email || '';
+    card.querySelector('.caregiverParticipates').value = initial.participates || 'Yes';
+    card.querySelector('.removeCaregiverBtn').addEventListener('click', () => card.remove());
+    caregiverList.appendChild(card);
+  }
+  addCaregiverBtn.addEventListener('click', () => addCaregiver());
+  addCaregiver({name:'Sample Caregiver', relationship:'Parent', guardian:'Yes', participates:'Yes'});
+
+  const leadAnalysts = {
+    alex: {name:'Alex Morgan', credentials:'BCBA', certification:'1-23-45678'},
+    jamie: {name:'Jamie Lee', credentials:'BCBA', certification:'1-24-98765'},
+    manual: {name:'', credentials:'', certification:''}
+  };
+  const leadAnalystSelect = document.getElementById('leadAnalystSelect');
+  const leadAnalystName = document.getElementById('leadAnalystName');
+  const leadAnalystCredentials = document.getElementById('leadAnalystCredentials');
+  const leadAnalystCertification = document.getElementById('leadAnalystCertification');
+  leadAnalystSelect.addEventListener('change', () => {
+    const analyst = leadAnalysts[leadAnalystSelect.value];
+    leadAnalystName.value = analyst.name;
+    leadAnalystCredentials.value = analyst.credentials;
+    leadAnalystCertification.value = analyst.certification;
+  });
+
   const addAddressBtn = document.getElementById('addAddressBtn');
   if (addAddressBtn) {
     addAddressBtn.addEventListener('click', () => {
@@ -1040,3 +1128,4 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 </script>
 </body>
 </html>
+
