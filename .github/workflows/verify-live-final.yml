@@ -1,0 +1,71 @@
+name: Final live Atlas verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-live-final.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install browser controller
+        run: npm install --prefix /tmp/atlas-final-verify playwright-core@1.55.0 --no-save --no-package-lock
+      - name: Verify production UI
+        env:
+          NODE_PATH: /tmp/atlas-final-verify/node_modules
+          LIVE_URL: https://atlasintakeinteractiveprototype.vercel.app/?v=3367eba597e899413c50c69d28ae7c583c81c72e
+        shell: bash
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"; export CHROME
+          node <<'NODE'
+          const fs = require('fs');
+          const { chromium } = require('playwright-core');
+          (async () => {
+            const r = { checked_at:new Date().toISOString(), url:process.env.LIVE_URL, final_url:'', title:'', add_button:false, card_created:false, type_selector:false, location_input:false, address_input:false, remove_works:false, certification:false, old_npi:false, background_nav:false, ten_sections:false, passed:false, fatal:'' };
+            let browser;
+            try {
+              browser=await chromium.launch({executablePath:process.env.CHROME,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
+              const page=await browser.newPage({viewport:{width:1440,height:1100}});
+              await page.goto(process.env.LIVE_URL,{waitUntil:'networkidle',timeout:60000});
+              await page.waitForSelector('#addAddressBtn',{state:'visible',timeout:60000});
+              const text=await page.locator('body').innerText();
+              r.final_url=page.url(); r.title=await page.title();
+              r.add_button=await page.locator('#addAddressBtn').isVisible();
+              r.certification=text.includes('Certification #1-23-45678');
+              r.old_npi=text.includes('NPI on profile');
+              r.background_nav=text.includes('Background Information');
+              r.ten_sections=text.includes('Section 1 of 10') && text.includes('Final Review');
+              await page.locator('#addAddressBtn').click();
+              await page.waitForSelector('.additional-address',{state:'visible',timeout:10000});
+              r.card_created=await page.locator('.additional-address').isVisible();
+              r.type_selector=await page.locator('.additional-address select').count()>0;
+              r.location_input=await page.locator('.additional-address input[placeholder*="Father"]').count()>0;
+              r.address_input=await page.locator('.additional-address input[placeholder="Enter full address"]').count()>0;
+              await page.locator('.additional-address .removeAddressBtn').click();
+              r.remove_works=await page.locator('.additional-address').count()===0;
+              await page.screenshot({path:'final-live.png',fullPage:true});
+              r.passed=r.add_button&&r.card_created&&r.type_selector&&r.location_input&&r.address_input&&r.remove_works&&r.certification&&!r.old_npi&&r.background_nav&&r.ten_sections;
+            } catch(e) { r.fatal=e.stack||e.message||String(e); }
+            finally { if(browser) await browser.close(); }
+            fs.writeFileSync('FINAL_LIVE_VERIFY.txt',Object.entries(r).map(([k,v])=>`${k}=${v}`).join('\n')+'\n');
+            if(!r.passed) process.exitCode=1;
+          })();
+          NODE
+      - name: Commit evidence
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "atlas-final-verify"
+          git config user.email "actions@users.noreply.github.com"
+          git add FINAL_LIVE_VERIFY.txt final-live.png 2>/dev/null || git add FINAL_LIVE_VERIFY.txt
+          git commit -m "[final-live-verify] Record verified production UI" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
