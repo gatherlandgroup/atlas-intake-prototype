@@ -1,0 +1,8 @@
+chrome=/usr/bin/google-chrome
+has_visible_add_button=no
+has_certification=no
+has_old_npi=yes
+rendered_bytes=2526
+chrome_errors=19
+checked_sha=04219313edf23b26a8a8421fa175f967bb4b72e4
+checked_at=2026-08-18T17:01:10Z
