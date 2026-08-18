@@ -1,0 +1,44 @@
+name: Build direct Atlas index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'payload/**'
+      - '.github/workflows/build-direct-index.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: ${{ !contains(github.event.head_commit.message, '[build-result]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild direct HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat payload/part*.txt > /tmp/atlas.b64
+          tr -d '\r\n\t ' < /tmp/atlas.b64 > /tmp/atlas.clean.b64
+          base64 -d /tmp/atlas.clean.b64 > /tmp/atlas.html.gz
+          gzip -dc /tmp/atlas.html.gz > index.html
+          test "$(sha256sum index.html | awk '{print $1}')" = "754e2f3be71a4c31321e3c1022ccc72d2de58f17be39b528993c2eb2ee2fd9b4"
+          grep -q '+ Add another address' index.html
+          grep -q 'Certification #1-23-45678' index.html
+          ! grep -q 'NPI on profile' index.html
+          grep -q 'Background Information' index.html
+
+      - name: Commit direct index
+        shell: bash
+        run: |
+          git config user.name "atlas-build"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git commit -m "[build-result] Build direct Atlas Intake" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
