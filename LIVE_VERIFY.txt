@@ -1,0 +1,17 @@
+checked_at=2026-08-18T17:36:49.984Z
+source_commit=c4219cd546171d2e3f2b127e380ae907c525151a
+requested_url=https://atlasintakeinteractiveprototype.vercel.app/?liveverify=c4219cd546171d2e3f2b127e380ae907c525151a
+final_url=https://atlasintakeinteractiveprototype.vercel.app/?liveverify=c4219cd546171d2e3f2b127e380ae907c525151a
+http_title=Atlas Intake — Interactive Prototype
+visible_add_button=true
+additional_card_after_click=true
+address_type_selector_present=true
+address_input_present=true
+remove_button_works=true
+certification_present=true
+old_npi_present=false
+background_nav_present=true
+ten_sections_present=true
+body_chars=1290
+errors=["console: Failed to load resource: the server responded with a status of 404 ()"]
+passed=false
