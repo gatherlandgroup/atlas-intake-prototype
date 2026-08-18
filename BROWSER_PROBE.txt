@@ -1,7 +1,7 @@
-checked_sha=4a90e0121160b7152521cf6e3a7644a9d15141b1
-checked_at=2026-08-18T17:26:21.181Z
+checked_sha=a5a24804a4532f7432e0ea497ae8f849fc393cc1
+checked_at=2026-08-18T17:27:57.151Z
 chrome=/usr/bin/google-chrome
-requested_url=https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=4a90e0121160b7152521cf6e3a7644a9d15141b1
+requested_url=https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=a5a24804a4532f7432e0ea497ae8f849fc393cc1
 has_visible_add_button=false
 has_certification=false
 has_old_npi=false
@@ -10,4 +10,4 @@ error_box_visible=false
 body_chars=0
 page_title=
 final_url=
-browser_errors=["console: InvalidCharacterError: Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=4a90e0121160b7152521cf6e3a7644a9d15141b1:1:20664\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=4a90e0121160b7152521cf6e3a7644a9d15141b1:1:21126","console: Failed to load resource: the server responded with a status of 404 ()","fatal: page.waitForSelector: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator('#addAddressBtn') to be visible\n\n    at [stdin]:35:16"]
+browser_errors=["console: InvalidCharacterError: Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=a5a24804a4532f7432e0ea497ae8f849fc393cc1:1:20664\n    at https://atlasintakeinteractiveprototype.vercel.app/?browserprobe=a5a24804a4532f7432e0ea497ae8f849fc393cc1:1:21126","console: Failed to load resource: the server responded with a status of 404 ()","fatal: page.waitForSelector: Timeout 45000ms exceeded.\nCall log:\n  - waiting for locator('#addAddressBtn') to be visible\n\n    at [stdin]:35:16"]
