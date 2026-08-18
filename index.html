@@ -39,10 +39,8 @@ button{cursor:pointer}
 .nav button{width:100%;border:1px solid transparent;background:transparent;text-align:left;border-radius:12px;padding:10px;display:flex;align-items:center;gap:10px;color:var(--text)}
 .nav button:hover{background:#f2f4ff}
 .nav button.active{background:var(--accent-2);border-color:var(--accent-3)}
-.nav-num{width:24px;height:24px;border-radius:8px;background:#fff;border:1px solid var(--border);display:grid;place-items:center;font-size:12px;font-weight:700}
 .main{padding:22px;min-width:0}
 .topline{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
-.section-label{font-size:13px;color:var(--muted)}
 h1{font-size:24px;margin:3px 0 6px}
 h2{font-size:17px;margin:0}
 p{line-height:1.5}
@@ -77,12 +75,13 @@ th{color:var(--muted);font-weight:600}
 .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 .check{background:var(--success);border-radius:12px;padding:10px 12px;font-size:13px}
 .source{font-size:12px;color:#4e55b8;background:#f2f3ff;border:1px solid #e0e2ff;padding:4px 7px;border-radius:999px}
+.document-status{width:auto;min-width:150px;margin-top:0;padding:6px 9px}
 hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 @media(max-width:900px){
   .layout{grid-template-columns:1fr}
   .sidebar{border-right:0;border-bottom:1px solid var(--border)}
-  .nav{grid-template-columns:repeat(3,1fr)}
-  .nav-text{display:none}
+  .nav{grid-template-columns:repeat(2,1fr)}
+  .nav button{font-size:12px}
   .grid2,.grid3,.checklist{grid-template-columns:1fr}
 }
 </style>
@@ -106,19 +105,21 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
     <div class="layout">
       <aside class="sidebar">
-        <div class="progress-row"><span>Intake progress</span><strong id="progressLabel">10%</strong></div>
-        <div class="track"><div class="fill" id="progressFill" style="width:10%"></div></div>
+        <div class="progress-row"><span>Intake progress</span><strong id="progressLabel">9%</strong></div>
+        <div class="track"><div class="fill" id="progressFill" style="width:9%"></div></div>
         <div class="nav">
-          <button class="active" data-page-target="1"><span class="nav-num">1</span><span class="nav-text">Patient & File Review</span></button>
-          <button data-page-target="2"><span class="nav-num">2</span><span class="nav-text">Background Information</span></button>
-          <button data-page-target="3"><span class="nav-num">3</span><span class="nav-text">Clinical Interview</span></button>
-          <button data-page-target="4"><span class="nav-num">4</span><span class="nav-text">Maladaptive Behaviors</span></button>
-          <button data-page-target="5"><span class="nav-num">5</span><span class="nav-text">Assessment Procedures</span></button>
-          <button data-page-target="6"><span class="nav-num">6</span><span class="nav-text">Behavior Goals</span></button>
-          <button data-page-target="7"><span class="nav-num">7</span><span class="nav-text">Replacement & Skills</span></button>
-          <button data-page-target="8"><span class="nav-num">8</span><span class="nav-text">Caregiver Training</span></button>
-          <button data-page-target="9"><span class="nav-num">9</span><span class="nav-text">Hours Requested</span></button>
-          <button data-page-target="10"><span class="nav-num">10</span><span class="nav-text">Final Review</span></button>        </div>
+          <button class="active" data-page-target="1"><span class="nav-text">Case Setup</span></button>
+          <button data-page-target="2"><span class="nav-text">File Review</span></button>
+          <button data-page-target="3"><span class="nav-text">Background Information</span></button>
+          <button data-page-target="4"><span class="nav-text">Clinical Interview</span></button>
+          <button data-page-target="5"><span class="nav-text">Maladaptive Behaviors</span></button>
+          <button data-page-target="6"><span class="nav-text">Assessment Procedures</span></button>
+          <button data-page-target="7"><span class="nav-text">Behavior Goals</span></button>
+          <button data-page-target="8"><span class="nav-text">Replacement & Skills</span></button>
+          <button data-page-target="9"><span class="nav-text">Caregiver Training</span></button>
+          <button data-page-target="10"><span class="nav-text">Hours Requested</span></button>
+          <button data-page-target="11"><span class="nav-text">Final Review</span></button>
+        </div>
       </aside>
 
       <main class="main">
@@ -126,11 +127,9 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         <section class="page stack" data-page="1">
           <div class="topline">
             <div>
-              <div class="section-label">Section 1 of 10</div>
-              <h1>Patient Information & File Review</h1>
+              <h1>Case Setup</h1>
               <p class="small muted">Build the canonical client profile once. Atlas reuses confirmed information throughout the assessment.</p>
             </div>
-            <span class="badge">Document-first</span>
           </div>
 
           <div class="card stack">
@@ -178,27 +177,54 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             </div>
           </div>
 
-          <div class="card stack">
-            <div><h2>Core Documents</h2><p class="small muted">Files are uploaded once and processed in parallel.</p></div>
-            <div class="grid2">
-              <div class="upload"><div class="between"><strong class="small">Comprehensive Diagnostic Evaluation</strong><span class="badge">Processing</span></div><p class="small muted">CDE_sample.pdf</p><div class="track"><div class="fill" style="width:74%"></div></div></div>
-              <div class="upload"><div class="between"><strong class="small">ABA referral / physician order</strong><span class="badge">Extracted</span></div><p class="small muted">Referral_order.pdf</p><p class="small">Provider, date and rationale identified.</p></div>
-              <div class="upload"><div class="between"><strong class="small">Vineland-3 scoring report</strong><span class="badge">Ready</span></div><p class="small muted">Vineland3_full.pdf</p></div>
-              <div class="upload"><div class="between"><strong class="small">BASC-3 PRQ scoring report</strong><span class="badge">Ready</span></div><p class="small muted">BASC3_PRQ.pdf</p></div>
-            </div>
-          </div>
-
-          <div class="card stack">
-            <div class="between"><div><h2>Additional Record Review</h2><p class="small muted">Optional records only when they add clinically relevant information.</p></div><button class="btn" id="addRecord">+ Add document</button></div>
-            <div id="recordsList" class="small muted">No additional records.</div>
-          </div>
-
-                  </section>
+        </section>
 
         <section class="page stack" data-page="2" hidden>
           <div class="topline">
             <div>
-              <div class="section-label">Section 2 of 10</div>
+              <h1>File Review</h1>
+              <p class="small muted">Upload and review the required source documents before continuing the Intake.</p>
+            </div>
+            <span class="badge">4 required documents</span>
+          </div>
+
+          <div class="card stack">
+            <div><h2>Required Documents</h2><p class="small muted">All four documents are required. Files are uploaded once and processed in parallel.</p></div>
+            <div>
+              <div class="progress-row"><span>Document readiness</span><strong id="documentProgressLabel">2 of 4 ready</strong></div>
+              <div class="track"><div class="fill" id="documentProgressFill" style="width:50%"></div></div>
+            </div>
+            <div class="grid2">
+              <div class="upload stack">
+                <div class="between"><div class="flex"><strong class="small">Comprehensive Diagnostic Evaluation</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="Comprehensive Diagnostic Evaluation status"><option>Missing</option><option selected>Processing</option><option>Ready</option><option>Needs Attention</option></select></div>
+                <p class="small muted">CDE_sample.pdf</p>
+                <div class="track"><div class="fill" style="width:74%"></div></div>
+              </div>
+              <div class="upload stack">
+                <div class="between"><div class="flex"><strong class="small">ABA referral / physician order</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="ABA referral status"><option>Missing</option><option>Processing</option><option selected>Ready</option><option>Needs Attention</option></select></div>
+                <p class="small muted">Referral_order.pdf</p><p class="small">Provider, date and rationale identified.</p>
+              </div>
+              <div class="upload stack">
+                <div class="between"><div class="flex"><strong class="small">Vineland-3 scoring report</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="Vineland-3 scoring report status"><option>Missing</option><option>Processing</option><option selected>Ready</option><option>Needs Attention</option></select></div>
+                <p class="small muted">Vineland3_full.pdf</p>
+              </div>
+              <div class="upload stack">
+                <div class="between"><div class="flex"><strong class="small">BASC-3 PRQ scoring report</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="BASC-3 PRQ scoring report status"><option>Missing</option><option>Processing</option><option>Ready</option><option selected>Needs Attention</option></select></div>
+                <p class="small muted">BASC3_PRQ.pdf</p><p class="small">Review the uploaded scoring report before continuing.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card stack">
+            <div class="between"><div><h2>Additional Records</h2><p class="small muted">Before continuing, please upload any other records currently available that may be relevant to this assessment. This is the only document-upload step in the Intake</p></div><button class="btn" id="addRecord">+ Add document</button></div>
+            <div id="recordsList" class="small muted">No additional records.</div>
+          </div>
+
+        </section>
+
+        <section class="page stack" data-page="3" hidden>
+          <div class="topline">
+            <div>
               <h1>Background Information</h1>
               <p class="small muted">Document-first · Each subsection is prefilled from available records. Atlas only asks for missing, conflicting, or potentially outdated information.</p>
             </div>
@@ -793,8 +819,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           </div>
         </section>
 
-        <section class="page stack" data-page="3" hidden>
-          <div><div class="section-label">Section 3 of 10</div><h1>Clinical Interview</h1><p class="small muted">Brief caregiver-attributed information that adds priorities and context without repeating Background.</p></div>
+        <section class="page stack" data-page="4" hidden>
+          <div><h1>Clinical Interview</h1><p class="small muted">Brief caregiver-attributed information that adds priorities and context without repeating Background.</p></div>
           <div class="card grid3">
             <label class="small">Informant<select class="field"><option>Primary participating caregiver</option></select></label>
             <label class="small">Interview date<input type="date" class="field"></label>
@@ -816,8 +842,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           </div>
         </section>
 
-        <section class="page stack" data-page="4" hidden>
-          <div class="topline"><div><div class="section-label">Section 4 of 10</div><h1>Identified Maladaptive Behaviors</h1><p class="small muted">Atlas surfaces candidates from records, Safety Screening, interview and previous ABA documentation.</p></div><button class="btn primary">Confirm selected targets</button></div>
+        <section class="page stack" data-page="5" hidden>
+          <div class="topline"><div><h1>Identified Maladaptive Behaviors</h1><p class="small muted">Atlas surfaces candidates from records, Safety Screening, interview and previous ABA documentation.</p></div><button class="btn primary">Confirm selected targets</button></div>
           <div class="warning"><strong class="small">Possible overlap detected</strong><p class="small muted">Task refusal and hygiene refusal may overlap. Review before continuing to prevent double counting.</p></div>
           <div class="card stack">
             <div class="between"><div><div class="flex"><h2>Self-Injurious Behavior</h2><span class="badge">High priority</span></div><p class="small muted">Suggested from CDE + Safety Screening</p></div><label><input type="checkbox" checked> Target</label></div>
@@ -829,8 +855,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <button class="btn">+ Add behavior from Behavior Bank</button>
         </section>
 
-        <section class="page stack" data-page="5" hidden>
-          <div><div class="section-label">Section 5 of 10</div><h1>Assessment Procedures</h1><p class="small muted">Document what was actually administered, observed and scored.</p></div>
+        <section class="page stack" data-page="6" hidden>
+          <div><h1>Assessment Procedures</h1><p class="small muted">Document what was actually administered, observed and scored.</p></div>
           <div class="card stack">
             <div class="between"><div><h2>Observation Log</h2><p class="small muted">Direct sessions and procedures used</p></div><button class="btn">+ Add session</button></div>
             <div class="table-wrap"><table><thead><tr><th>Date</th><th>Setting</th><th>Context</th><th>Tools</th></tr></thead><tbody><tr><td>Aug 14</td><td>Home</td><td>Demands / transitions</td><td>ABC · Direct observation</td></tr><tr><td>Aug 15</td><td>Community</td><td>Waiting / denied access</td><td>ABC · Preference probe</td></tr></tbody></table></div>
@@ -850,8 +876,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="card"><h2>Functional Formulation</h2><p class="small muted">Atlas presents the evidence; the BCBA selects the final hypothesized function.</p><label class="small">Hypothesized Function<select class="field"><option>Escape/Avoidance</option><option>Attention</option><option>Tangible</option><option>Automatic</option></select></label></div>
         </section>
 
-        <section class="page stack" data-page="6" hidden>
-          <div><div class="section-label">Section 6 of 10</div><h1>Topography & Behavior Reduction Goals</h1><p class="small muted">One complete module is created for each confirmed treatment target.</p></div>
+        <section class="page stack" data-page="7" hidden>
+          <div><h1>Topography & Behavior Reduction Goals</h1><p class="small muted">One complete module is created for each confirmed treatment target.</p></div>
           <div class="flex"><span class="badge">Self-Injurious Behavior</span><span class="chip">Elopement</span><span class="chip">Tantrum</span></div>
           <div class="card stack">
             <div class="between"><div><h2>Definition & Measurement</h2><p class="small muted">Self-Injurious Behavior</p></div><span class="source">Behavior Bank + client data</span></div>
@@ -877,8 +903,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           </div>
         </section>
 
-        <section class="page stack" data-page="7" hidden>
-          <div><div class="section-label">Section 7 of 10</div><h1>Replacement & Skill Acquisition</h1><p class="small muted">Atlas recommends candidates using confirmed profile data, functions and the Skill/Replacement Bank.</p></div>
+        <section class="page stack" data-page="8" hidden>
+          <div><h1>Replacement & Skill Acquisition</h1><p class="small muted">Atlas recommends candidates using confirmed profile data, functions and the Skill/Replacement Bank.</p></div>
           <div class="warning"><strong class="small">Recommended set</strong><p class="small muted">Candidates are suggestions only. The final treatment plan remains a BCBA decision.</p></div>
           <div class="card stack">
             <div class="between"><div><h2>Request for Break</h2><p class="small muted">Replacement · Communication</p></div><span class="badge">Recommended</span></div>
@@ -895,8 +921,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="card stack"><h2>Function-Based Interventions</h2><div class="grid2"><label class="small">Antecedent strategies<select class="field"><option>Demand fading · choice · visual schedule</option></select></label><label class="small">Consequence strategies<select class="field"><option>Functional communication reinforcement</option></select></label></div><p class="small muted">Atlas does not default to global escape extinction, automatic hand-over-hand prompting, or rigid follow-through.</p></div>
         </section>
 
-        <section class="page stack" data-page="8" hidden>
-          <div><div class="section-label">Section 8 of 10</div><h1>Caregiver Training</h1><p class="small muted">Goals measure caregiver performance, not client behavior.</p></div>
+        <section class="page stack" data-page="9" hidden>
+          <div><h1>Caregiver Training</h1><p class="small muted">Goals measure caregiver performance, not client behavior.</p></div>
           <div class="card"><div class="between"><div><h2>Participating caregiver</h2><p class="small muted">Reused from Patient Information</p></div><span class="badge">Primary caregiver</span></div></div>
           <div class="card stack">
             <div class="between"><div><h2>Communication-Support Fidelity</h2><p class="small muted">Caregiver will create and reinforce opportunities for functional requests according to the treatment protocol.</p></div><label><input type="checkbox" checked> Select</label></div>
@@ -906,8 +932,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="card stack"><h2>Training Procedure</h2><p class="small muted">Atlas suggests BST components appropriate to the selected caregiver goal.</p><div class="flex"><label><input type="checkbox" checked> Instruction</label><label><input type="checkbox" checked> Modeling</label><label><input type="checkbox" checked> Rehearsal / role-play</label><label><input type="checkbox" checked> Performance feedback</label><label><input type="checkbox" checked> Treatment-integrity monitoring</label></div></div>
         </section>
 
-        <section class="page stack" data-page="9" hidden>
-          <div><div class="section-label">Section 9 of 10</div><h1>Hours Requested</h1><p class="small muted">Atlas may suggest a distribution, but the BCBA confirms the final clinical request.</p></div>
+        <section class="page stack" data-page="10" hidden>
+          <div><h1>Hours Requested</h1><p class="small muted">Atlas may suggest a distribution, but the BCBA confirms the final clinical request.</p></div>
           <div class="grid3"><div class="kpi"><div class="small muted">97153</div><div class="value" id="m97153">30 h</div><div class="small muted">Direct protocol</div></div><div class="kpi"><div class="small muted">97155</div><div class="value" id="m97155">3 h</div><div class="small muted">Protocol modification</div></div><div class="kpi"><div class="small muted">97156</div><div class="value" id="m97156">1 h</div><div class="small muted">Caregiver guidance</div></div></div>
           <div class="card stack">
             <h2>Service Model & Weekly Distribution</h2>
@@ -920,8 +946,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="card"><div class="between"><div><h2>Clinical Rationale</h2><p class="small muted">Generated from functional impairment, risk, targets, acquisition needs, routines and service model.</p></div><button class="btn">Edit</button></div><p class="small">The requested service intensity is supported by multiple prioritized behavior-reduction targets, substantial functional communication and adaptive deficits, safety risk, and the need for repeated intervention opportunities across daily routines and settings.</p></div>
         </section>
 
-        <section class="page stack" data-page="10" hidden>
-          <div><div class="section-label">Section 10 of 10</div><h1>Clinical Review & Final Confirmation</h1><p class="small muted">No new interview. Atlas resolves gaps, conflicts and derived sections before report generation.</p></div>
+        <section class="page stack" data-page="11" hidden>
+          <div><h1>Clinical Review & Final Confirmation</h1><p class="small muted">No new interview. Atlas resolves gaps, conflicts and derived sections before report generation.</p></div>
           <div class="grid3"><div class="kpi"><div class="small muted">Ready</div><div class="value">6</div><div class="small muted">review blocks</div></div><div class="kpi"><div class="small muted">Needs review</div><div class="value">1</div><div class="small muted">coordination item</div></div><div class="kpi"><div class="small muted">Blocking</div><div class="value">0</div><div class="small muted">validation errors</div></div></div>
           <div class="card stack">
             <div class="between"><div><strong class="small">Patient identity, CDE, diagnoses, caregiver and records</strong><p class="small muted">No unresolved source conflicts.</p></div><span class="badge">Confirmed</span></div>
@@ -937,7 +963,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
         <div class="footer-nav">
           <button id="previousPage" class="btn">Back</button>
-          <div id="pageStatus" class="small muted">Section 1 of 10</div>
+          <div id="pageStatus" class="small muted">Case Setup</div>
           <button id="nextPage" class="btn primary">Continue</button>
         </div>
       </main>
@@ -957,15 +983,16 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   const next = document.getElementById('nextPage');
 
   function showPage(page){
-    currentPage = Math.max(1, Math.min(10, Number(page)));
+    currentPage = Math.max(1, Math.min(pages.length, Number(page)));
     pages.forEach(el => el.hidden = Number(el.dataset.page) !== currentPage);
     navButtons.forEach(btn => btn.classList.toggle('active', Number(btn.dataset.pageTarget) === currentPage));
-    const progress = Math.round((currentPage/10)*100);
+    const progress = Math.round((currentPage/pages.length)*100);
     progressFill.style.width = progress + '%';
     progressLabel.textContent = progress + '%';
-    pageStatus.textContent = `Section ${currentPage} of 10`;
+    const activeNav = navButtons.find(btn => Number(btn.dataset.pageTarget) === currentPage);
+    pageStatus.textContent = activeNav ? activeNav.textContent.trim() : '';
     prev.disabled = currentPage === 1;
-    next.textContent = currentPage === 10 ? 'Final review' : 'Continue';
+    next.textContent = currentPage === pages.length ? 'Final review' : 'Continue';
     window.scrollTo({top:0, behavior:'smooth'});
   }
 
@@ -981,6 +1008,18 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     btn.textContent='Confirmed';
     btn.disabled=true;
   }));
+
+  const documentStatuses = [...document.querySelectorAll('.document-status')];
+  const documentProgressLabel = document.getElementById('documentProgressLabel');
+  const documentProgressFill = document.getElementById('documentProgressFill');
+  function updateDocumentProgress(){
+    const readyCount = documentStatuses.filter(select => select.value === 'Ready').length;
+    const percentage = Math.round((readyCount / documentStatuses.length) * 100);
+    documentProgressLabel.textContent = `${readyCount} of ${documentStatuses.length} ready`;
+    documentProgressFill.style.width = percentage + '%';
+  }
+  documentStatuses.forEach(select => select.addEventListener('change', updateDocumentProgress));
+  updateDocumentProgress();
 
   const dateOfBirth = document.getElementById('dateOfBirth');
   const childAge = document.getElementById('childAge');
