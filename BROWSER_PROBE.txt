@@ -1,8 +1,8 @@
 chrome=/usr/bin/google-chrome
-has_visible_add_button=no
-has_certification=no
+has_visible_add_button=yes
+has_certification=yes
 has_old_npi=yes
-rendered_bytes=2525
+rendered_bytes=4105
 chrome_errors=19
-checked_sha=5c701fdf1a659cf398718943885b4bffd474de11
-checked_at=2026-08-18T17:05:32Z
+checked_sha=e6f3458983e8b37e9290391eefdf33d32381a8b4
+checked_at=2026-08-18T17:12:54Z
