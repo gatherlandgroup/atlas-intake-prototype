@@ -155,17 +155,14 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <hr>
             <div class="stack">
               <div class="between">
-                <div><h2>Caregivers / Legal Guardians</h2><p class="small muted">Add everyone involved in legal decisions or direct participation in treatment.</p></div>
+                <h2>Caregiver</h2>
                 <button type="button" class="btn" id="addCaregiverBtn">+ Add caregiver</button>
               </div>
               <div id="caregiverList" class="stack"></div>
             </div>
             <hr>
             <div class="stack">
-              <div class="between">
-                <div><h2>Lead Analyst</h2><p class="small muted">Loaded from the profile and available for selection or editing.</p></div>
-                <span class="badge">From profile</span>
-              </div>
+              <h2>Lead Analyst</h2>
               <label class="small">Select analyst
                 <select id="leadAnalystSelect" class="field">
                   <option value="alex">Alex Morgan, BCBA</option>
@@ -176,7 +173,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
               <div class="grid3">
                 <label class="small">Analyst name<input id="leadAnalystName" class="field" value="Alex Morgan"></label>
                 <label class="small">Credentials<input id="leadAnalystCredentials" class="field" value="BCBA"></label>
-                <label class="small">Certification number<input id="leadAnalystCertification" class="field" value="1-23-45678"></label>
+                <label class="small">NPI<input id="leadAnalystNpi" class="field" value="1234567890" inputmode="numeric"></label>
               </div>
             </div>
           </div>
@@ -1011,7 +1008,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     const card = document.createElement('div');
     card.className = 'card alt stack caregiver-row';
     card.innerHTML = `
-      <div class="between"><strong class="small">Caregiver / Legal Guardian ${caregiverCount}</strong><button type="button" class="btn ghost removeCaregiverBtn">Remove</button></div>
+      <div class="between"><strong class="small">Caregiver ${caregiverCount}</strong><button type="button" class="btn ghost removeCaregiverBtn">Remove</button></div>
       <div class="grid3">
         <label class="small">Name<input class="field caregiverName" placeholder="Full name"></label>
         <label class="small">Relationship<input class="field caregiverRelationship" placeholder="e.g., Parent or Grandparent"></label>
@@ -1033,19 +1030,19 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   addCaregiver({name:'Sample Caregiver', relationship:'Parent', guardian:'Yes', participates:'Yes'});
 
   const leadAnalysts = {
-    alex: {name:'Alex Morgan', credentials:'BCBA', certification:'1-23-45678'},
-    jamie: {name:'Jamie Lee', credentials:'BCBA', certification:'1-24-98765'},
-    manual: {name:'', credentials:'', certification:''}
+    alex: {name:'Alex Morgan', credentials:'BCBA', npi:'1234567890'},
+    jamie: {name:'Jamie Lee', credentials:'BCBA', npi:'1098765432'},
+    manual: {name:'', credentials:'', npi:''}
   };
   const leadAnalystSelect = document.getElementById('leadAnalystSelect');
   const leadAnalystName = document.getElementById('leadAnalystName');
   const leadAnalystCredentials = document.getElementById('leadAnalystCredentials');
-  const leadAnalystCertification = document.getElementById('leadAnalystCertification');
+  const leadAnalystNpi = document.getElementById('leadAnalystNpi');
   leadAnalystSelect.addEventListener('change', () => {
     const analyst = leadAnalysts[leadAnalystSelect.value];
     leadAnalystName.value = analyst.name;
     leadAnalystCredentials.value = analyst.credentials;
-    leadAnalystCertification.value = analyst.certification;
+    leadAnalystNpi.value = analyst.npi;
   });
 
   const addAddressBtn = document.getElementById('addAddressBtn');
@@ -1057,16 +1054,17 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       card.innerHTML = `
         <div class="between"><strong class="small">Additional address</strong><button type="button" class="btn ghost removeAddressBtn">Remove</button></div>
         <div class="grid2">
-          <label class="small">Where is this address from?
+          <label class="small">What living arrangement does this address represent?
             <select class="field">
-              <option>Second household</option>
-              <option>School / educational program</option>
-              <option>Daycare / aftercare</option>
-              <option>Other treatment location</option>
-              <option>Other</option>
+              <option>Other parent or guardian's home</option>
+              <option>Grandparent's home</option>
+              <option>Aunt, uncle, or extended family home</option>
+              <option>Licensed foster family home</option>
+              <option>Group home or residential care setting</option>
+              <option>Other living arrangement</option>
             </select>
           </label>
-          <label class="small">Location name / relationship<input class="field" placeholder="e.g., Father's home or school name"></label>
+          <label class="small">Home name / relationship<input class="field" placeholder="e.g., Grandmother's home or foster family name"></label>
         </div>
         <label class="small">Address<input class="field" placeholder="Enter full address"></label>`;
       wrap.appendChild(card);
