@@ -47,10 +47,13 @@ p{line-height:1.5}
 .muted{color:var(--muted)}
 .small{font-size:13px}
 .stack{display:grid;gap:14px}
+.section-fieldset{border:0;padding:0;margin:0;min-width:0;transition:opacity .2s ease}
+.section-fieldset:disabled{opacity:.5}
 .card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px}
 .card.alt{background:#fbfcff}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.page:not([data-page="1"]) .grid2:not(.keep-columns):has(label),.page:not([data-page="1"]) .grid3:not(.keep-columns):has(label){grid-template-columns:minmax(0,1fr);gap:16px}
 .field{width:100%;border:1px solid var(--border);background:#fff;color:var(--text);border-radius:11px;padding:10px 11px;margin-top:6px;outline:none}
 .field:focus{border-color:#b6b9ff;box-shadow:0 0 0 3px rgba(91,91,214,.08)}
 textarea.field{min-height:88px;resize:vertical}
@@ -62,6 +65,40 @@ textarea.field{min-height:88px;resize:vertical}
 .flex{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .between{display:flex;align-items:center;justify-content:space-between;gap:14px}
 .chip{display:inline-flex;padding:5px 9px;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:12px;color:var(--muted)}
+.selected-domains{min-height:29px;margin-top:8px}
+.selected-domains .chip{background:var(--accent-2);border-color:var(--accent-3);color:#4545b5;font-weight:650}
+.multi-select-summary{cursor:pointer;font-size:13px;font-weight:600}
+.multi-select-options{display:grid;gap:10px;margin-top:8px;border:1px solid var(--border);background:#fff;border-radius:11px;padding:12px}
+.selected-household-members{display:grid;gap:8px;margin-top:8px}
+.selected-household-member{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--border);background:#fff;border-radius:11px;padding:10px 12px}
+.selected-household-member strong{font-size:13px}
+.selected-household-member label{font-size:13px;color:var(--muted)}
+.selected-household-member .household-other-input{flex:1 1 220px;max-width:320px;margin-top:0}
+.selected-household-member .household-role{flex:1 1 300px;max-width:380px;margin-top:0}
+.yes-details{display:grid;gap:6px}
+.other-details{display:grid;gap:6px;flex:1 1 100%}
+.yes-details[hidden],.other-details[hidden],.education-plan-details[hidden],.education-plan-upload[hidden]{display:none!important}
+.service-other-details{display:grid;gap:6px}
+.service-other-details[hidden],.service-previous-time[hidden],.service-current-note[hidden]{display:none!important}
+.seizure-protocol-block[hidden],.seizure-protocol-details[hidden],.emergency-protocol-details[hidden]{display:none!important}
+.services-table td{vertical-align:top;min-width:190px}
+.services-table td:last-child{min-width:240px}
+.services-table tfoot td{padding-top:14px}
+.table-heading-toggle{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;padding:0;cursor:pointer}
+#safetyConcernRows[hidden],#safetyConcernActions[hidden]{display:none!important}
+.behavior-header{align-items:flex-start;flex-wrap:wrap}
+.behavior-intensity-control{width:min(100%,280px)}
+.intensity-key{display:grid;gap:5px;background:#f7f8fc;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.intensity-key div{font-size:12px;line-height:1.4;color:var(--muted)}
+.behavior-baseline-abc.confirmed:disabled{opacity:1}
+.behavior-clinical-table{min-width:1080px;table-layout:fixed}
+.behavior-clinical-table th:first-child{width:25%}
+.behavior-clinical-table textarea{min-height:150px}
+.baseline-fields{display:grid;gap:9px}
+.baseline-fields .field{margin-top:4px}
+.behavior-function-panel[hidden],#confirmBehaviorSection[hidden]{display:none!important}
+.locked-control{pointer-events:none}
+.behavior-clinical-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
 .warning{background:var(--warning);border-left:4px solid #e6b84d;border-radius:12px;padding:13px 14px}
 .success{background:var(--success);border-radius:12px;padding:12px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
@@ -74,8 +111,11 @@ th{color:var(--muted);font-weight:600}
 .footer-nav{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:18px;margin-top:20px}
 .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 .check{background:var(--success);border-radius:12px;padding:10px 12px;font-size:13px}
-.source{font-size:12px;color:#4e55b8;background:#f2f3ff;border:1px solid #e0e2ff;padding:4px 7px;border-radius:999px}
-.document-status{width:auto;min-width:150px;margin-top:0;padding:6px 9px}
+.document-status{display:inline-flex;align-items:center;justify-content:center;min-width:116px;border:1px solid transparent;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.document-status.processing{background:#eef0ff;border-color:#dfe3ff;color:#4545b5}
+.document-status.ready{background:var(--success);border-color:#cdebd7;color:#276749}
+.document-status.attention{background:var(--warning);border-color:#f0d58a;color:#8a5a00}
+.doc-upload-warning p{margin:3px 0 0}
 hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 @media(max-width:900px){
   .layout{grid-template-columns:1fr}
@@ -183,40 +223,44 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="topline">
             <div>
               <h1>File Review</h1>
-              <p class="small muted">Upload and review the required source documents before continuing the Intake.</p>
+              <p class="small muted">Upload the required source documents before continuing the Intake.</p>
             </div>
-            <span class="badge">4 required documents</span>
+          </div>
+
+          <div class="warning doc-upload-warning">
+            <strong class="small">Important</strong>
+            <p class="small muted">This is the only document-upload step in the Intake.</p>
           </div>
 
           <div class="card stack">
-            <div><h2>Required Documents</h2><p class="small muted">All four documents are required. Files are uploaded once and processed in parallel.</p></div>
+            <div><div class="flex"><h2>Required Documents</h2><span class="badge">All 4 documents are required</span></div><p class="small muted">Files are uploaded once and processed in parallel.</p></div>
             <div>
               <div class="progress-row"><span>Document readiness</span><strong id="documentProgressLabel">2 of 4 ready</strong></div>
               <div class="track"><div class="fill" id="documentProgressFill" style="width:50%"></div></div>
             </div>
             <div class="grid2">
               <div class="upload stack">
-                <div class="between"><div class="flex"><strong class="small">Comprehensive Diagnostic Evaluation</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="Comprehensive Diagnostic Evaluation status"><option>Missing</option><option selected>Processing</option><option>Ready</option><option>Needs Attention</option></select></div>
-                <p class="small muted">CDE_sample.pdf</p>
+                <div class="between"><div class="flex"><strong class="small">Comprehensive Diagnostic Evaluation</strong><span class="chip">Required</span></div><span class="document-status processing" data-status="Processing" role="status" aria-label="Comprehensive Diagnostic Evaluation status: Processing">Processing</span></div>
+                <div class="between"><p class="small muted">CDE_sample.pdf</p><button type="button" class="btn" aria-label="Upload Comprehensive Diagnostic Evaluation">Upload</button></div>
                 <div class="track"><div class="fill" style="width:74%"></div></div>
               </div>
               <div class="upload stack">
-                <div class="between"><div class="flex"><strong class="small">ABA referral / physician order</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="ABA referral status"><option>Missing</option><option>Processing</option><option selected>Ready</option><option>Needs Attention</option></select></div>
-                <p class="small muted">Referral_order.pdf</p><p class="small">Provider, date and rationale identified.</p>
+                <div class="between"><div class="flex"><strong class="small">ABA referral / physician order</strong><span class="chip">Required</span></div><span class="document-status ready" data-status="Ready" role="status" aria-label="ABA referral status: Ready">Ready</span></div>
+                <div class="between"><p class="small muted">Referral_order.pdf</p><button type="button" class="btn" aria-label="Upload ABA referral or physician order">Upload</button></div><p class="small">Provider, date and rationale identified.</p>
               </div>
               <div class="upload stack">
-                <div class="between"><div class="flex"><strong class="small">Vineland-3 scoring report</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="Vineland-3 scoring report status"><option>Missing</option><option>Processing</option><option selected>Ready</option><option>Needs Attention</option></select></div>
-                <p class="small muted">Vineland3_full.pdf</p>
+                <div class="between"><div class="flex"><strong class="small">Vineland-3 scoring report</strong><span class="chip">Required</span></div><span class="document-status ready" data-status="Ready" role="status" aria-label="Vineland-3 scoring report status: Ready">Ready</span></div>
+                <div class="between"><p class="small muted">Vineland3_full.pdf</p><button type="button" class="btn" aria-label="Upload Vineland-3 scoring report">Upload</button></div>
               </div>
               <div class="upload stack">
-                <div class="between"><div class="flex"><strong class="small">BASC-3 PRQ scoring report</strong><span class="chip">Required</span></div><select class="field document-status" aria-label="BASC-3 PRQ scoring report status"><option>Missing</option><option>Processing</option><option>Ready</option><option selected>Needs Attention</option></select></div>
-                <p class="small muted">BASC3_PRQ.pdf</p><p class="small">Review the uploaded scoring report before continuing.</p>
+                <div class="between"><div class="flex"><strong class="small">BASC-3 PRQ scoring report</strong><span class="chip">Required</span></div><span class="document-status attention" data-status="Needs Attention" role="status" aria-label="BASC-3 PRQ scoring report status: Needs Attention">Needs Attention</span></div>
+                <div class="between"><p class="small muted">BASC3_PRQ.pdf</p><button type="button" class="btn" aria-label="Upload BASC-3 PRQ scoring report">Upload</button></div><p class="small">Review the uploaded scoring report before continuing.</p>
               </div>
             </div>
           </div>
 
           <div class="card stack">
-            <div class="between"><div><h2>Additional Records</h2><p class="small muted">Before continuing, please upload any other records currently available that may be relevant to this assessment. This is the only document-upload step in the Intake</p></div><button class="btn" id="addRecord">+ Add document</button></div>
+            <div class="between"><div><h2>Additional Records</h2><p class="small muted">Before continuing, please upload any other records currently available that may be relevant to this assessment.</p></div><button class="btn" id="addRecord">+ Add document</button></div>
             <div id="recordsList" class="small muted">No additional records.</div>
           </div>
 
@@ -226,50 +270,50 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="topline">
             <div>
               <h1>Background Information</h1>
-              <p class="small muted">Document-first · Each subsection is prefilled from available records. Atlas only asks for missing, conflicting, or potentially outdated information.</p>
+              <p class="small muted">Document-first · Each subsection is prefilled when information is available. Atlas only asks for missing, conflicting, or potentially outdated information.</p>
             </div>
-            <span class="badge">11 subsections</span>
           </div>
 
           <div class="stack">
-            <div class="warning">
-              <strong class="small">Block behavior</strong>
-              <p class="small muted">If the record is clear and current, Atlas shows the extracted information for block confirmation. If a value may have changed, use <strong>Still current</strong> / <strong>Update</strong>. If sources conflict, Atlas shows both candidates with provenance. A confirmed value is not requested again later.</p>
-            </div>
-
             <!-- A -->
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>A. Developmental History</strong><p class="small muted">Pregnancy/birth complications, developmental delays, milestone timing and regression.</p></div>
-                  <span class="source">CDE · primary source</span>
+                  <div><strong>Developmental History</strong><p class="small muted">Pregnancy/birth complications, developmental delays, milestone timing and regression.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" style="margin-top:14px">
                 <div class="grid2">
                   <label class="small">Were any significant pregnancy, birth, delivery, or neonatal complications reported?
-                    <select class="field"><option>No</option><option>Yes — briefly specify</option></select>
+                    <select class="field"><option>No</option><option>Yes — briefly specify</option><option>Unknown</option></select>
                   </label>
                   <label class="small">Were significant developmental delays reported?
-                    <select class="field"><option>Yes</option><option>No</option></select>
+                    <select id="developmentalDelaysSelect" class="field" data-yes-target="delayDetails"><option>Yes</option><option>No</option><option>Unknown</option></select>
                   </label>
                 </div>
-                <div>
-                  <div class="small">Delay domains</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox" checked> Motor</label>
-                    <label><input type="checkbox" checked> Language / communication</label>
-                    <label><input type="checkbox"> Social / play</label>
-                    <label><input type="checkbox" checked> Adaptive / self-care</label>
-                    <label><input type="checkbox"> Cognitive</label>
-                    <label><input type="checkbox"> Other</label>
+                <div id="delayDetails" class="stack">
+                  <div class="delay-domain-selector">
+                    <div class="small">Delay domains</div>
+                    <div id="selectedDelayDomains" class="flex selected-domains" aria-live="polite" aria-label="Selected delay domains"></div>
+                    <details class="multi-select">
+                      <summary id="delayDomainsSummary" class="field multi-select-summary">Choose delay domains</summary>
+                      <div class="multi-select-options">
+                        <label><input type="checkbox" name="delayDomain" value="Motor" checked> Motor</label>
+                        <label><input type="checkbox" name="delayDomain" value="Language / communication" checked> Language / communication</label>
+                        <label><input type="checkbox" name="delayDomain" value="Social / play"> Social / play</label>
+                        <label><input type="checkbox" name="delayDomain" value="Adaptive / self-care" checked> Adaptive / self-care</label>
+                        <label><input type="checkbox" name="delayDomain" value="Cognitive"> Cognitive</label>
+                        <label><input type="checkbox" name="delayDomain" value="Other"> Other</label>
+                        <label><input type="checkbox" name="delayDomain" value="None"> None</label>
+                      </div>
+                    </details>
                   </div>
+                  <label id="delayDescriptionField" class="small">Briefly describe the most clinically relevant delays or milestone timing.
+                    <textarea class="field">Motor and communication delays were reported in the diagnostic record. Edit only if the extracted description is incomplete.</textarea>
+                  </label>
                 </div>
-                <label class="small">Briefly describe the most clinically relevant delays or milestone timing.
-                  <textarea class="field">Motor and communication delays were reported in the diagnostic record. Edit only if the extracted description is incomplete.</textarea>
-                </label>
                 <label class="small">Has the client experienced a loss or regression of previously acquired skills?
-                  <select class="field"><option>No</option><option>Yes — specify skill, approximate age/timeframe, and current status</option></select>
+                  <select class="field"><option>No</option><option>Yes — specify skill, approximate age/timeframe, and current status</option><option>Unknown</option></select>
                 </label>
                 <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button></div>
               </div>
@@ -279,36 +323,27 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>B. Living Situation and Family Context</strong><p class="small muted">Household composition, language, family changes and relevant family history.</p></div>
-                  <span class="source">CDE + caregiver records</span>
+                  <div><strong>Living Situation and Family Context</strong><p class="small muted">Household composition, language, family changes and relevant family history.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
-                <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>Who currently lives with the client in the primary household?</th><th>Participates in daily care</th></tr></thead>
-                    <tbody>
-                      <tr><td><select class="field"><option>Mother</option><option>Father</option><option>Sibling</option><option>Grandparent</option><option>Other relative</option><option>Other</option></select></td><td><select class="field"><option>Yes</option><option>No</option></select></td></tr>
-                      <tr><td><select class="field"><option>Sibling</option><option>Mother</option><option>Father</option><option>Grandparent</option><option>Other relative</option><option>Other</option></select></td><td><select class="field"><option>No</option><option>Yes</option></select></td></tr>
-                    </tbody>
-                  </table>
+                <div class="household-selector">
+                  <div class="small">Who currently lives with the client in the primary household?</div>
+                  <div id="selectedHouseholdMembers" class="selected-household-members" aria-live="polite" aria-label="Selected household members"></div>
+                  <details class="multi-select">
+                    <summary id="householdMembersSummary" class="field multi-select-summary">Choose household members</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="householdMember" value="Mother" checked> Mother</label>
+                      <label><input type="checkbox" name="householdMember" value="Father"> Father</label>
+                      <label><input type="checkbox" name="householdMember" value="Sibling" checked> Sibling</label>
+                      <label><input type="checkbox" name="householdMember" value="Grandparent"> Grandparent</label>
+                      <label><input type="checkbox" name="householdMember" value="Other" data-other-details="false"> Other</label>
+                    </div>
+                  </details>
                 </div>
-                <p class="small muted">Do not request name, age or phone unless the person is separately registered as a caregiver.</p>
-                <label class="small">Does the client regularly stay in another household?
-                  <select class="field"><option>No</option><option>Yes</option></select>
-                </label>
-                <details>
-                  <summary class="small">If Yes — second household details</summary>
-                  <div class="grid3" style="margin-top:10px">
-                    <label class="small">Responsible adult relationship<input class="field" placeholder="Relationship only"></label>
-                    <label class="small">Frequency<input class="field" placeholder="e.g., weekends"></label>
-                    <label class="small">ABA services expected there?<select class="field"><option>No</option><option>Yes</option></select></label>
-                  </div>
-                </details>
-                <div class="grid3">
+                <div class="grid2 keep-columns">
                   <label class="small">Client’s primary language<input class="field" value="English"></label>
-                  <label class="small">Language primarily spoken in the home<input class="field" value="English"></label>
-                  <label class="small">Are other languages regularly used with the client?<select class="field"><option>No</option><option>Yes — specify</option></select></label>
+                  <label class="small">What languages are spoken in the home?<input class="field" value="English"></label>
                 </div>
                 <label class="small">Have there been recent family, custody, relocation, or living-arrangement changes that currently affect functioning?
                   <select class="field"><option>No</option><option>Yes — brief description</option></select>
@@ -324,23 +359,29 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>C. Communication Profile</strong><p class="small muted">Communication modes, spoken-language level, functional communication, receptive directions and barriers.</p></div>
-                  <span class="source">CDE + Vineland-3</span>
+                  <div><strong>Communication Profile</strong><p class="small muted">Communication modes, spoken-language level, functional communication, receptive directions and barriers.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
-                <div>
+                <div class="communication-mode-selector">
                   <div class="small">Which communication modes does the client currently use?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox" checked> Vocal speech</label>
-                    <label><input type="checkbox"> Signs</label>
-                    <label><input type="checkbox" checked> Gestures</label>
-                    <label><input type="checkbox" checked> Pointing</label>
-                    <label><input type="checkbox"> Leading another person</label>
-                    <label><input type="checkbox"> Picture exchange</label>
-                    <label><input type="checkbox"> AAC / SGD</label>
-                    <label><input type="checkbox"> Behavior interpreted by familiar caregivers</label>
-                    <label><input type="checkbox"> Other</label>
+                  <details class="multi-select">
+                    <summary id="communicationModesSummary" class="field multi-select-summary">Choose communication modes</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="communicationMode" value="Vocal speech" checked> Vocal speech</label>
+                      <label><input type="checkbox" name="communicationMode" value="Signs"> Signs</label>
+                      <label><input type="checkbox" name="communicationMode" value="Gestures" checked> Gestures</label>
+                      <label><input type="checkbox" name="communicationMode" value="Pointing" checked> Pointing</label>
+                      <label><input type="checkbox" name="communicationMode" value="Leading another person"> Leading another person</label>
+                      <label><input type="checkbox" name="communicationMode" value="Picture exchange"> Picture exchange</label>
+                      <label><input type="checkbox" name="communicationMode" value="AAC / SGD"> AAC / SGD</label>
+                      <label><input type="checkbox" name="communicationMode" value="Behavior interpreted by familiar caregivers"> Behavior interpreted by familiar caregivers</label>
+                      <label><input type="checkbox" name="communicationMode" value="Other" data-other-details="false"> Other</label>
+                    </div>
+                  </details>
+                  <div id="selectedCommunicationModes" class="flex selected-domains" aria-live="polite" aria-label="Selected communication modes"></div>
+                  <div id="communicationOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other communication mode<input id="communicationOtherInput" class="field" placeholder="Enter communication mode"></label>
                   </div>
                 </div>
                 <label class="small">What is the client’s current spoken-language level?
@@ -369,19 +410,26 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
                 <label class="small">What level of directions can the client reliably follow?
                   <select class="field"><option>Not yet consistent</option><option selected>Familiar one-step</option><option>Novel one-step</option><option>Two-step</option><option>Multi-step</option><option>Group directions</option></select>
                 </label>
-                <div>
+                <div class="communication-barrier-selector">
                   <div class="small">Which communication barriers are present?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox" checked> Limited spontaneous communication</label>
-                    <label><input type="checkbox" checked> Prompt dependence</label>
-                    <label><input type="checkbox"> Limited to familiar people</label>
-                    <label><input type="checkbox"> Inconsistent AAC use</label>
-                    <label><input type="checkbox"> Echolalia</label>
-                    <label><input type="checkbox" checked> Limited protest</label>
-                    <label><input type="checkbox"> Difficulty repairing misunderstandings</label>
-                    <label><input type="checkbox"> Difficulty generalizing</label>
-                    <label><input type="checkbox"> Other</label>
-                    <label><input type="checkbox"> None reported</label>
+                  <details class="multi-select">
+                    <summary id="communicationBarriersSummary" class="field multi-select-summary">Choose communication barriers</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="communicationBarrier" value="Limited spontaneous communication" checked> Limited spontaneous communication</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Prompt dependence" checked> Prompt dependence</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Limited to familiar people"> Limited to familiar people</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Inconsistent AAC use"> Inconsistent AAC use</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Echolalia"> Echolalia</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Limited protest" checked> Limited protest</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Difficulty repairing misunderstandings"> Difficulty repairing misunderstandings</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Difficulty generalizing"> Difficulty generalizing</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="Other" data-other-details="false"> Other</label>
+                      <label><input type="checkbox" name="communicationBarrier" value="None reported"> None reported</label>
+                    </div>
+                  </details>
+                  <div id="selectedCommunicationBarriers" class="flex selected-domains" aria-live="polite" aria-label="Selected communication barriers"></div>
+                  <div id="communicationBarrierOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other communication barrier<input id="communicationBarrierOtherInput" class="field" placeholder="Enter communication barrier"></label>
                   </div>
                 </div>
                 <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button></div>
@@ -392,8 +440,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>D. Adaptive, Daily Living, and Routine Functioning</strong><p class="small muted">Age-appropriate routines, independence level, and tolerance/flexibility.</p></div>
-                  <span class="source">CDE + Vineland-3</span>
+                  <div><strong>Adaptive, Daily Living, and Routine Functioning</strong><p class="small muted">Age-appropriate routines, independence level, and tolerance/flexibility.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
@@ -459,27 +506,33 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>E. Leisure, Play and Social Functioning</strong><p class="small muted">Leisure/play repertoire and social interaction. Preferences are intentionally excluded here.</p></div>
-                  <span class="source">CDE + caregiver + instruments</span>
+                  <div><strong>Leisure, Play and Social Functioning</strong><p class="small muted">Leisure/play repertoire and social interaction. Preferences are intentionally excluded here.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
                 <div><strong class="small">Leisure and play</strong></div>
-                <div>
+                <div class="leisure-activity-selector">
                   <div class="small">Which types of leisure or play activities does the client currently perform?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox"> Functional play</label>
-                    <label><input type="checkbox"> Constructive play</label>
-                    <label><input type="checkbox"> Pretend / symbolic play</label>
-                    <label><input type="checkbox"> Games / rule-based activities</label>
-                    <label><input type="checkbox" checked> Independent hobbies / recreation</label>
-                    <label><input type="checkbox" checked> Family / community leisure</label>
-                    <label><input type="checkbox"> Other</label>
+                  <details class="multi-select">
+                    <summary id="leisureActivitiesSummary" class="field multi-select-summary">Choose leisure or play activities</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="leisureActivity" value="Functional play"> Functional play</label>
+                      <label><input type="checkbox" name="leisureActivity" value="Constructive play"> Constructive play</label>
+                      <label><input type="checkbox" name="leisureActivity" value="Pretend / symbolic play"> Pretend / symbolic play</label>
+                      <label><input type="checkbox" name="leisureActivity" value="Games / rule-based activities"> Games / rule-based activities</label>
+                      <label><input type="checkbox" name="leisureActivity" value="Independent hobbies / recreation" checked> Independent hobbies / recreation</label>
+                      <label><input type="checkbox" name="leisureActivity" value="Family / community leisure" checked> Family / community leisure</label>
+                      <label><input type="checkbox" name="leisureActivity" value="Other" data-other-details="false"> Other</label>
+                    </div>
+                  </details>
+                  <div id="selectedLeisureActivities" class="flex selected-domains" aria-live="polite" aria-label="Selected leisure or play activities"></div>
+                  <div id="leisureOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other leisure or play activity<input id="leisureOtherInput" class="field" placeholder="Enter leisure or play activity"></label>
                   </div>
                 </div>
                 <div class="table-wrap">
                   <table>
-                    <thead><tr><th>Current leisure/play participation</th><th>Independently</th><th>With limited support</th><th>Briefly / inconsistently</th><th>Not currently</th></tr></thead>
+                    <thead><tr><th>Current leisure/play participation</th><th>Independently</th><th>With support</th><th>Briefly / inconsistently</th><th>Not currently</th></tr></thead>
                     <tbody>
                       <tr><td>Selects / initiates an activity</td><td><input type="radio" name="lp1"></td><td><input type="radio" name="lp1" checked></td><td><input type="radio" name="lp1"></td><td><input type="radio" name="lp1"></td></tr>
                       <tr><td>Sustains participation</td><td><input type="radio" name="lp2"></td><td><input type="radio" name="lp2"></td><td><input type="radio" name="lp2" checked></td><td><input type="radio" name="lp2"></td></tr>
@@ -489,34 +542,47 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
                 </div>
                 <hr>
                 <div><strong class="small">Social interaction</strong></div>
-                <div>
+                <div class="social-pattern-selector">
                   <div class="small">Which social-interaction patterns are currently demonstrated?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox"> Initiates</label>
-                    <label><input type="checkbox" checked> Responds to others</label>
-                    <label><input type="checkbox" checked> Seeks proximity</label>
-                    <label><input type="checkbox" checked> Seeks / accepts appropriate physical interaction</label>
-                    <label><input type="checkbox"> Tolerates but does not seek</label>
-                    <label><input type="checkbox"> Avoids / withdraws</label>
-                    <label><input type="checkbox" checked> Varies by person / setting</label>
-                    <label><input type="checkbox"> Other</label>
+                  <details class="multi-select">
+                    <summary id="socialPatternsSummary" class="field multi-select-summary">Choose social-interaction patterns</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="socialPattern" value="Initiates"> Initiates</label>
+                      <label><input type="checkbox" name="socialPattern" value="Responds to others" checked> Responds to others</label>
+                      <label><input type="checkbox" name="socialPattern" value="Seeks proximity" checked> Seeks proximity</label>
+                      <label><input type="checkbox" name="socialPattern" value="Seeks / accepts appropriate physical interaction" checked> Seeks / accepts appropriate physical interaction</label>
+                      <label><input type="checkbox" name="socialPattern" value="Tolerates but does not seek"> Tolerates but does not seek</label>
+                      <label><input type="checkbox" name="socialPattern" value="Avoids / withdraws"> Avoids / withdraws</label>
+                      <label><input type="checkbox" name="socialPattern" value="Varies by person / setting" checked> Varies by person / setting</label>
+                      <label><input type="checkbox" name="socialPattern" value="Other" data-other-details="false"> Other</label>
+                    </div>
+                  </details>
+                  <div id="selectedSocialPatterns" class="flex selected-domains" aria-live="polite" aria-label="Selected social-interaction patterns"></div>
+                  <div id="socialPatternOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other social-interaction pattern<input id="socialPatternOtherInput" class="field" placeholder="Enter social-interaction pattern"></label>
                   </div>
                 </div>
-                <div>
+                <div class="social-skill-selector">
                   <div class="small">Which social skills are currently demonstrated?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox"> Turn-taking</label>
-                    <label><input type="checkbox"> Sharing</label>
-                    <label><input type="checkbox"> Cooperative activity</label>
-                    <label><input type="checkbox" checked> Greeting</label>
-                    <label><input type="checkbox"> Requesting interaction</label>
-                    <label><input type="checkbox"> Basic conversation</label>
-                    <label><input type="checkbox"> Respecting personal boundaries</label>
-                    <label><input type="checkbox"> Other</label>
-                    <label><input type="checkbox"> None currently</label>
+                  <details class="multi-select">
+                    <summary id="socialSkillsSummary" class="field multi-select-summary">Choose social skills</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="socialSkill" value="Turn-taking"> Turn-taking</label>
+                      <label><input type="checkbox" name="socialSkill" value="Sharing"> Sharing</label>
+                      <label><input type="checkbox" name="socialSkill" value="Cooperative activity"> Cooperative activity</label>
+                      <label><input type="checkbox" name="socialSkill" value="Greeting" checked> Greeting</label>
+                      <label><input type="checkbox" name="socialSkill" value="Requesting interaction"> Requesting interaction</label>
+                      <label><input type="checkbox" name="socialSkill" value="Basic conversation"> Basic conversation</label>
+                      <label><input type="checkbox" name="socialSkill" value="Respecting personal boundaries"> Respecting personal boundaries</label>
+                      <label><input type="checkbox" name="socialSkill" value="Other" data-other-details="false"> Other</label>
+                      <label><input type="checkbox" name="socialSkill" value="None currently"> None currently</label>
+                    </div>
+                  </details>
+                  <div id="selectedSocialSkills" class="flex selected-domains" aria-live="polite" aria-label="Selected social skills"></div>
+                  <div id="socialSkillOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other social skill<input id="socialSkillOtherInput" class="field" placeholder="Enter social skill"></label>
                   </div>
                 </div>
-                <div class="warning"><strong class="small">Rule</strong><p class="small muted">Do not collect preferences here. Reported preferences and formal preference assessments are documented in Assessment Procedures.</p></div>
                 <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button></div>
               </div>
             </div>
@@ -525,8 +591,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>F. Education, Daycare, Vocational or Work Functioning</strong><p class="small muted">Age-gated educational/program/work context and current functional concerns.</p></div>
-                  <span class="source">CDE + educational records</span>
+                  <div><strong>Education / Work</strong><p class="small muted">Age-gated educational/program/work context and current functional concerns.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
@@ -536,41 +601,69 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
                   </label>
                   <label class="small">Grade, level, program, or role<input class="field" value="3rd grade"></label>
                 </div>
-                <label class="small">Does the client have an IEP or 504 Plan?
-                  <select class="field"><option>Yes</option><option>No</option></select>
+                <label class="small">Does the client currently have an IEP or 504 Plan?
+                  <select id="educationPlanType" class="field" data-yes-details="false">
+                    <option selected>IEP</option>
+                    <option>504 Plan</option>
+                    <option>Neither</option>
+                    <option>Unknown</option>
+                  </select>
                 </label>
-                <div class="flex"><span class="source">IEP recognized in records</span><button class="btn">Upload / replace IEP</button></div>
-                <div>
+                <div id="educationPlanDetails" class="education-plan-details stack">
+                  <label class="small">Is the plan currently active?
+                    <select class="field" data-yes-details="false"><option selected>Yes</option><option>No</option><option>Unknown</option></select>
+                  </label>
+                  <label class="small">Is a copy available for review?
+                    <select id="educationPlanCopy" class="field" data-yes-details="false"><option selected>Yes</option><option>No</option></select>
+                  </label>
+                  <div id="educationPlanUpload" class="education-plan-upload flex"><button type="button" class="btn">Upload document</button></div>
+                  <label class="small">Optional comments<textarea class="field" placeholder="Add any relevant details (optional)"></textarea></label>
+                </div>
+                <div class="education-support-selector">
                   <div class="small">Which supports or accommodations are currently provided?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox" checked> Modified curriculum</label>
-                    <label><input type="checkbox"> 1:1 support</label>
-                    <label><input type="checkbox" checked> Paraprofessional</label>
-                    <label><input type="checkbox" checked> Visual supports</label>
-                    <label><input type="checkbox" checked> Communication supports</label>
-                    <label><input type="checkbox"> Behavior plan</label>
-                    <label><input type="checkbox"> Sensory accommodations</label>
-                    <label><input type="checkbox"> Transportation accommodations</label>
-                    <label><input type="checkbox"> Other</label>
-                    <label><input type="checkbox"> None reported</label>
+                  <details class="multi-select">
+                    <summary id="educationSupportsSummary" class="field multi-select-summary">Choose supports or accommodations</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="educationSupport" value="Modified curriculum" checked> Modified curriculum</label>
+                      <label><input type="checkbox" name="educationSupport" value="1:1 support"> 1:1 support</label>
+                      <label><input type="checkbox" name="educationSupport" value="Paraprofessional" checked> Paraprofessional</label>
+                      <label><input type="checkbox" name="educationSupport" value="Visual supports" checked> Visual supports</label>
+                      <label><input type="checkbox" name="educationSupport" value="Communication supports" checked> Communication supports</label>
+                      <label><input type="checkbox" name="educationSupport" value="Behavior plan"> Behavior plan</label>
+                      <label><input type="checkbox" name="educationSupport" value="Sensory accommodations"> Sensory accommodations</label>
+                      <label><input type="checkbox" name="educationSupport" value="Transportation accommodations"> Transportation accommodations</label>
+                      <label><input type="checkbox" name="educationSupport" value="Other" data-other-details="false"> Other</label>
+                      <label><input type="checkbox" name="educationSupport" value="None reported"> None reported</label>
+                    </div>
+                  </details>
+                  <div id="selectedEducationSupports" class="flex selected-domains" aria-live="polite" aria-label="Selected supports or accommodations"></div>
+                  <div id="educationSupportOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other support or accommodation<input id="educationSupportOtherInput" class="field" placeholder="Enter support or accommodation"></label>
                   </div>
                 </div>
-                <div>
+                <div class="education-concern-selector">
                   <div class="small">Which areas are current concerns in this setting?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox" checked> Attending</label>
-                    <label><input type="checkbox" checked> Remaining seated</label>
-                    <label><input type="checkbox" checked> Instructions</label>
-                    <label><input type="checkbox" checked> Task completion</label>
-                    <label><input type="checkbox" checked> Transitions</label>
-                    <label><input type="checkbox" checked> Communication</label>
-                    <label><input type="checkbox"> Peer interaction</label>
-                    <label><input type="checkbox"> Toileting</label>
-                    <label><input type="checkbox"> Feeding</label>
-                    <label><input type="checkbox" checked> Safety</label>
-                    <label><input type="checkbox"> Attendance</label>
-                    <label><input type="checkbox"> Job / task performance</label>
-                    <label><input type="checkbox"> Other</label>
+                  <details class="multi-select">
+                    <summary id="educationConcernsSummary" class="field multi-select-summary">Choose areas of concern</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="educationConcern" value="Attending" checked> Attending</label>
+                      <label><input type="checkbox" name="educationConcern" value="Remaining seated" checked> Remaining seated</label>
+                      <label><input type="checkbox" name="educationConcern" value="Instructions" checked> Instructions</label>
+                      <label><input type="checkbox" name="educationConcern" value="Task completion" checked> Task completion</label>
+                      <label><input type="checkbox" name="educationConcern" value="Transitions" checked> Transitions</label>
+                      <label><input type="checkbox" name="educationConcern" value="Communication" checked> Communication</label>
+                      <label><input type="checkbox" name="educationConcern" value="Peer interaction"> Peer interaction</label>
+                      <label><input type="checkbox" name="educationConcern" value="Toileting"> Toileting</label>
+                      <label><input type="checkbox" name="educationConcern" value="Feeding"> Feeding</label>
+                      <label><input type="checkbox" name="educationConcern" value="Safety" checked> Safety</label>
+                      <label><input type="checkbox" name="educationConcern" value="Attendance"> Attendance</label>
+                      <label><input type="checkbox" name="educationConcern" value="Job / task performance"> Job / task performance</label>
+                      <label><input type="checkbox" name="educationConcern" value="Other" data-other-details="false"> Other</label>
+                    </div>
+                  </details>
+                  <div id="selectedEducationConcerns" class="flex selected-domains" aria-live="polite" aria-label="Selected areas of concern"></div>
+                  <div id="educationConcernOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other area of concern<input id="educationConcernOtherInput" class="field" placeholder="Enter area of concern"></label>
                   </div>
                 </div>
                 <p class="small muted">Dynamic logic: labels and options change for daycare, school, vocational program, day program or employment. School-only questions are not shown to a client who works or does not attend a program.</p>
@@ -582,37 +675,70 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>G. Current and Previous Services</strong><p class="small muted">Services extracted from records and edited only when needed.</p></div>
-                  <span class="source">CDE + additional records</span>
+                  <div><strong>Current and Previous Services</strong><p class="small muted">Review current and previous services.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
                 <div class="card">
-                  <div class="between"><strong class="small">Current and previous services extracted from records</strong><span class="badge">Extracted</span></div>
+                  <div><strong class="small">Current and previous services</strong></div>
                   <div class="table-wrap" style="margin-top:8px">
-                    <table>
-                      <thead><tr><th>Service</th><th>Status</th><th>Provider / setting</th><th>Frequency / schedule</th></tr></thead>
-                      <tbody><tr><td>Speech therapy</td><td>Current</td><td>Outpatient</td><td>2× weekly</td></tr><tr><td>Occupational therapy</td><td>Previous</td><td>Outpatient</td><td>Not current</td></tr></tbody>
+                    <table class="services-table">
+                      <thead><tr><th>Service</th><th>Status</th><th>If previous: approximately how long ago?</th></tr></thead>
+                      <tbody id="serviceRows">
+                        <tr class="service-row">
+                          <td>
+                            <select class="field service-type" aria-label="Service" data-other-details="false">
+                              <option>ABA</option><option selected>Speech therapy</option><option>Occupational therapy</option><option>Physical therapy</option><option>Feeding therapy</option><option>Counseling</option><option>Psychiatry</option><option>Neurology</option><option>School-based services</option><option>Personal care</option><option>Other</option>
+                            </select>
+                            <div class="service-other-details" hidden><input class="field service-other-input" aria-label="Specify other service" placeholder="Specify other service"></div>
+                          </td>
+                          <td><select class="field service-status" aria-label="Service status"><option selected>Current</option><option>Previous</option></select></td>
+                          <td>
+                            <span class="small muted service-current-note">Not applicable</span>
+                            <select class="field service-previous-time" aria-label="Approximately how long ago" hidden>
+                              <option value="" selected>Select approximate time</option><option>Less than 6 months ago</option><option>6–12 months ago</option><option>1–2 years ago</option><option>2–5 years ago</option><option>More than 5 years ago</option><option>Unknown</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr class="service-row">
+                          <td>
+                            <select class="field service-type" aria-label="Service" data-other-details="false">
+                              <option>ABA</option><option>Speech therapy</option><option selected>Occupational therapy</option><option>Physical therapy</option><option>Feeding therapy</option><option>Counseling</option><option>Psychiatry</option><option>Neurology</option><option>School-based services</option><option>Personal care</option><option>Other</option>
+                            </select>
+                            <div class="service-other-details" hidden><input class="field service-other-input" aria-label="Specify other service" placeholder="Specify other service"></div>
+                          </td>
+                          <td><select class="field service-status" aria-label="Service status"><option>Current</option><option selected>Previous</option></select></td>
+                          <td>
+                            <span class="small muted service-current-note" hidden>Not applicable</span>
+                            <select class="field service-previous-time" aria-label="Approximately how long ago">
+                              <option value="" selected>Select approximate time</option><option>Less than 6 months ago</option><option>6–12 months ago</option><option>1–2 years ago</option><option>2–5 years ago</option><option>More than 5 years ago</option><option>Unknown</option>
+                            </select>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot><tr><td colspan="3"><button id="addService" type="button" class="btn">+ Add service</button></td></tr></tfoot>
                     </table>
                   </div>
                 </div>
-                <div class="grid3">
-                  <label class="small">Service type<select class="field"><option>ABA</option><option>Speech</option><option>OT</option><option>PT</option><option>Feeding</option><option>Counseling</option><option>Psychiatry</option><option>Neurology</option><option>School service</option><option>Personal care</option><option>Other</option></select></label>
-                  <label class="small">Status<select class="field"><option>Current</option><option>Previous</option></select></label>
-                  <label class="small">Provider / setting<input class="field" placeholder="Provider or setting"></label>
-                  <label class="small">Frequency / schedule<input class="field" placeholder="e.g., 2× weekly"></label>
-                  <label class="small">Optional brief note<input class="field" placeholder="Clinically relevant note only"></label>
-                </div>
-                <details>
-                  <summary class="small">If previous ABA is selected</summary>
-                  <div class="grid2" style="margin-top:8px">
-                    <label class="small">Approximate dates<input class="field"></label>
-                    <label class="small">Previous intensity<input class="field"></label>
-                    <label class="small">Primary targets<input class="field"></label>
-                    <label class="small">Response / reason services ended<input class="field"></label>
-                  </div>
-                </details>
-                <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button><button class="btn">+ Add service</button></div>
+                <label class="small">Optional clarification note<textarea class="field" placeholder="Add an optional clarification"></textarea></label>
+                <div class="flex"><button class="btn primary confirmBlock">Confirm all</button></div>
+                <template id="serviceRowTemplate">
+                  <tr class="service-row">
+                    <td>
+                      <select class="field service-type" aria-label="Service" data-other-details="false">
+                        <option value="" selected>Select service</option><option>ABA</option><option>Speech therapy</option><option>Occupational therapy</option><option>Physical therapy</option><option>Feeding therapy</option><option>Counseling</option><option>Psychiatry</option><option>Neurology</option><option>School-based services</option><option>Personal care</option><option>Other</option>
+                      </select>
+                      <div class="service-other-details" hidden><input class="field service-other-input" aria-label="Specify other service" placeholder="Specify other service"></div>
+                    </td>
+                    <td><select class="field service-status" aria-label="Service status"><option selected>Current</option><option>Previous</option></select></td>
+                    <td>
+                      <span class="small muted service-current-note">Not applicable</span>
+                      <select class="field service-previous-time" aria-label="Approximately how long ago" hidden>
+                        <option value="" selected>Select approximate time</option><option>Less than 6 months ago</option><option>6–12 months ago</option><option>1–2 years ago</option><option>2–5 years ago</option><option>More than 5 years ago</option><option>Unknown</option>
+                      </select>
+                    </td>
+                  </tr>
+                </template>
               </div>
             </div>
 
@@ -620,14 +746,14 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>H. Health and Medical Information</strong><p class="small muted">Diagnoses, medications and medical variables relevant to treatment.</p></div>
-                  <span class="source">CDE + medical records</span>
+                  <div><strong>Health and Medical Information</strong><p class="small muted">Diagnoses, medications and medical variables relevant to treatment.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
-                <div class="card">
-                  <div class="between"><strong class="small">Current diagnoses and co-occurring conditions</strong><span class="badge">Extracted</span></div>
-                  <div class="flex" style="margin-top:10px"><span class="chip">Autism Spectrum Disorder</span><span class="chip">Developmental condition</span></div>
+                <div class="card stack">
+                  <div class="between"><strong class="small">Current diagnoses and co-occurring conditions</strong><button id="addDiagnosis" type="button" class="btn">+ Add diagnosis</button></div>
+                  <div id="diagnosisList" class="flex"><span class="chip">Autism Spectrum Disorder</span><span class="chip">Developmental condition</span></div>
+                  <div id="additionalDiagnoses" class="stack"></div>
                 </div>
                 <div>
                   <div class="between"><strong class="small">Current medications or supplements</strong><button class="btn">+ Add medication</button></div>
@@ -638,47 +764,45 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
                   <label class="small">Does the client have dietary restrictions?<select class="field"><option>No</option><option>Yes — specify</option></select></label>
                   <label class="small">Are there current vision or hearing concerns?<select class="field"><option>No concerns</option><option>Vision</option><option>Hearing</option></select></label>
                   <label class="small">Corrective device, if relevant<select class="field"><option>Not applicable</option><option>Yes</option><option>No</option></select></label>
-                  <label class="small">Does the client have a seizure history?<select class="field"><option>No</option><option>Yes</option></select></label>
-                  <label class="small">Current seizure protocol / action plan?<select class="field"><option>Not applicable</option><option>Yes</option><option>No</option></select></label>
+                  <label class="small">Does the client have a seizure history?
+                    <select id="seizureHistory" class="field" data-yes-details="false"><option selected>No</option><option>Yes</option></select>
+                  </label>
+                  <div id="seizureProtocolBlock" class="seizure-protocol-block stack" hidden>
+                    <label class="small">Does the client have a current seizure protocol / action plan?
+                      <select id="seizureProtocol" class="field" data-yes-details="false"><option selected>No</option><option>Yes</option></select>
+                    </label>
+                    <div id="seizureProtocolDetails" class="seizure-protocol-details stack" hidden>
+                      <label class="small">Paste or enter the current seizure protocol / action plan<textarea class="field" placeholder="Paste or enter the plan here"></textarea></label>
+                      <div class="flex"><span class="small muted">or</span><button type="button" class="btn">Upload plan</button></div>
+                    </div>
+                  </div>
                 </div>
-                <button class="btn" style="width:max-content">Upload seizure / medical action plan</button>
                 <label class="small">Is there a significant history of surgeries, hospitalizations, serious illness, head injury, or other major medical events?
                   <select class="field"><option>No</option><option>Yes — brief relevant information</option></select>
                 </label>
                 <label class="small">Does the client have mobility, motor, or physical limitations relevant to treatment?
                   <select class="field"><option>No</option><option>Yes — specify functional impact / adaptation</option></select>
                 </label>
-                <div>
+                <div class="sleep-concern-selector">
                   <div class="small">Are there current sleep concerns?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox"> Difficulty falling asleep</label>
-                    <label><input type="checkbox"> Night waking</label>
-                    <label><input type="checkbox"> Early waking</label>
-                    <label><input type="checkbox"> Irregular schedule</label>
-                    <label><input type="checkbox"> Daytime sleepiness</label>
-                    <label><input type="checkbox"> Other</label>
-                    <label><input type="checkbox" checked> None</label>
+                  <details class="multi-select">
+                    <summary id="sleepConcernsSummary" class="field multi-select-summary">Choose sleep concerns</summary>
+                    <div class="multi-select-options">
+                      <label><input type="checkbox" name="sleepConcern" value="Difficulty falling asleep"> Difficulty falling asleep</label>
+                      <label><input type="checkbox" name="sleepConcern" value="Night waking"> Night waking</label>
+                      <label><input type="checkbox" name="sleepConcern" value="Early waking"> Early waking</label>
+                      <label><input type="checkbox" name="sleepConcern" value="Irregular schedule"> Irregular schedule</label>
+                      <label><input type="checkbox" name="sleepConcern" value="Daytime sleepiness"> Daytime sleepiness</label>
+                      <label><input type="checkbox" name="sleepConcern" value="Other" data-other-details="false"> Other</label>
+                      <label><input type="checkbox" name="sleepConcern" value="None" checked> None</label>
+                    </div>
+                  </details>
+                  <div id="selectedSleepConcerns" class="flex selected-domains" aria-live="polite" aria-label="Selected sleep concerns"></div>
+                  <div id="sleepConcernOtherDetail" class="other-details" hidden>
+                    <label class="small">Specify other sleep concern<input id="sleepConcernOtherInput" class="field" placeholder="Enter sleep concern"></label>
                   </div>
                 </div>
-                <label class="small">Are there feeding, swallowing, gastrointestinal, or hydration concerns relevant to treatment?
-                  <select class="field"><option>No</option><option>Yes — specify</option></select>
-                </label>
-                <div>
-                  <div class="small">Which medical variables currently affect alertness, stamina, participation, behavior, reinforcement, or safety?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox"> Seizures</label>
-                    <label><input type="checkbox"> Fatigue</label>
-                    <label><input type="checkbox"> Pain / discomfort</label>
-                    <label><input type="checkbox"> Mobility</label>
-                    <label><input type="checkbox"> Diet</label>
-                    <label><input type="checkbox"> Hydration</label>
-                    <label><input type="checkbox"> Medication effects reported by caregiver</label>
-                    <label><input type="checkbox"> Other</label>
-                    <label><input type="checkbox" checked> None</label>
-                  </div>
-                  <textarea class="field" placeholder="Brief treatment-relevant note, only when needed"></textarea>
-                </div>
-                <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Update selected fields</button></div>
+                <div class="flex"><button class="btn primary confirmBlock">Confirm all</button></div>
               </div>
             </div>
 
@@ -686,37 +810,45 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
             <div class="card alt">
               <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
                 <div class="between">
-                  <div><strong>I. Safety and Risk Profile</strong><p class="small muted">Screening only. It does not collect topography, baseline, function or intensity.</p></div>
-                  <span class="source">Safety screening</span>
+                  <div><strong>Safety and Risk Profile</strong><p class="small muted">Review safety concerns, supervision needs, and emergency protocols.</p></div>
                 </div>
               </button>
               <div class="accordion-body stack" hidden style="margin-top:14px">
-                <div class="warning"><strong class="small">Scope</strong><p class="small muted">Selected current concerns activate detailed review in Identified Maladaptive Behaviors. Historical/resolved concerns remain distinguishable and do not trigger the same risk logic.</p></div>
-                <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>Safety concern</th><th>Present?</th><th>Status if selected</th></tr></thead>
-                    <tbody>
-                      <tr><td>Self-injury</td><td><input type="checkbox" checked></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Aggression</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Elopement</td><td><input type="checkbox" checked></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Pica</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Mouthing</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Unsafe climbing</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Traffic safety</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Water safety</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Stranger awareness</td><td><input type="checkbox" checked></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Risky property destruction</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Inability to communicate pain</td><td><input type="checkbox" checked></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Inability to provide identifying information</td><td><input type="checkbox"></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Inability to seek emergency help</td><td><input type="checkbox" checked></td><td><select class="field"><option>Current</option><option>Historical-resolved</option><option>Both</option></select></td></tr>
-                      <tr><td>Other</td><td><input type="checkbox"></td><td><input class="field" placeholder="Specify"></td></tr>
+                <p class="small muted"><strong>Clarification:</strong> The safety concerns selected here are not definitions of the client’s behaviors. Behaviors are identified and defined later in the Intake.</p>
+                <div class="card stack">
+                  <div>
+                    <div class="small">Selected safety concerns</div>
+                    <div id="selectedSafetyConcerns" class="flex selected-domains" aria-live="polite" aria-label="Selected safety concerns"></div>
+                  </div>
+                  <div class="table-wrap">
+                    <table>
+                    <thead><tr><th><button id="toggleSafetyConcerns" type="button" class="table-heading-toggle" aria-expanded="true">Safety concern <span class="collapse-indicator" aria-hidden="true">-</span></button></th><th>Select</th></tr></thead>
+                    <tbody id="safetyConcernRows">
+                      <tr><td>Self-injury</td><td><input type="checkbox" name="safetyConcern" value="Self-injury" checked aria-label="Select self-injury"></td></tr>
+                      <tr><td>Aggression</td><td><input type="checkbox" name="safetyConcern" value="Aggression" aria-label="Select aggression"></td></tr>
+                      <tr><td>Elopement</td><td><input type="checkbox" name="safetyConcern" value="Elopement" checked aria-label="Select elopement"></td></tr>
+                      <tr><td>Pica</td><td><input type="checkbox" name="safetyConcern" value="Pica" aria-label="Select pica"></td></tr>
+                      <tr><td>Mouthing</td><td><input type="checkbox" name="safetyConcern" value="Mouthing" aria-label="Select mouthing"></td></tr>
+                      <tr><td>Unsafe climbing</td><td><input type="checkbox" name="safetyConcern" value="Unsafe climbing" aria-label="Select unsafe climbing"></td></tr>
+                      <tr><td>Traffic safety</td><td><input type="checkbox" name="safetyConcern" value="Traffic safety" aria-label="Select traffic safety"></td></tr>
+                      <tr><td>Water safety</td><td><input type="checkbox" name="safetyConcern" value="Water safety" aria-label="Select water safety"></td></tr>
+                      <tr><td>Stranger awareness</td><td><input type="checkbox" name="safetyConcern" value="Stranger awareness" checked aria-label="Select stranger awareness"></td></tr>
+                      <tr><td>Risky property destruction</td><td><input type="checkbox" name="safetyConcern" value="Risky property destruction" aria-label="Select risky property destruction"></td></tr>
+                      <tr><td>Inability to communicate pain</td><td><input type="checkbox" name="safetyConcern" value="Inability to communicate pain" checked aria-label="Select inability to communicate pain"></td></tr>
+                      <tr><td>Inability to provide identifying information</td><td><input type="checkbox" name="safetyConcern" value="Inability to provide identifying information" aria-label="Select inability to provide identifying information"></td></tr>
+                      <tr><td>Inability to seek emergency help</td><td><input type="checkbox" name="safetyConcern" value="Inability to seek emergency help" checked aria-label="Select inability to seek emergency help"></td></tr>
+                      <tr class="safety-other-row"><td>Other<div class="other-details safety-other-detail" hidden><input class="field safety-other-input" aria-label="Specify other safety concern" placeholder="Specify other safety concern"></div></td><td><input class="safety-other-checkbox" type="checkbox" name="safetyConcern" value="Other" data-other-details="false" aria-label="Select other safety concern"></td></tr>
                     </tbody>
-                  </table>
+                    <tfoot id="safetyConcernActions"><tr><td colspan="2"><button id="addSafetyOther" type="button" class="btn">+ Add another</button></td></tr></tfoot>
+                    </table>
+                  </div>
                 </div>
-                <label class="small">What level of supervision is currently required for safety?
-                  <select class="field"><option>Typical age-appropriate</option><option>Intermittent enhanced</option><option>Close during specific activities</option><option>Continuous visual</option><option>Continuous 1:1</option></select>
-                </label>
-                <div>
+                <div class="card stack">
+                  <label class="small">What level of supervision is currently required for safety?
+                    <select class="field"><option>Typical age-appropriate</option><option>Intermittent enhanced</option><option>Close during specific activities</option><option>Continuous visual</option><option>Continuous 1:1</option></select>
+                  </label>
+                </div>
+                <div class="card stack">
                   <div class="small">Can the client reliably respond to basic safety directions?</div>
                   <div class="table-wrap" style="margin-top:8px">
                     <table><thead><tr><th>Direction</th><th>Yes</th><th>Inconsistently</th><th>No</th></tr></thead>
@@ -730,87 +862,14 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
                     </table>
                   </div>
                 </div>
-                <label class="small">Is an existing medical, seizure, school, or household emergency protocol in place?
-                  <select class="field"><option>No</option><option>Yes — identify and upload if available</option></select>
-                </label>
-                <button class="btn" style="width:max-content">Upload emergency protocol</button>
-                <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button></div>
-              </div>
-            </div>
-
-            <!-- J -->
-            <div class="card alt">
-              <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
-                <div class="between">
-                  <div><strong>J. Strengths and Learning Profile</strong><p class="small muted">Strengths are derived from confirmed independent skills. Areas Requiring Support are derived elsewhere, not asked as a weakness list.</p></div>
-                  <span class="source">Derived from confirmed profile</span>
-                </div>
-              </button>
-              <div class="accordion-body stack" hidden style="margin-top:14px">
-                <div class="card">
-                  <div class="between"><strong class="small">Atlas-generated strengths from the confirmed profile</strong><span class="badge">Review / remove / add</span></div>
-                  <div class="flex" style="margin-top:10px"><span class="chip">Independent eating</span><span class="chip">Responds to familiar one-step directions</span><span class="chip">Engages in selected leisure activities</span><button class="btn">+ Add strength</button></div>
-                </div>
-                <div>
-                  <div class="small">Which instructional approaches or supports help the client learn or participate?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox" checked> Visual supports</label>
-                    <label><input type="checkbox" checked> Modeling</label>
-                    <label><input type="checkbox" checked> Verbal / gestural instruction</label>
-                    <label><input type="checkbox" checked> Repetition</label>
-                    <label><input type="checkbox" checked> Task breakdown</label>
-                    <label><input type="checkbox"> Hands-on instruction</label>
-                    <label><input type="checkbox"> Natural-environment teaching</label>
-                    <label><input type="checkbox"> Structured teaching</label>
-                    <label><input type="checkbox" checked> Choices</label>
-                    <label><input type="checkbox" checked> Predictable routines</label>
-                    <label><input type="checkbox"> Technology</label>
-                    <label><input type="checkbox"> Music / rhythm</label>
-                    <label><input type="checkbox" checked> Frequent reinforcement</label>
-                    <label><input type="checkbox" checked> Short periods with breaks</label>
-                    <label><input type="checkbox"> Other</label>
+                <div class="card stack">
+                  <label class="small">Is an existing emergency protocol in place?
+                    <select id="emergencyProtocol" class="field" data-yes-details="false"><option selected>No</option><option>Yes</option></select>
+                  </label>
+                  <div id="emergencyProtocolDetails" class="emergency-protocol-details stack" hidden>
+                    <label class="small">Paste or enter the current emergency protocol<textarea class="field" placeholder="Paste or enter the protocol here"></textarea></label>
+                    <div class="flex"><span class="small muted">or</span><button type="button" class="btn">Upload emergency protocol</button></div>
                   </div>
-                </div>
-                <div class="warning"><strong class="small">Output rule</strong><p class="small muted">Atlas uses explicit responses and confirmed independent skills to draft Strengths. “Areas Requiring Support” is derived from Communication, Adaptive, Social, Education, Safety, behaviors and assessment results.</p></div>
-                <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button></div>
-              </div>
-            </div>
-
-            <!-- K -->
-            <div class="card alt">
-              <button class="btn accordionToggle" style="width:100%;text-align:left;border:0;padding:0;background:transparent">
-                <div class="between">
-                  <div><strong>K. Environmental Resources and Barriers</strong><p class="small muted">Reuse existing caregivers and settings; ask only feasibility and practical barriers.</p></div>
-                  <span class="source">Canonical client profile</span>
-                </div>
-              </button>
-              <div class="accordion-body stack" hidden style="margin-top:14px">
-                <div>
-                  <div class="small">Which previously identified caregivers are available to participate in treatment and caregiver training?</div>
-                  <div class="flex" style="margin-top:8px"><label><input type="checkbox" checked> Primary caregiver</label><label><input type="checkbox"> Secondary caregiver</label></div>
-                  <p class="small muted">Names and contact information are reused from Case Setup; they are not requested again here.</p>
-                </div>
-                <div>
-                  <div class="small">Which settings are feasible for assessment or treatment?</div>
-                  <div class="flex" style="margin-top:8px"><label><input type="checkbox" checked> Home</label><label><input type="checkbox" checked> Community</label><label><input type="checkbox"> School</label></div>
-                  <p class="small muted">Settings only: Home, Community, School. Telehealth and authorization qualifiers are not added here.</p>
-                </div>
-                <div>
-                  <div class="small">Are there current practical barriers that may affect assessment or treatment?</div>
-                  <div class="flex" style="margin-top:8px">
-                    <label><input type="checkbox"> Scheduling</label>
-                    <label><input type="checkbox"> Transportation</label>
-                    <label><input type="checkbox"> Language</label>
-                    <label><input type="checkbox"> Caregiver availability</label>
-                    <label><input type="checkbox"> Competing services</label>
-                    <label><input type="checkbox"> Service gaps</label>
-                    <label><input type="checkbox"> Unstable routines</label>
-                    <label><input type="checkbox"> Access to settings</label>
-                    <label><input type="checkbox"> Technology</label>
-                    <label><input type="checkbox"> Other</label>
-                    <label><input type="checkbox" checked> None</label>
-                  </div>
-                  <textarea class="field" placeholder="Brief note only when a barrier is selected"></textarea>
                 </div>
                 <div class="flex"><button class="btn primary confirmBlock">Confirm all</button><button class="btn">Edit selected fields</button></div>
               </div>
@@ -820,39 +879,124 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         </section>
 
         <section class="page stack" data-page="4" hidden>
-          <div><h1>Clinical Interview</h1><p class="small muted">Brief caregiver-attributed information that adds priorities and context without repeating Background.</p></div>
-          <div class="card grid3">
-            <label class="small">Informant<select class="field"><option>Primary participating caregiver</option></select></label>
-            <label class="small">Interview date<input type="date" class="field"></label>
-            <label class="small">Method<select class="field"><option>In person</option><option>Phone</option><option>Video</option><option>Other</option></select></label>
+          <div><h1>Clinical Interview</h1></div>
+          <div class="card">
+            <label class="small"><input id="interviewNotCompleted" type="checkbox"> Interview was not completed</label>
           </div>
-          <div class="card stack">
-            <div><h2>Caregiver Concerns & Priorities</h2><p class="small muted">Select up to 3 in each priority group.</p></div>
-            <div><div class="small">Highest-priority concerns</div><div class="flex" style="margin-top:8px"><span class="badge">Safety</span><span class="badge">Communication</span><span class="chip">Self-care</span><span class="chip">Transitions</span><span class="chip">Social interaction</span></div></div>
-            <div><div class="small">Most important family outcomes</div><div class="flex" style="margin-top:8px"><span class="badge">Functional communication</span><span class="badge">Safety</span><span class="badge">Independence</span><span class="chip">Community access</span></div></div>
-            <label class="small">Briefly describe any additional family priorities<textarea class="field" placeholder="Optional brief context..."></textarea></label>
-          </div>
-          <div class="card stack">
-            <h2>Brief Reported Behavioral Context</h2>
-            <div class="grid2">
-              <div class="stack"><div class="small">Concerns most likely during</div><label><input type="checkbox" checked> Demands</label><label><input type="checkbox" checked> Transitions</label><label><input type="checkbox"> Denied access</label><label><input type="checkbox"> Attention unavailable</label></div>
-              <div class="stack"><div class="small">Common immediate aftermath</div><label><input type="checkbox" checked> Task delay or break</label><label><input type="checkbox"> Attention</label><label><input type="checkbox"> Access to item/activity</label><label><input type="checkbox"> Blocking / safety response</label></div>
+          <fieldset id="clinicalInterviewFields" class="stack section-fieldset">
+            <div class="card grid3">
+              <label class="small">Informant<select class="field"><option>Primary participating caregiver</option></select></label>
+              <label class="small">Interview date<input type="date" class="field"></label>
+              <label class="small">Method<select class="field"><option>In person</option><option>Phone</option><option>Video</option><option>Other</option></select></label>
             </div>
-            <p class="small muted">Context labels orient later suggestions. They do not replace ABC assessment or the BCBA's functional formulation.</p>
-          </div>
+            <div class="card stack">
+              <div class="caregiver-priority-selector">
+                <div class="small">Which areas are the caregiver's highest priorities for treatment? Select up to 3.</div>
+                <details class="multi-select">
+                  <summary id="caregiverPrioritiesSummary" class="field multi-select-summary">Choose up to 3 priorities</summary>
+                  <div class="multi-select-options">
+                    <label><input type="checkbox" name="caregiverPriority" value="Safety" checked> Safety</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Functional communication" checked> Functional communication</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Independence / self-care" checked> Independence / self-care</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Toileting"> Toileting</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Transitions / flexibility"> Transitions / flexibility</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Learning / school participation"> Learning / school participation</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Social interaction"> Social interaction</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Leisure / play"> Leisure / play</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Feeding / mealtime"> Feeding / mealtime</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Sleep"> Sleep</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Community participation"> Community participation</label>
+                    <label><input type="checkbox" name="caregiverPriority" value="Other" data-other-details="false"> Other</label>
+                  </div>
+                </details>
+                <div id="selectedCaregiverPriorities" class="flex selected-domains" aria-live="polite" aria-label="Selected caregiver priorities"></div>
+                <div id="caregiverPriorityOtherDetail" class="other-details" hidden>
+                  <label class="small">Specify other treatment priority<input id="caregiverPriorityOtherInput" class="field" placeholder="Enter treatment priority"></label>
+                </div>
+              </div>
+              <label class="small">What would meaningful improvement look like for the family?
+                <textarea class="field" placeholder='Example: "Being able to go to a restaurant without elopement" or "Requesting help instead of crying."'></textarea>
+              </label>
+            </div>
+          </fieldset>
         </section>
 
         <section class="page stack" data-page="5" hidden>
-          <div class="topline"><div><h1>Identified Maladaptive Behaviors</h1><p class="small muted">Atlas surfaces candidates from records, Safety Screening, interview and previous ABA documentation.</p></div><button class="btn primary">Confirm selected targets</button></div>
-          <div class="warning"><strong class="small">Possible overlap detected</strong><p class="small muted">Task refusal and hygiene refusal may overlap. Review before continuing to prevent double counting.</p></div>
-          <div class="card stack">
-            <div class="between"><div><div class="flex"><h2>Self-Injurious Behavior</h2><span class="badge">High priority</span></div><p class="small muted">Suggested from CDE + Safety Screening</p></div><label><input type="checkbox" checked> Target</label></div>
-            <p class="small">Record evidence indicates self-directed hitting during episodes of escalation.</p>
-            <div class="grid2"><label class="small">Clinical disposition<select class="field"><option>Confirm as current target</option><option>Current but not treatment target</option><option>Historical only</option><option>Not present</option><option>Merge with another behavior</option></select></label><label class="small">Major life activities affected<select class="field"><option>Safety · self-care · participation</option><option>Safety</option><option>Learning</option><option>Community access</option></select></label></div>
+          <div class="topline"><div><h1>Identified Maladaptive Behaviors</h1><p class="small muted">At this stage, select only the maladaptive behaviors that will be targeted for treatment. Assessment procedures will be applied to these behaviors; behavior goals and replacement skills are established later.</p></div></div>
+          <div class="card stack behavior-target-selector">
+            <div class="small">Which maladaptive behaviors will be targeted for treatment?</div>
+            <details id="treatmentBehaviorSelector" class="multi-select">
+              <summary id="treatmentBehaviorsSummary" class="field multi-select-summary">Choose treatment targets</summary>
+              <div class="multi-select-options">
+                <label><input type="checkbox" name="treatmentBehavior" value="selfInjury" checked> Self-Injurious Behavior</label>
+                <label><input type="checkbox" name="treatmentBehavior" value="elopement" checked> Elopement</label>
+                <label><input type="checkbox" name="treatmentBehavior" value="tantrum" checked> Tantrum</label>
+              </div>
+            </details>
+            <div id="selectedTreatmentBehaviors" class="flex selected-domains" aria-live="polite" aria-label="Selected treatment behaviors"></div>
           </div>
-          <div class="card"><div class="between"><div><div class="flex"><h2>Elopement</h2><span class="badge">High priority</span></div><p class="small muted">Suggested from Safety Screening + interview</p></div><label><input type="checkbox" checked> Target</label></div><p class="small">Reported during transitions and supervision changes.</p></div>
-          <div class="card"><div class="between"><div><div class="flex"><h2>Tantrum</h2><span class="chip">Moderate priority</span></div><p class="small muted">Suggested from CDE + caregiver interview</p></div><label><input type="checkbox" checked> Target</label></div><p class="small">Reported during denied access, transitions and non-preferred demands.</p></div>
-          <button class="btn">+ Add behavior from Behavior Bank</button>
+          <div id="behaviorClinicalCards" class="stack"></div>
+          <button id="confirmBehaviorSection" type="button" class="btn primary" hidden>Confirm &amp; Lock Section</button>
+
+          <template id="behaviorClinicalCardTemplate">
+            <article class="card stack behavior-clinical-card">
+              <div class="between behavior-header">
+                <h2 class="behavior-name"></h2>
+                <label class="small behavior-intensity-control">Intensity
+                  <select class="field behavior-intensity">
+                    <option value="01">01 &mdash; None</option>
+                    <option value="02">02 &mdash; Mild</option>
+                    <option value="03">03 &mdash; Moderate</option>
+                    <option value="04">04 &mdash; Severe</option>
+                  </select>
+                </label>
+              </div>
+              <div class="intensity-key" aria-label="Intensity Key">
+                <strong class="small">Intensity Key</strong>
+                <div><strong>01 &mdash; None:</strong> No challenging behavior.</div>
+                <div><strong>02 &mdash; Mild:</strong> Interferes with social interaction/activity; may require some redirection; minor disruption.</div>
+                <div><strong>03 &mdash; Moderate:</strong> Requires adult intervention to redirect or block; moderately disrupts the environment.</div>
+                <div><strong>04 &mdash; Severe:</strong> Major disruption or safety risk; requires immediate adult intervention; may cause physical harm or serious property damage.</div>
+              </div>
+              <div><button type="button" class="btn primary confirm-intensity">Confirm Intensity</button></div>
+
+              <fieldset class="stack section-fieldset behavior-baseline-abc" disabled>
+                <div class="table-wrap">
+                  <table class="behavior-clinical-table">
+                    <thead><tr><th>Baseline</th><th>Antecedent</th><th>Behavior</th><th>Consequence</th></tr></thead>
+                    <tbody><tr>
+                      <td>
+                        <div class="baseline-fields">
+                          <label class="small">Value<input class="field baseline-value" placeholder="e.g., 52"></label>
+                          <label class="small">Unit<input class="field baseline-unit" placeholder="e.g., occurrences"></label>
+                          <label class="small">Timeframe<input class="field baseline-timeframe" placeholder="e.g., week"></label>
+                        </div>
+                      </td>
+                      <td><textarea class="field antecedent-field" aria-label="Antecedent" placeholder="Describe the events or conditions immediately preceding the behavior"></textarea></td>
+                      <td><textarea class="field behavior-field" aria-label="Behavior" placeholder="Describe the observable and measurable behavior"></textarea></td>
+                      <td><textarea class="field consequence-field" aria-label="Consequence" placeholder="Describe what typically follows the behavior"></textarea></td>
+                    </tr></tbody>
+                  </table>
+                </div>
+                <div><button type="button" class="btn primary confirm-baseline">Confirm Baseline &amp; ABC</button></div>
+              </fieldset>
+
+              <div class="behavior-function-panel stack" hidden>
+                <div><strong class="small">Hypothesized Function</strong></div>
+                <details class="multi-select behavior-function-selector">
+                  <summary class="field multi-select-summary behavior-function-summary">Choose hypothesized functions</summary>
+                  <div class="multi-select-options">
+                    <label><input type="checkbox" class="behavior-function-option" value="Attention"> Attention</label>
+                    <label><input type="checkbox" class="behavior-function-option" value="Escape/Avoidance"> Escape/Avoidance</label>
+                    <label><input type="checkbox" class="behavior-function-option" value="Tangible"> Tangible</label>
+                    <label><input type="checkbox" class="behavior-function-option" value="Automatic"> Automatic</label>
+                  </div>
+                </details>
+                <div class="flex selected-domains selected-behavior-functions" aria-live="polite" aria-label="Selected hypothesized functions"></div>
+                <div><button type="button" class="btn primary confirm-behavior">Confirm &amp; Lock Behavior</button></div>
+              </div>
+            </article>
+          </template>
         </section>
 
         <section class="page stack" data-page="6" hidden>
@@ -880,7 +1024,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div><h1>Topography & Behavior Reduction Goals</h1><p class="small muted">One complete module is created for each confirmed treatment target.</p></div>
           <div class="flex"><span class="badge">Self-Injurious Behavior</span><span class="chip">Elopement</span><span class="chip">Tantrum</span></div>
           <div class="card stack">
-            <div class="between"><div><h2>Definition & Measurement</h2><p class="small muted">Self-Injurious Behavior</p></div><span class="source">Behavior Bank + client data</span></div>
+            <div class="between"><div><h2>Definition & Measurement</h2><p class="small muted">Self-Injurious Behavior</p></div></div>
             <label class="small">Operational definition<textarea class="field">Any instance in which the client directs force toward their own body by hitting or striking the head, face, chest, or limbs. An episode ends after 30 consecutive seconds without the response.</textarea></label>
             <div class="grid3">
               <label class="small">Measurement Procedure<select class="field"><option>Frequency / event</option><option>Duration</option><option>Rate</option><option>Latency</option><option>Interval</option></select></label>
@@ -950,7 +1094,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div><h1>Clinical Review & Final Confirmation</h1><p class="small muted">No new interview. Atlas resolves gaps, conflicts and derived sections before report generation.</p></div>
           <div class="grid3"><div class="kpi"><div class="small muted">Ready</div><div class="value">6</div><div class="small muted">review blocks</div></div><div class="kpi"><div class="small muted">Needs review</div><div class="value">1</div><div class="small muted">coordination item</div></div><div class="kpi"><div class="small muted">Blocking</div><div class="value">0</div><div class="small muted">validation errors</div></div></div>
           <div class="card stack">
-            <div class="between"><div><strong class="small">Patient identity, CDE, diagnoses, caregiver and records</strong><p class="small muted">No unresolved source conflicts.</p></div><span class="badge">Confirmed</span></div>
+            <div class="between"><div><strong class="small">Patient identity, CDE, diagnoses, caregiver and records</strong><p class="small muted">No unresolved information conflicts.</p></div><span class="badge">Confirmed</span></div>
             <hr><div class="between"><div><strong class="small">Background and Clinical Interview</strong><p class="small muted">Extracted and current information confirmed.</p></div><span class="badge">Confirmed</span></div>
             <hr><div class="between"><div><strong class="small">Selected behaviors, functions, baselines and interventions</strong><p class="small muted">Review target-by-target.</p></div><button class="btn">Review</button></div>
             <hr><div class="between"><div><strong class="small">Replacement / skill programs and teaching procedures</strong><p class="small muted">Each selected program has a measurement method and Teaching Procedure.</p></div><span class="badge">Confirmed</span></div>
@@ -1009,16 +1153,685 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     btn.disabled=true;
   }));
 
+  const interviewNotCompleted = document.getElementById('interviewNotCompleted');
+  const clinicalInterviewFields = document.getElementById('clinicalInterviewFields');
+  function updateClinicalInterviewAvailability(){
+    if(!interviewNotCompleted || !clinicalInterviewFields) return;
+    clinicalInterviewFields.disabled = interviewNotCompleted.checked;
+  }
+  if(interviewNotCompleted){
+    interviewNotCompleted.addEventListener('change', updateClinicalInterviewAvailability);
+    updateClinicalInterviewAvailability();
+  }
+
+  const behaviorDefinitions = {
+    selfInjury: {
+      name: 'Self-Injurious Behavior',
+      intensity: '04',
+      baseline: {value: '52', unit: 'occurrences', timeframe: 'week'},
+      antecedent: 'Non-preferred demands, interruption of preferred activities, or transitions away from preferred routines.',
+      behavior: 'The client strikes their own head or body with an open or closed hand.',
+      consequence: 'Adults block for safety, redirect the client, and may pause the task while support is provided.',
+      functions: ['Escape/Avoidance', 'Automatic']
+    },
+    elopement: {
+      name: 'Elopement',
+      intensity: '04',
+      baseline: {value: '8', unit: 'occurrences', timeframe: 'week'},
+      antecedent: 'Transitions, reduced access to preferred activities, or changes in the level of adult supervision.',
+      behavior: 'The client moves more than six feet away from the supervising adult or designated area without permission.',
+      consequence: 'Adults follow, block access to unsafe areas, and guide the client back to the designated location.',
+      functions: ['Escape/Avoidance']
+    },
+    tantrum: {
+      name: 'Tantrum',
+      intensity: '03',
+      baseline: {value: '35', unit: '% of opportunities', timeframe: 'across observed sessions'},
+      antecedent: 'Denied or delayed access, transitions, and presentation of non-preferred demands.',
+      behavior: 'The client cries, yells, or drops to the floor for longer than 10 seconds.',
+      consequence: 'Adults provide redirection or reassurance; demands or access to preferred items may be delayed.',
+      functions: ['Escape/Avoidance', 'Tangible']
+    }
+  };
+  const treatmentBehaviorInputs = [...document.querySelectorAll('input[name="treatmentBehavior"]')];
+  const selectedTreatmentBehaviors = document.getElementById('selectedTreatmentBehaviors');
+  const treatmentBehaviorsSummary = document.getElementById('treatmentBehaviorsSummary');
+  const treatmentBehaviorSelector = document.getElementById('treatmentBehaviorSelector');
+  const behaviorClinicalCards = document.getElementById('behaviorClinicalCards');
+  const behaviorClinicalCardTemplate = document.getElementById('behaviorClinicalCardTemplate');
+  const confirmBehaviorSection = document.getElementById('confirmBehaviorSection');
+
+  function updateBehaviorFunctionSelection(card){
+    const inputs = [...card.querySelectorAll('.behavior-function-option')];
+    const selected = inputs.filter(input => input.checked);
+    const selectedContainer = card.querySelector('.selected-behavior-functions');
+    const summary = card.querySelector('.behavior-function-summary');
+    selectedContainer.replaceChildren();
+    selected.forEach(input => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = input.value;
+      selectedContainer.appendChild(chip);
+    });
+    summary.textContent = selected.length
+      ? `Choose hypothesized functions (${selected.length} selected)`
+      : 'Choose hypothesized functions';
+  }
+
+  function updateBehaviorSectionState(){
+    if(!confirmBehaviorSection) return;
+    const selected = treatmentBehaviorInputs.filter(input => input.checked);
+    const allLocked = selected.length > 0 && selected.every(input => {
+      const card = behaviorClinicalCards.querySelector(`[data-behavior-id="${input.value}"]`);
+      return card?.dataset.locked === 'true';
+    });
+    confirmBehaviorSection.hidden = !allLocked;
+  }
+
+  function createBehaviorClinicalCard(input){
+    const definition = behaviorDefinitions[input.value];
+    const card = behaviorClinicalCardTemplate.content.firstElementChild.cloneNode(true);
+    card.dataset.behaviorId = input.value;
+    card.dataset.locked = 'false';
+    card.querySelector('.behavior-name').textContent = definition.name;
+
+    const intensity = card.querySelector('.behavior-intensity');
+    const confirmIntensity = card.querySelector('.confirm-intensity');
+    const baselineFields = card.querySelector('.behavior-baseline-abc');
+    const confirmBaseline = card.querySelector('.confirm-baseline');
+    const functionPanel = card.querySelector('.behavior-function-panel');
+    const functionSelector = card.querySelector('.behavior-function-selector');
+    const functionInputs = [...card.querySelectorAll('.behavior-function-option')];
+    const confirmBehavior = card.querySelector('.confirm-behavior');
+
+    intensity.value = definition.intensity;
+    intensity.setAttribute('aria-label', `${definition.name} intensity`);
+    functionInputs.forEach(functionInput => {
+      functionInput.checked = definition.functions.includes(functionInput.value);
+      functionInput.addEventListener('change', () => updateBehaviorFunctionSelection(card));
+    });
+    updateBehaviorFunctionSelection(card);
+
+    confirmIntensity.addEventListener('click', () => {
+      intensity.disabled = true;
+      confirmIntensity.textContent = 'Intensity confirmed';
+      confirmIntensity.disabled = true;
+      baselineFields.disabled = false;
+      card.querySelector('.baseline-value').value = definition.baseline.value;
+      card.querySelector('.baseline-unit').value = definition.baseline.unit;
+      card.querySelector('.baseline-timeframe').value = definition.baseline.timeframe;
+      card.querySelector('.antecedent-field').value = definition.antecedent;
+      card.querySelector('.behavior-field').value = definition.behavior;
+      card.querySelector('.consequence-field').value = definition.consequence;
+    });
+
+    confirmBaseline.addEventListener('click', () => {
+      confirmBaseline.textContent = 'Baseline & ABC confirmed';
+      baselineFields.classList.add('confirmed');
+      baselineFields.disabled = true;
+      functionPanel.hidden = false;
+    });
+
+    confirmBehavior.addEventListener('click', () => {
+      functionInputs.forEach(functionInput => functionInput.disabled = true);
+      functionSelector.open = false;
+      functionSelector.classList.add('locked-control');
+      confirmBehavior.textContent = 'Behavior locked';
+      confirmBehavior.disabled = true;
+      card.dataset.locked = 'true';
+      card.classList.add('locked');
+      input.disabled = true;
+      updateBehaviorSectionState();
+    });
+
+    return card;
+  }
+
+  function syncTreatmentBehaviorCards(){
+    if(!selectedTreatmentBehaviors || !treatmentBehaviorsSummary || !behaviorClinicalCards || !behaviorClinicalCardTemplate) return;
+    const selected = treatmentBehaviorInputs.filter(input => input.checked);
+    const selectedIds = new Set(selected.map(input => input.value));
+
+    behaviorClinicalCards.querySelectorAll('.behavior-clinical-card').forEach(card => {
+      if(!selectedIds.has(card.dataset.behaviorId)) card.remove();
+    });
+    selected.forEach(input => {
+      if(!behaviorClinicalCards.querySelector(`[data-behavior-id="${input.value}"]`)){
+        behaviorClinicalCards.appendChild(createBehaviorClinicalCard(input));
+      }
+    });
+
+    selectedTreatmentBehaviors.replaceChildren();
+    selected.forEach(input => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = behaviorDefinitions[input.value].name;
+      selectedTreatmentBehaviors.appendChild(chip);
+    });
+    treatmentBehaviorsSummary.textContent = selected.length
+      ? `Choose treatment targets (${selected.length} selected)`
+      : 'Choose treatment targets';
+    updateBehaviorSectionState();
+  }
+
+  treatmentBehaviorInputs.forEach(input => input.addEventListener('change', syncTreatmentBehaviorCards));
+  if(confirmBehaviorSection){
+    confirmBehaviorSection.addEventListener('click', () => {
+      treatmentBehaviorInputs.forEach(input => input.disabled = true);
+      treatmentBehaviorSelector.open = false;
+      treatmentBehaviorSelector.classList.add('locked-control');
+      confirmBehaviorSection.textContent = 'Section locked';
+      confirmBehaviorSection.disabled = true;
+    });
+  }
+  syncTreatmentBehaviorCards();
+
+  function isYesOption(option){
+    return option && /^Yes\b/i.test(option.textContent.trim());
+  }
+  function setupYesDetails(select){
+    if(select.dataset.yesDetailsReady || select.matches('[data-yes-details="false"]')) return;
+    if(![...select.options].some(isYesOption)) return;
+
+    const parentLabel = select.closest('label');
+    const targetId = select.dataset.yesTarget;
+    let details = targetId ? document.getElementById(targetId) : null;
+    if(!details){
+      details = document.createElement('div');
+      details.className = 'yes-details';
+      const detailLabel = document.createElement('label');
+      detailLabel.className = 'small';
+      detailLabel.textContent = 'Please specify.';
+      const textarea = document.createElement('textarea');
+      textarea.className = 'field';
+      textarea.placeholder = 'Add relevant details';
+      detailLabel.appendChild(textarea);
+      details.appendChild(detailLabel);
+      if(parentLabel) parentLabel.insertAdjacentElement('afterend', details);
+      else select.insertAdjacentElement('afterend', details);
+    }
+
+    const update = () => {
+      details.hidden = !isYesOption(select.options[select.selectedIndex]);
+    };
+    select.dataset.yesDetailsReady = 'true';
+    select.addEventListener('change', update);
+    update();
+  }
+  document.querySelectorAll('select').forEach(setupYesDetails);
+
+  const educationPlanType = document.getElementById('educationPlanType');
+  const educationPlanDetails = document.getElementById('educationPlanDetails');
+  const educationPlanCopy = document.getElementById('educationPlanCopy');
+  const educationPlanUpload = document.getElementById('educationPlanUpload');
+  function updateEducationPlanFields(){
+    if(!educationPlanType || !educationPlanDetails || !educationPlanCopy || !educationPlanUpload) return;
+    const hasPlan = educationPlanType.value === 'IEP' || educationPlanType.value === '504 Plan';
+    educationPlanDetails.hidden = !hasPlan;
+    educationPlanUpload.hidden = !hasPlan || educationPlanCopy.value !== 'Yes';
+  }
+  if(educationPlanType && educationPlanCopy){
+    educationPlanType.addEventListener('change', updateEducationPlanFields);
+    educationPlanCopy.addEventListener('change', updateEducationPlanFields);
+    updateEducationPlanFields();
+  }
+
+  function setupServiceRow(row){
+    const serviceType = row.querySelector('.service-type');
+    const otherDetails = row.querySelector('.service-other-details');
+    const otherInput = row.querySelector('.service-other-input');
+    const status = row.querySelector('.service-status');
+    const previousTime = row.querySelector('.service-previous-time');
+    const currentNote = row.querySelector('.service-current-note');
+    if(!serviceType || !otherDetails || !otherInput || !status || !previousTime || !currentNote) return;
+
+    const updateServiceType = () => {
+      const isOther = serviceType.value === 'Other';
+      otherDetails.hidden = !isOther;
+      otherInput.required = isOther;
+    };
+    const updateStatus = () => {
+      const isPrevious = status.value === 'Previous';
+      previousTime.hidden = !isPrevious;
+      previousTime.required = isPrevious;
+      currentNote.hidden = isPrevious;
+    };
+    serviceType.addEventListener('change', updateServiceType);
+    status.addEventListener('change', updateStatus);
+    updateServiceType();
+    updateStatus();
+  }
+  document.querySelectorAll('.service-row').forEach(setupServiceRow);
+  const addServiceButton = document.getElementById('addService');
+  const serviceRows = document.getElementById('serviceRows');
+  const serviceRowTemplate = document.getElementById('serviceRowTemplate');
+  if(addServiceButton && serviceRows && serviceRowTemplate){
+    addServiceButton.addEventListener('click', () => {
+      const row = serviceRowTemplate.content.firstElementChild.cloneNode(true);
+      serviceRows.appendChild(row);
+      setupServiceRow(row);
+      row.querySelector('.service-type').focus();
+    });
+  }
+
+  const addDiagnosisButton = document.getElementById('addDiagnosis');
+  const additionalDiagnoses = document.getElementById('additionalDiagnoses');
+  if(addDiagnosisButton && additionalDiagnoses){
+    addDiagnosisButton.addEventListener('click', () => {
+      const label = document.createElement('label');
+      label.className = 'small';
+      label.textContent = 'Additional diagnosis';
+      const input = document.createElement('input');
+      input.className = 'field';
+      input.placeholder = 'Enter diagnosis';
+      label.appendChild(input);
+      additionalDiagnoses.appendChild(label);
+      input.focus();
+    });
+  }
+
+  const seizureHistory = document.getElementById('seizureHistory');
+  const seizureProtocolBlock = document.getElementById('seizureProtocolBlock');
+  const seizureProtocol = document.getElementById('seizureProtocol');
+  const seizureProtocolDetails = document.getElementById('seizureProtocolDetails');
+  function updateSeizureProtocol(){
+    if(!seizureHistory || !seizureProtocolBlock || !seizureProtocol || !seizureProtocolDetails) return;
+    const hasSeizureHistory = seizureHistory.value === 'Yes';
+    seizureProtocolBlock.hidden = !hasSeizureHistory;
+    seizureProtocolDetails.hidden = !hasSeizureHistory || seizureProtocol.value !== 'Yes';
+  }
+  if(seizureHistory && seizureProtocol){
+    seizureHistory.addEventListener('change', updateSeizureProtocol);
+    seizureProtocol.addEventListener('change', updateSeizureProtocol);
+    updateSeizureProtocol();
+  }
+
+  const selectedSafetyConcerns = document.getElementById('selectedSafetyConcerns');
+  const safetyConcernRows = document.getElementById('safetyConcernRows');
+  const safetyConcernActions = document.getElementById('safetyConcernActions');
+  const toggleSafetyConcerns = document.getElementById('toggleSafetyConcerns');
+  const addSafetyOther = document.getElementById('addSafetyOther');
+  function updateSafetyConcerns(){
+    if(!selectedSafetyConcerns) return;
+    const safetyConcernInputs = [...document.querySelectorAll('input[name="safetyConcern"]')];
+    document.querySelectorAll('.safety-other-row').forEach(row => {
+      const checkbox = row.querySelector('.safety-other-checkbox');
+      const detail = row.querySelector('.safety-other-detail');
+      const otherInput = row.querySelector('.safety-other-input');
+      detail.hidden = !checkbox.checked;
+      otherInput.required = checkbox.checked;
+    });
+    selectedSafetyConcerns.replaceChildren();
+    safetyConcernInputs.filter(input => input.checked).forEach(input => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      const otherInput = input.closest('.safety-other-row')?.querySelector('.safety-other-input');
+      chip.textContent = input.value === 'Other' && otherInput?.value.trim() ? `Other: ${otherInput.value.trim()}` : input.value;
+      selectedSafetyConcerns.appendChild(chip);
+    });
+  }
+  function setupSafetyConcernInput(input){
+    if(input.dataset.safetyConcernReady) return;
+    input.dataset.safetyConcernReady = 'true';
+    input.addEventListener('change', updateSafetyConcerns);
+    const otherInput = input.closest('.safety-other-row')?.querySelector('.safety-other-input');
+    if(otherInput) otherInput.addEventListener('input', updateSafetyConcerns);
+  }
+  const initialSafetyConcernInputs = [...document.querySelectorAll('input[name="safetyConcern"]')];
+  if(initialSafetyConcernInputs.length){
+    initialSafetyConcernInputs.forEach(setupSafetyConcernInput);
+    updateSafetyConcerns();
+  }
+  if(addSafetyOther && safetyConcernRows){
+    addSafetyOther.addEventListener('click', () => {
+      const sourceRow = safetyConcernRows.querySelector('.safety-other-row');
+      const newRow = sourceRow.cloneNode(true);
+      const checkbox = newRow.querySelector('.safety-other-checkbox');
+      const otherInput = newRow.querySelector('.safety-other-input');
+      checkbox.checked = true;
+      checkbox.dataset.safetyConcernReady = '';
+      otherInput.value = '';
+      safetyConcernRows.appendChild(newRow);
+      setupSafetyConcernInput(checkbox);
+      updateSafetyConcerns();
+      otherInput.focus();
+    });
+  }
+  if(toggleSafetyConcerns && safetyConcernRows && safetyConcernActions){
+    toggleSafetyConcerns.addEventListener('click', () => {
+      const expanded = toggleSafetyConcerns.getAttribute('aria-expanded') === 'true';
+      const nextExpanded = !expanded;
+      toggleSafetyConcerns.setAttribute('aria-expanded', String(nextExpanded));
+      safetyConcernRows.hidden = !nextExpanded;
+      safetyConcernActions.hidden = !nextExpanded;
+      toggleSafetyConcerns.querySelector('.collapse-indicator').textContent = nextExpanded ? '-' : '+';
+    });
+  }
+
+  const emergencyProtocol = document.getElementById('emergencyProtocol');
+  const emergencyProtocolDetails = document.getElementById('emergencyProtocolDetails');
+  function updateEmergencyProtocol(){
+    if(!emergencyProtocol || !emergencyProtocolDetails) return;
+    emergencyProtocolDetails.hidden = emergencyProtocol.value !== 'Yes';
+  }
+  if(emergencyProtocol){
+    emergencyProtocol.addEventListener('change', updateEmergencyProtocol);
+    updateEmergencyProtocol();
+  }
+
+  function isOtherOption(option){
+    if(!option) return false;
+    const text = option.textContent.trim().toLowerCase();
+    return text === 'other' || text === 'other documented value' || text === 'other living arrangement';
+  }
+  function isOtherCheckbox(input){
+    if(input.value === 'Other') return true;
+    const label = input.closest('label');
+    return label ? label.textContent.trim().toLowerCase() === 'other' : false;
+  }
+  function setupOtherDetails(control){
+    if(control.dataset.otherDetailsReady || control.matches('[data-other-details="false"]')) return;
+    const isSelect = control.tagName === 'SELECT';
+    if(isSelect && ![...control.options].some(isOtherOption)) return;
+    if(!isSelect && !isOtherCheckbox(control)) return;
+
+    const parentLabel = control.closest('label');
+    const details = document.createElement('div');
+    details.className = 'other-details';
+    const detailLabel = document.createElement('label');
+    detailLabel.className = 'small';
+    detailLabel.textContent = 'Specify other.';
+    const detailInput = document.createElement('input');
+    detailInput.className = 'field';
+    detailInput.placeholder = 'Specify other';
+    detailLabel.appendChild(detailInput);
+    details.appendChild(detailLabel);
+    if(parentLabel) parentLabel.insertAdjacentElement('afterend', details);
+    else control.insertAdjacentElement('afterend', details);
+
+    const update = () => {
+      const active = isSelect ? isOtherOption(control.options[control.selectedIndex]) : control.checked;
+      details.hidden = !active;
+      detailInput.required = active;
+    };
+    control.dataset.otherDetailsReady = 'true';
+    control.addEventListener('change', update);
+    update();
+  }
+  document.querySelectorAll('select, input[type="checkbox"]').forEach(setupOtherDetails);
+
+  const delayDomainInputs = [...document.querySelectorAll('input[name="delayDomain"]')];
+  const selectedDelayDomains = document.getElementById('selectedDelayDomains');
+  const delayDomainsSummary = document.getElementById('delayDomainsSummary');
+  const delayDescriptionField = document.getElementById('delayDescriptionField');
+  const noneDelayDomain = delayDomainInputs.find(input => input.value === 'None');
+  function updateDelayDomains(changedInput){
+    if(changedInput?.value === 'None' && changedInput.checked){
+      delayDomainInputs.forEach(input => {
+        if(input !== changedInput) input.checked = false;
+      });
+    } else if(changedInput?.checked && noneDelayDomain){
+      noneDelayDomain.checked = false;
+    }
+
+    const selected = delayDomainInputs.filter(input => input.checked);
+    selectedDelayDomains.replaceChildren();
+    selected.forEach(input => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = input.value;
+      selectedDelayDomains.appendChild(chip);
+    });
+    delayDomainsSummary.textContent = selected.length ? `Choose delay domains (${selected.length} selected)` : 'Choose delay domains';
+    delayDescriptionField.hidden = !selected.some(input => input.value !== 'None');
+  }
+  delayDomainInputs.forEach(input => input.addEventListener('change', event => updateDelayDomains(event.target)));
+  updateDelayDomains();
+
+  const communicationModeInputs = [...document.querySelectorAll('input[name="communicationMode"]')];
+  const selectedCommunicationModes = document.getElementById('selectedCommunicationModes');
+  const communicationModesSummary = document.getElementById('communicationModesSummary');
+  const communicationOtherDetail = document.getElementById('communicationOtherDetail');
+  const communicationOtherInput = document.getElementById('communicationOtherInput');
+  const otherCommunicationMode = communicationModeInputs.find(input => input.value === 'Other');
+  function updateCommunicationModes(){
+    const selected = communicationModeInputs.filter(input => input.checked);
+    selectedCommunicationModes.replaceChildren();
+    selected.forEach(input => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = input.value === 'Other' && communicationOtherInput.value.trim()
+        ? `Other: ${communicationOtherInput.value.trim()}`
+        : input.value;
+      selectedCommunicationModes.appendChild(chip);
+    });
+    const otherSelected = otherCommunicationMode?.checked || false;
+    communicationOtherDetail.hidden = !otherSelected;
+    communicationOtherInput.required = otherSelected;
+    communicationModesSummary.textContent = selected.length ? `Choose communication modes (${selected.length} selected)` : 'Choose communication modes';
+  }
+  communicationModeInputs.forEach(input => input.addEventListener('change', updateCommunicationModes));
+  communicationOtherInput.addEventListener('input', updateCommunicationModes);
+  updateCommunicationModes();
+
+  const communicationBarrierInputs = [...document.querySelectorAll('input[name="communicationBarrier"]')];
+  const selectedCommunicationBarriers = document.getElementById('selectedCommunicationBarriers');
+  const communicationBarriersSummary = document.getElementById('communicationBarriersSummary');
+  const communicationBarrierOtherDetail = document.getElementById('communicationBarrierOtherDetail');
+  const communicationBarrierOtherInput = document.getElementById('communicationBarrierOtherInput');
+  const otherCommunicationBarrier = communicationBarrierInputs.find(input => input.value === 'Other');
+  const noCommunicationBarriers = communicationBarrierInputs.find(input => input.value === 'None reported');
+  function updateCommunicationBarriers(changedInput){
+    if(changedInput === noCommunicationBarriers && changedInput.checked){
+      communicationBarrierInputs.forEach(input => {
+        if(input !== changedInput) input.checked = false;
+      });
+    } else if(changedInput?.checked && noCommunicationBarriers){
+      noCommunicationBarriers.checked = false;
+    }
+
+    const selected = communicationBarrierInputs.filter(input => input.checked);
+    selectedCommunicationBarriers.replaceChildren();
+    selected.forEach(input => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = input.value === 'Other' && communicationBarrierOtherInput.value.trim()
+        ? `Other: ${communicationBarrierOtherInput.value.trim()}`
+        : input.value;
+      selectedCommunicationBarriers.appendChild(chip);
+    });
+    const otherSelected = otherCommunicationBarrier?.checked || false;
+    communicationBarrierOtherDetail.hidden = !otherSelected;
+    communicationBarrierOtherInput.required = otherSelected;
+    communicationBarriersSummary.textContent = selected.length ? `Choose communication barriers (${selected.length} selected)` : 'Choose communication barriers';
+  }
+  communicationBarrierInputs.forEach(input => input.addEventListener('change', event => updateCommunicationBarriers(event.target)));
+  communicationBarrierOtherInput.addEventListener('input', () => updateCommunicationBarriers());
+  updateCommunicationBarriers();
+
+  function setupVisibleSelectionGroup({
+    inputName,
+    selectedId,
+    summaryId,
+    summaryLabel,
+    otherDetailId,
+    otherInputId,
+    noneValue,
+    maxSelected
+  }){
+    const inputs = [...document.querySelectorAll(`input[name="${inputName}"]`)];
+    const selectedContainer = document.getElementById(selectedId);
+    const summary = document.getElementById(summaryId);
+    const otherDetail = document.getElementById(otherDetailId);
+    const otherInput = document.getElementById(otherInputId);
+    const otherChoice = inputs.find(input => input.value === 'Other');
+    const noneChoice = noneValue ? inputs.find(input => input.value === noneValue) : null;
+
+    function update(changedInput){
+      if(changedInput === noneChoice && changedInput.checked){
+        inputs.forEach(input => {
+          if(input !== changedInput) input.checked = false;
+        });
+      } else if(changedInput?.checked && noneChoice){
+        noneChoice.checked = false;
+      }
+      if(maxSelected && changedInput?.checked && inputs.filter(input => input.checked).length > maxSelected){
+        changedInput.checked = false;
+      }
+
+      const selected = inputs.filter(input => input.checked);
+      inputs.forEach(input => {
+        input.disabled = Boolean(maxSelected && selected.length >= maxSelected && !input.checked);
+      });
+      selectedContainer.replaceChildren();
+      selected.forEach(input => {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = input.value === 'Other' && otherInput.value.trim()
+          ? `Other: ${otherInput.value.trim()}`
+          : input.value;
+        selectedContainer.appendChild(chip);
+      });
+      const otherSelected = otherChoice?.checked || false;
+      otherDetail.hidden = !otherSelected;
+      otherInput.required = otherSelected;
+      summary.textContent = selected.length ? `${summaryLabel} (${selected.length} selected)` : summaryLabel;
+    }
+
+    inputs.forEach(input => input.addEventListener('change', event => update(event.target)));
+    otherInput.addEventListener('input', () => update());
+    update();
+  }
+
+  setupVisibleSelectionGroup({
+    inputName: 'leisureActivity',
+    selectedId: 'selectedLeisureActivities',
+    summaryId: 'leisureActivitiesSummary',
+    summaryLabel: 'Choose leisure or play activities',
+    otherDetailId: 'leisureOtherDetail',
+    otherInputId: 'leisureOtherInput'
+  });
+  setupVisibleSelectionGroup({
+    inputName: 'socialPattern',
+    selectedId: 'selectedSocialPatterns',
+    summaryId: 'socialPatternsSummary',
+    summaryLabel: 'Choose social-interaction patterns',
+    otherDetailId: 'socialPatternOtherDetail',
+    otherInputId: 'socialPatternOtherInput'
+  });
+  setupVisibleSelectionGroup({
+    inputName: 'socialSkill',
+    selectedId: 'selectedSocialSkills',
+    summaryId: 'socialSkillsSummary',
+    summaryLabel: 'Choose social skills',
+    otherDetailId: 'socialSkillOtherDetail',
+    otherInputId: 'socialSkillOtherInput',
+    noneValue: 'None currently'
+  });
+  setupVisibleSelectionGroup({
+    inputName: 'educationSupport',
+    selectedId: 'selectedEducationSupports',
+    summaryId: 'educationSupportsSummary',
+    summaryLabel: 'Choose supports or accommodations',
+    otherDetailId: 'educationSupportOtherDetail',
+    otherInputId: 'educationSupportOtherInput',
+    noneValue: 'None reported'
+  });
+  setupVisibleSelectionGroup({
+    inputName: 'educationConcern',
+    selectedId: 'selectedEducationConcerns',
+    summaryId: 'educationConcernsSummary',
+    summaryLabel: 'Choose areas of concern',
+    otherDetailId: 'educationConcernOtherDetail',
+    otherInputId: 'educationConcernOtherInput'
+  });
+  setupVisibleSelectionGroup({
+    inputName: 'sleepConcern',
+    selectedId: 'selectedSleepConcerns',
+    summaryId: 'sleepConcernsSummary',
+    summaryLabel: 'Choose sleep concerns',
+    otherDetailId: 'sleepConcernOtherDetail',
+    otherInputId: 'sleepConcernOtherInput',
+    noneValue: 'None'
+  });
+  setupVisibleSelectionGroup({
+    inputName: 'caregiverPriority',
+    selectedId: 'selectedCaregiverPriorities',
+    summaryId: 'caregiverPrioritiesSummary',
+    summaryLabel: 'Choose up to 3 priorities',
+    otherDetailId: 'caregiverPriorityOtherDetail',
+    otherInputId: 'caregiverPriorityOtherInput',
+    maxSelected: 3
+  });
+
+  const householdMemberInputs = [...document.querySelectorAll('input[name="householdMember"]')];
+  const selectedHouseholdMembers = document.getElementById('selectedHouseholdMembers');
+  const householdMembersSummary = document.getElementById('householdMembersSummary');
+  const householdParticipation = new Map([
+    ['Mother', 'Participates in daily care'],
+    ['Sibling', 'Lives with the client']
+  ]);
+  const householdParticipationOptions = [
+    'Will participate in treatment/caregiver training',
+    'Participates in daily care',
+    'Lives with the client',
+    'Regularly spends time with the client'
+  ];
+  let householdOtherDescription = '';
+  function updateHouseholdMembers(){
+    const selected = householdMemberInputs.filter(input => input.checked);
+    selectedHouseholdMembers.replaceChildren();
+    selected.forEach(input => {
+      const row = document.createElement('div');
+      row.className = 'selected-household-member';
+
+      const name = document.createElement('strong');
+      name.textContent = input.value;
+
+      let otherField = null;
+      if(input.value === 'Other'){
+        otherField = document.createElement('input');
+        otherField.className = 'field household-other-input';
+        otherField.placeholder = 'Specify who';
+        otherField.setAttribute('aria-label', 'Specify other household member');
+        otherField.required = true;
+        otherField.value = householdOtherDescription;
+        otherField.addEventListener('input', () => {
+          householdOtherDescription = otherField.value;
+        });
+      }
+
+      const participationSelect = document.createElement('select');
+      participationSelect.className = 'field household-role';
+      participationSelect.setAttribute('aria-label', `${input.value} participation`);
+      householdParticipationOptions.forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        participationSelect.appendChild(option);
+      });
+      participationSelect.value = householdParticipation.get(input.value) || 'Lives with the client';
+      participationSelect.addEventListener('change', () => householdParticipation.set(input.value, participationSelect.value));
+
+      row.append(name);
+      if(otherField) row.append(otherField);
+      row.append(participationSelect);
+      selectedHouseholdMembers.appendChild(row);
+    });
+    householdMembersSummary.textContent = selected.length ? `Choose household members (${selected.length} selected)` : 'Choose household members';
+  }
+  householdMemberInputs.forEach(input => input.addEventListener('change', updateHouseholdMembers));
+  updateHouseholdMembers();
+
   const documentStatuses = [...document.querySelectorAll('.document-status')];
   const documentProgressLabel = document.getElementById('documentProgressLabel');
   const documentProgressFill = document.getElementById('documentProgressFill');
   function updateDocumentProgress(){
-    const readyCount = documentStatuses.filter(select => select.value === 'Ready').length;
+    const readyCount = documentStatuses.filter(status => status.dataset.status === 'Ready').length;
     const percentage = Math.round((readyCount / documentStatuses.length) * 100);
     documentProgressLabel.textContent = `${readyCount} of ${documentStatuses.length} ready`;
     documentProgressFill.style.width = percentage + '%';
   }
-  documentStatuses.forEach(select => select.addEventListener('change', updateDocumentProgress));
   updateDocumentProgress();
 
   const dateOfBirth = document.getElementById('dateOfBirth');
@@ -1051,10 +1864,10 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       <div class="grid3">
         <label class="small">Name<input class="field caregiverName" placeholder="Full name"></label>
         <label class="small">Relationship<input class="field caregiverRelationship" placeholder="e.g., Parent or Grandparent"></label>
-        <label class="small">Legal guardian<select class="field caregiverGuardian"><option value="Yes">Yes</option><option value="No">No</option></select></label>
+        <label class="small">Legal guardian<select class="field caregiverGuardian" data-yes-details="false"><option value="Yes">Yes</option><option value="No">No</option></select></label>
         <label class="small">Phone<input type="tel" class="field caregiverPhone" placeholder="Phone number"></label>
         <label class="small">Email<input type="email" class="field caregiverEmail" placeholder="Email address"></label>
-        <label class="small">Participates directly in treatment<select class="field caregiverParticipates"><option value="Yes">Yes</option><option value="No">No</option></select></label>
+        <label class="small">Participates directly in treatment<select class="field caregiverParticipates" data-yes-details="false"><option value="Yes">Yes</option><option value="No">No</option></select></label>
       </div>`;
     card.querySelector('.caregiverName').value = initial.name || '';
     card.querySelector('.caregiverRelationship').value = initial.relationship || '';
@@ -1064,6 +1877,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     card.querySelector('.caregiverParticipates').value = initial.participates || 'Yes';
     card.querySelector('.removeCaregiverBtn').addEventListener('click', () => card.remove());
     caregiverList.appendChild(card);
+    card.querySelectorAll('select').forEach(setupYesDetails);
+    card.querySelectorAll('select, input[type="checkbox"]').forEach(setupOtherDetails);
   }
   addCaregiverBtn.addEventListener('click', () => addCaregiver());
   addCaregiver({name:'Sample Caregiver', relationship:'Parent', guardian:'Yes', participates:'Yes'});
@@ -1108,16 +1923,21 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         <label class="small">Address<input class="field" placeholder="Enter full address"></label>`;
       wrap.appendChild(card);
       card.querySelector('.removeAddressBtn').addEventListener('click', () => card.remove());
+      card.querySelectorAll('select').forEach(setupYesDetails);
+      card.querySelectorAll('select, input[type="checkbox"]').forEach(setupOtherDetails);
     });
   }
 
   document.getElementById('addRecord').addEventListener('click', ()=>{
-    document.getElementById('recordsList').innerHTML = `
+    const recordsList = document.getElementById('recordsList');
+    recordsList.innerHTML = `
       <div class="grid3">
         <select class="field"><option>Diagnostic or Medical Record</option><option>Previous ABA Record</option><option>Educational Record</option><option>Related Therapy Record</option><option>Other</option></select>
         <input class="field" placeholder="Brief document description">
         <button class="btn">Select file</button>
       </div>`;
+    recordsList.querySelectorAll('select').forEach(setupYesDetails);
+    recordsList.querySelectorAll('select, input[type="checkbox"]').forEach(setupOtherDetails);
   });
 
   function renderGoals(){
@@ -1165,4 +1985,3 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 </script>
 </body>
 </html>
-
