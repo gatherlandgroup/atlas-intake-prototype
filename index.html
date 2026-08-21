@@ -99,6 +99,28 @@ textarea.field{min-height:88px;resize:vertical}
 .behavior-function-panel[hidden],#confirmBehaviorSection[hidden]{display:none!important}
 .locked-control{pointer-events:none}
 .behavior-clinical-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
+.behavior-goal-card{padding:20px;gap:18px}
+.behavior-goal-header{border-bottom:1px solid var(--border);padding-bottom:14px}
+.behavior-goal-header h2{font-size:19px}
+.goal-baseline-summary{margin:5px 0 0;color:var(--muted);font-size:13px}
+.goal-configuration-title{font-size:13px;font-weight:700;color:var(--text)}
+.goal-config-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.goal-config-grid label,.goal-full-field{min-width:0}
+.goal-additional-field{min-height:92px}
+.goal-lto-field{min-height:142px}
+.generated-goals{display:grid;gap:12px;background:#f7f8fc;border:1px solid var(--border);border-radius:14px;padding:14px}
+.generated-goals[hidden]{display:none!important}
+.generated-goals-title{font-size:14px;font-weight:750}
+.generated-goal-list{display:grid;gap:9px}
+.generated-goal-row{display:grid;gap:4px;background:rgba(255,255,255,.82);border:1px solid var(--border);border-radius:11px;padding:11px 12px}
+.generated-goal-row strong{font-size:12px;color:#4545b5}
+.generated-goal-row p{margin:0;font-size:13px;line-height:1.5}
+.goal-card-footer,.goal-section-footer{display:flex;justify-content:flex-end}
+.goal-card-footer{border-top:1px solid var(--border);padding-top:16px}
+.goal-fields:disabled{opacity:1}
+.goal-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
+.behavior-goal-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
+#confirmGoalSection[hidden]{display:none!important}
 .warning{background:var(--warning);border-left:4px solid #e6b84d;border-radius:12px;padding:13px 14px}
 .success{background:var(--success);border-radius:12px;padding:12px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
@@ -122,8 +144,9 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   .sidebar{border-right:0;border-bottom:1px solid var(--border)}
   .nav{grid-template-columns:repeat(2,1fr)}
   .nav button{font-size:12px}
-  .grid2,.grid3,.checklist{grid-template-columns:1fr}
+  .grid2,.grid3,.checklist,.goal-config-grid{grid-template-columns:1fr}
 }
+@media(min-width:901px) and (max-width:1100px){.goal-config-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -1021,30 +1044,73 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         </section>
 
         <section class="page stack" data-page="7" hidden>
-          <div><h1>Topography & Behavior Reduction Goals</h1><p class="small muted">One complete module is created for each confirmed treatment target.</p></div>
-          <div class="flex"><span class="badge">Self-Injurious Behavior</span><span class="chip">Elopement</span><span class="chip">Tantrum</span></div>
-          <div class="card stack">
-            <div class="between"><div><h2>Definition & Measurement</h2><p class="small muted">Self-Injurious Behavior</p></div></div>
-            <label class="small">Operational definition<textarea class="field">Any instance in which the client directs force toward their own body by hitting or striking the head, face, chest, or limbs. An episode ends after 30 consecutive seconds without the response.</textarea></label>
-            <div class="grid3">
-              <label class="small">Measurement Procedure<select class="field"><option>Frequency / event</option><option>Duration</option><option>Rate</option><option>Latency</option><option>Interval</option></select></label>
-              <label class="small">Baseline<input id="goalBaseline" type="number" class="field" value="52"></label>
-              <label class="small">Unit<select class="field"><option>incidents / week</option></select></label>
-            </div>
-            <div class="between"><span class="small">Suggested intensity</span><div class="flex"><span class="badge">3 · Moderate</span><button class="btn ghost">Edit</button></div></div>
+          <div><h1>Behavior Reduction Goals</h1></div>
+          <div id="behaviorGoalCards" class="stack"></div>
+          <div class="goal-section-footer">
+            <button id="confirmGoalSection" type="button" class="btn primary" hidden>Confirm &amp; Lock Section</button>
           </div>
-          <div class="card stack">
-            <div><h2>STO / LTO Configuration</h2><p class="small muted">Clinical parameters are set individually for this target.</p></div>
-            <div class="grid3">
-              <label class="small">Direction<select id="goalDirection" class="field"><option>Decrease</option><option>Increase</option></select></label>
-              <label class="small">STO #1<input id="goalSto1" type="number" class="field" value="49"></label>
-              <label class="small">Step between STOs<input id="goalStep" type="number" class="field" value="3"></label>
-              <label class="small">Criterion duration<input class="field" value="4 consecutive weeks"></label>
-              <label class="small">Number of STOs<input id="goalCount" type="number" min="1" max="10" class="field" value="5"></label>
-              <label class="small">LTO value<input id="goalLto" type="number" class="field" value="1"></label>
-            </div>
-            <div class="card alt"><div class="small muted">Generated preview</div><ol id="goalPreview" class="small"></ol><strong id="goalFinal" class="small"></strong></div>
-          </div>
+
+          <datalist id="goalMeasurementUnits">
+            <option value="occurrences / week"></option>
+            <option value="occurrences / session"></option>
+            <option value="minutes / session"></option>
+            <option value="% of opportunities"></option>
+            <option value="episodes / day"></option>
+          </datalist>
+
+          <template id="behaviorGoalCardTemplate">
+            <article class="card stack behavior-goal-card">
+              <header class="behavior-goal-header">
+                <h2 class="goal-behavior-name"></h2>
+                <p class="goal-baseline-summary"><strong>Baseline:</strong> <span class="goal-baseline-value"></span></p>
+              </header>
+
+              <fieldset class="stack section-fieldset goal-fields">
+                <div class="goal-configuration-title">Goal Configuration</div>
+                <div class="goal-config-grid">
+                  <label class="small">STO #1 Value
+                    <input type="number" min="0" step="any" class="field goal-sto-one" inputmode="decimal">
+                  </label>
+                  <label class="small">Direction
+                    <select class="field goal-direction"><option>Decrease</option><option>Increase</option></select>
+                  </label>
+                  <label class="small">Step Between STOs
+                    <input type="number" min="0" step="any" class="field goal-step" inputmode="decimal">
+                  </label>
+                  <label class="small">Measurement Unit
+                    <input class="field goal-measurement-unit" list="goalMeasurementUnits" placeholder="Select or enter a unit">
+                  </label>
+                  <label class="small">Criterion Duration
+                    <input class="field goal-criterion-duration" placeholder="e.g., 4 consecutive weeks">
+                  </label>
+                  <label class="small">Number of STOs to Display
+                    <input type="number" min="1" max="10" step="1" class="field goal-count" inputmode="numeric">
+                  </label>
+                </div>
+
+                <label class="small goal-full-field">Additional Criterion
+                  <textarea class="field goal-additional-field" placeholder="Add settings, people, independence, conditions, or other requirements"></textarea>
+                </label>
+
+                <label class="small goal-full-field">Long-Term Objective (LTO)
+                  <textarea class="field goal-lto-field" placeholder="Enter the complete long-term objective"></textarea>
+                </label>
+
+                <section class="generated-goals" aria-live="polite">
+                  <div class="generated-goals-title">Generated Goals</div>
+                  <div class="generated-goal-list"></div>
+                  <div class="generated-goal-row generated-lto-row">
+                    <strong>LTO</strong>
+                    <p class="generated-lto-statement"></p>
+                  </div>
+                </section>
+              </fieldset>
+
+              <footer class="goal-card-footer">
+                <button type="button" class="btn primary confirm-goal">Confirm &amp; Lock Goal</button>
+              </footer>
+            </article>
+          </template>
         </section>
 
         <section class="page stack" data-page="8" hidden>
@@ -1128,6 +1194,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
   function showPage(page){
     currentPage = Math.max(1, Math.min(pages.length, Number(page)));
+    if(currentPage === 7) syncBehaviorGoalCards();
     pages.forEach(el => el.hidden = Number(el.dataset.page) !== currentPage);
     navButtons.forEach(btn => btn.classList.toggle('active', Number(btn.dataset.pageTarget) === currentPage));
     const progress = Math.round((currentPage/pages.length)*100);
@@ -1172,7 +1239,17 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       antecedent: 'Non-preferred demands, interruption of preferred activities, or transitions away from preferred routines.',
       behavior: 'The client strikes their own head or body with an open or closed hand.',
       consequence: 'Adults block for safety, redirect the client, and may pause the task while support is provided.',
-      functions: ['Escape/Avoidance', 'Automatic']
+      functions: ['Escape/Avoidance', 'Automatic'],
+      goal: {
+        stoOne: '49',
+        direction: 'Decrease',
+        step: '3',
+        measurementUnit: 'occurrences / week',
+        criterionDuration: '4 consecutive weeks',
+        count: '5',
+        additionalCriterion: 'Across home and community routines with no more than one verbal prompt.',
+        lto: 'The client will reduce Self-Injurious Behavior to no more than 1 occurrence per week for 4 consecutive weeks across home and community settings, with implementation by at least two caregivers.'
+      }
     },
     elopement: {
       name: 'Elopement',
@@ -1181,7 +1258,17 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       antecedent: 'Transitions, reduced access to preferred activities, or changes in the level of adult supervision.',
       behavior: 'The client moves more than six feet away from the supervising adult or designated area without permission.',
       consequence: 'Adults follow, block access to unsafe areas, and guide the client back to the designated location.',
-      functions: ['Escape/Avoidance']
+      functions: ['Escape/Avoidance'],
+      goal: {
+        stoOne: '7',
+        direction: 'Decrease',
+        step: '1',
+        measurementUnit: 'occurrences / week',
+        criterionDuration: '4 consecutive weeks',
+        count: '5',
+        additionalCriterion: 'Across home and community settings while remaining within the designated area or with the supervising adult.',
+        lto: 'The client will reduce Elopement to no more than 1 occurrence per week for 4 consecutive weeks across home and community settings with at least two familiar adults.'
+      }
     },
     tantrum: {
       name: 'Tantrum',
@@ -1190,7 +1277,17 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       antecedent: 'Denied or delayed access, transitions, and presentation of non-preferred demands.',
       behavior: 'The client cries, yells, or drops to the floor for longer than 10 seconds.',
       consequence: 'Adults provide redirection or reassurance; demands or access to preferred items may be delayed.',
-      functions: ['Escape/Avoidance', 'Tangible']
+      functions: ['Escape/Avoidance', 'Tangible'],
+      goal: {
+        stoOne: '30',
+        direction: 'Decrease',
+        step: '5',
+        measurementUnit: '% of opportunities',
+        criterionDuration: '4 consecutive weeks',
+        count: '5',
+        additionalCriterion: 'Across demands, transitions, and delayed-access situations with no more than one verbal prompt.',
+        lto: 'The client will reduce Tantrum behavior to no more than 10% of opportunities for 4 consecutive weeks across home and community routines with at least two familiar adults.'
+      }
     }
   };
   const treatmentBehaviorInputs = [...document.querySelectorAll('input[name="treatmentBehavior"]')];
@@ -1940,28 +2037,155 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     recordsList.querySelectorAll('select, input[type="checkbox"]').forEach(setupOtherDetails);
   });
 
-  function renderGoals(){
-    const direction=document.getElementById('goalDirection').value;
-    const first=Number(document.getElementById('goalSto1').value||0);
-    const step=Number(document.getElementById('goalStep').value||0);
-    const count=Math.max(1,Math.min(10,Number(document.getElementById('goalCount').value||1)));
-    const lto=Number(document.getElementById('goalLto').value||0);
-    const list=document.getElementById('goalPreview');
-    list.innerHTML='';
-    for(let i=0;i<count;i++){
-      const value=direction==='Decrease'?first-step*i:first+step*i;
-      const li=document.createElement('li');
-      li.textContent=`STO #${i+1}: ${direction.toLowerCase()} to ${value} incidents / week for 4 consecutive weeks.`;
-      list.appendChild(li);
-    }
-    document.getElementById('goalFinal').textContent=`LTO: ${direction.toLowerCase()} to ${lto} incidents / week for 4 consecutive weeks.`;
+  const behaviorGoalCards = document.getElementById('behaviorGoalCards');
+  const behaviorGoalCardTemplate = document.getElementById('behaviorGoalCardTemplate');
+  const confirmGoalSection = document.getElementById('confirmGoalSection');
+
+  function ensurePeriod(value){
+    const text = value.trim();
+    if(!text) return '';
+    return /[.!?]$/.test(text) ? text : `${text}.`;
   }
-  ['goalDirection','goalSto1','goalStep','goalCount','goalLto'].forEach(id=>{
-    const el=document.getElementById(id);
-    el.addEventListener('input',renderGoals);
-    el.addEventListener('change',renderGoals);
-  });
-  renderGoals();
+
+  function formatGoalValue(value){
+    return Number.isInteger(value) ? String(value) : String(Number(value.toFixed(2)));
+  }
+
+  function getBehaviorBaseline(behaviorId){
+    const definition = behaviorDefinitions[behaviorId];
+    const clinicalCard = behaviorClinicalCards?.querySelector(`[data-behavior-id="${behaviorId}"]`);
+    const value = clinicalCard?.querySelector('.baseline-value')?.value.trim() || definition.baseline.value;
+    const unit = clinicalCard?.querySelector('.baseline-unit')?.value.trim() || definition.baseline.unit;
+    const timeframe = clinicalCard?.querySelector('.baseline-timeframe')?.value.trim() || definition.baseline.timeframe;
+    return `${value} ${unit} / ${timeframe}`;
+  }
+
+  function goalCardIsComplete(card){
+    const requiredFields = [
+      '.goal-sto-one',
+      '.goal-direction',
+      '.goal-step',
+      '.goal-measurement-unit',
+      '.goal-criterion-duration',
+      '.goal-count',
+      '.goal-additional-field',
+      '.goal-lto-field'
+    ];
+    return requiredFields.every(selector => card.querySelector(selector).value.trim() !== '');
+  }
+
+  function renderBehaviorGoals(card){
+    const complete = goalCardIsComplete(card);
+    const preview = card.querySelector('.generated-goals');
+    const confirmGoal = card.querySelector('.confirm-goal');
+    preview.hidden = !complete;
+    confirmGoal.disabled = !complete;
+    if(!complete) return;
+
+    const definition = behaviorDefinitions[card.dataset.behaviorId];
+    const direction = card.querySelector('.goal-direction').value;
+    const first = Number(card.querySelector('.goal-sto-one').value);
+    const step = Number(card.querySelector('.goal-step').value);
+    const count = Math.max(1, Math.min(10, Number(card.querySelector('.goal-count').value)));
+    const measurementUnit = card.querySelector('.goal-measurement-unit').value.trim();
+    const criterionDuration = card.querySelector('.goal-criterion-duration').value.trim();
+    const additionalCriterion = card.querySelector('.goal-additional-field').value.trim();
+    const lto = card.querySelector('.goal-lto-field').value.trim();
+    const goalList = card.querySelector('.generated-goal-list');
+    goalList.replaceChildren();
+
+    for(let index = 0; index < count; index += 1){
+      const calculatedValue = direction === 'Decrease'
+        ? Math.max(0, first - (step * index))
+        : first + (step * index);
+      const row = document.createElement('div');
+      row.className = 'generated-goal-row';
+      const label = document.createElement('strong');
+      label.textContent = `STO #${index + 1}`;
+      const statement = document.createElement('p');
+      const mainCriterion = `The client will ${direction.toLowerCase()} ${definition.name} to ${formatGoalValue(calculatedValue)} ${measurementUnit} for ${criterionDuration}`;
+      statement.textContent = `${ensurePeriod(mainCriterion)} ${ensurePeriod(additionalCriterion)}`.trim();
+      row.append(label, statement);
+      goalList.appendChild(row);
+    }
+
+    card.querySelector('.generated-lto-statement').textContent = lto;
+  }
+
+  function updateGoalSectionState(){
+    if(!confirmGoalSection || !behaviorGoalCards) return;
+    const selected = treatmentBehaviorInputs.filter(input => input.checked);
+    const allLocked = selected.length > 0 && selected.every(input => {
+      const card = behaviorGoalCards.querySelector(`[data-behavior-id="${input.value}"]`);
+      return card?.dataset.locked === 'true';
+    });
+    confirmGoalSection.hidden = !allLocked;
+  }
+
+  function createBehaviorGoalCard(input){
+    const definition = behaviorDefinitions[input.value];
+    const defaults = definition.goal;
+    const card = behaviorGoalCardTemplate.content.firstElementChild.cloneNode(true);
+    card.dataset.behaviorId = input.value;
+    card.dataset.locked = 'false';
+    card.querySelector('.goal-behavior-name').textContent = definition.name;
+    card.querySelector('.goal-baseline-value').textContent = getBehaviorBaseline(input.value);
+    card.querySelector('.goal-sto-one').value = defaults.stoOne;
+    card.querySelector('.goal-direction').value = defaults.direction;
+    card.querySelector('.goal-step').value = defaults.step;
+    card.querySelector('.goal-measurement-unit').value = defaults.measurementUnit;
+    card.querySelector('.goal-criterion-duration').value = defaults.criterionDuration;
+    card.querySelector('.goal-count').value = defaults.count;
+    card.querySelector('.goal-additional-field').value = defaults.additionalCriterion;
+    card.querySelector('.goal-lto-field').value = defaults.lto;
+
+    card.querySelectorAll('.goal-fields input, .goal-fields select, .goal-fields textarea').forEach(field => {
+      field.addEventListener('input', () => renderBehaviorGoals(card));
+      field.addEventListener('change', () => renderBehaviorGoals(card));
+    });
+
+    const confirmGoal = card.querySelector('.confirm-goal');
+    confirmGoal.addEventListener('click', () => {
+      card.querySelector('.goal-fields').disabled = true;
+      confirmGoal.textContent = 'Goal locked';
+      confirmGoal.disabled = true;
+      card.dataset.locked = 'true';
+      card.classList.add('locked');
+      updateGoalSectionState();
+    });
+
+    renderBehaviorGoals(card);
+    return card;
+  }
+
+  function syncBehaviorGoalCards(){
+    if(!behaviorGoalCards || !behaviorGoalCardTemplate) return;
+    const selected = treatmentBehaviorInputs.filter(input => input.checked);
+    const selectedIds = new Set(selected.map(input => input.value));
+
+    behaviorGoalCards.querySelectorAll('.behavior-goal-card').forEach(card => {
+      if(!selectedIds.has(card.dataset.behaviorId)) card.remove();
+    });
+    selected.forEach(input => {
+      let card = behaviorGoalCards.querySelector(`[data-behavior-id="${input.value}"]`);
+      if(!card){
+        card = createBehaviorGoalCard(input);
+        behaviorGoalCards.appendChild(card);
+      } else if(card.dataset.locked !== 'true'){
+        card.querySelector('.goal-baseline-value').textContent = getBehaviorBaseline(input.value);
+      }
+    });
+    updateGoalSectionState();
+  }
+
+  treatmentBehaviorInputs.forEach(input => input.addEventListener('change', syncBehaviorGoalCards));
+  if(confirmGoalSection){
+    confirmGoalSection.addEventListener('click', () => {
+      confirmGoalSection.textContent = 'Section locked';
+      confirmGoalSection.disabled = true;
+    });
+  }
+  syncBehaviorGoalCards();
 
   function updateHours(){
     const h1=Number(document.getElementById('h97153').value||0);
