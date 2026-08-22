@@ -124,6 +124,17 @@ textarea.generated-lto-input{height:54px;min-height:54px}
 .goal-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
 .behavior-goal-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
 #confirmGoalSection[hidden]{display:none!important}
+.program-goal-subsection{padding:20px;gap:18px}
+.program-goal-subsection-header{border-bottom:1px solid var(--border);padding-bottom:13px}
+.program-goal-cards{display:grid;gap:14px}
+.program-goal-card{padding:16px}
+.program-goal-card h3{font-size:16px;margin:0}
+.program-goal-config-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.program-goal-config-grid label{min-width:0}
+.program-subsection-footer{display:flex;justify-content:flex-end;border-top:1px solid var(--border);padding-top:16px}
+.program-goal-fields:disabled{opacity:1}
+.program-goal-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
+.program-goal-subsection.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
 .warning{background:var(--warning);border-left:4px solid #e6b84d;border-radius:12px;padding:13px 14px}
 .success{background:var(--success);border-radius:12px;padding:12px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
@@ -147,9 +158,9 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   .sidebar{border-right:0;border-bottom:1px solid var(--border)}
   .nav{grid-template-columns:repeat(2,1fr)}
   .nav button{font-size:12px}
-  .grid2,.grid3,.checklist,.goal-config-grid{grid-template-columns:1fr}
+  .grid2,.grid3,.checklist,.goal-config-grid,.program-goal-config-grid{grid-template-columns:1fr}
 }
-@media(min-width:901px) and (max-width:1100px){.goal-config-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:901px) and (max-width:1100px){.goal-config-grid,.program-goal-config-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -1117,18 +1128,62 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
         <section class="page stack" data-page="8" hidden>
           <div><h1>Replacement & Skill Acquisition</h1><p class="small muted">Candidates are suggestions only. The final treatment plan remains a BCBA decision.</p></div>
-          <div class="card stack">
-            <div><h2>Request for Break</h2><p class="small muted">Replacement · Communication</p></div>
-            <div class="grid2"><label class="small">Disposition<select class="field"><option>Select program</option><option>Reject</option><option>Edit</option></select></label><label class="small">Linked behavior / function<select class="field"><option>Elopement · Escape/Avoidance</option><option>Tantrum · Escape/Avoidance</option></select></label></div>
-          </div>
-          <div class="card"><div><h2>Request for Help</h2><p class="small muted">Replacement · Functional communication</p></div></div>
-          <div class="card"><div><h2>Safety Awareness & Emergency Response</h2><p class="small muted">Skill acquisition · Safety</p></div></div>
-          <div class="card stack">
-            <h2>Teaching Procedure</h2>
-            <p class="small muted">Not manually rewritten in the Intake. Atlas retrieves the bank procedure and individualizes it with confirmed communication mode, prompts, materials, age and context.</p>
-            <div class="grid2"><div class="card alt small">Target response</div><div class="card alt small">Teaching context / antecedent</div><div class="card alt small">Prompting procedure</div><div class="card alt small">Correct response / reinforcement</div><div class="card alt small">Prompt fading</div><div class="card alt small">Data collection</div></div>
-          </div>
-          <div class="card stack"><h2>Function-Based Interventions</h2><div class="grid2"><label class="small">Antecedent strategies<select class="field"><option>Demand fading · choice · visual schedule</option></select></label><label class="small">Consequence strategies<select class="field"><option>Functional communication reinforcement</option></select></label></div><p class="small muted">Atlas does not default to global escape extinction, automatic hand-over-hand prompting, or rigid follow-through.</p></div>
+
+          <section id="replacementBehaviorGoals" class="card stack program-goal-subsection" data-program-group="replacement">
+            <header class="program-goal-subsection-header"><h2>Replacement Behaviors</h2></header>
+            <div class="program-goal-cards"></div>
+            <footer class="program-subsection-footer">
+              <button type="button" class="btn primary confirm-program-group">Confirm &amp; Lock Replacement Behaviors</button>
+            </footer>
+          </section>
+
+          <section id="skillAcquisitionGoals" class="card stack program-goal-subsection" data-program-group="skills">
+            <header class="program-goal-subsection-header"><h2>Skills Acquisition</h2></header>
+            <div class="program-goal-cards"></div>
+            <footer class="program-subsection-footer">
+              <button type="button" class="btn primary confirm-program-group">Confirm &amp; Lock Skills Acquisition</button>
+            </footer>
+          </section>
+
+          <template id="programGoalCardTemplate">
+            <article class="card alt stack program-goal-card">
+              <h3 class="program-goal-name"></h3>
+              <fieldset class="stack section-fieldset program-goal-fields">
+                <div class="program-goal-config-grid">
+                  <label class="small">Baseline (BL) Value
+                    <input type="number" min="0" step="any" class="field program-baseline" inputmode="decimal">
+                  </label>
+                  <label class="small">Measurement Unit
+                    <input class="field program-measurement-unit" list="goalMeasurementUnits" placeholder="Select or enter a unit">
+                  </label>
+                  <label class="small">STO #1 Value
+                    <input type="number" min="0" step="any" class="field program-sto-one" inputmode="decimal">
+                  </label>
+                  <label class="small">Direction
+                    <select class="field program-direction"><option>Increase</option><option>Decrease</option></select>
+                  </label>
+                  <label class="small">Step Between STOs
+                    <input type="number" min="0" step="any" class="field program-step" inputmode="decimal">
+                  </label>
+                  <label class="small">Criterion Duration
+                    <input class="field program-duration" placeholder="e.g., 4 consecutive weeks">
+                  </label>
+                  <label class="small">Number of STOs to Display
+                    <input type="number" min="1" max="10" step="1" class="field program-count" inputmode="numeric">
+                  </label>
+                </div>
+
+                <section class="generated-goals program-generated-goals" aria-live="polite">
+                  <div class="generated-goals-title">Generated Goals</div>
+                  <div class="generated-goal-list program-generated-goal-list"></div>
+                  <div class="generated-goal-row program-lto-row">
+                    <strong>LTO:</strong>
+                    <textarea class="field generated-goal-input program-generated-lto-input" rows="2" aria-label="Long-Term Objective"></textarea>
+                  </div>
+                </section>
+              </fieldset>
+            </article>
+          </template>
         </section>
 
         <section class="page stack" data-page="9" hidden>
@@ -2199,6 +2254,156 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     });
   }
   syncBehaviorGoalCards();
+
+  const programGoalDefinitions = {
+    replacement: [
+      {
+        id: 'requestBreak',
+        name: 'Request for Break',
+        goalPhrase: 'independent requests for a break',
+        baseline: '1',
+        measurementUnit: 'independent requests / session',
+        stoOne: '2',
+        direction: 'Increase',
+        step: '1',
+        duration: '4 consecutive weeks',
+        count: '5',
+        lto: 'The client will independently request a break in at least 80% of relevant opportunities across two settings and with two familiar adults for 4 consecutive weeks.'
+      },
+      {
+        id: 'requestHelp',
+        name: 'Request for Help',
+        goalPhrase: 'independent requests for help',
+        baseline: '0',
+        measurementUnit: 'independent requests / session',
+        stoOne: '1',
+        direction: 'Increase',
+        step: '1',
+        duration: '4 consecutive weeks',
+        count: '5',
+        lto: 'The client will independently request help in at least 80% of relevant opportunities across two settings and with two familiar adults for 4 consecutive weeks.'
+      }
+    ],
+    skills: [
+      {
+        id: 'safetyResponse',
+        name: 'Safety Awareness & Emergency Response',
+        goalPhrase: 'correct responses to safety and emergency directions',
+        baseline: '25',
+        measurementUnit: '% of opportunities',
+        stoOne: '40',
+        direction: 'Increase',
+        step: '10',
+        duration: '4 consecutive weeks',
+        count: '5',
+        lto: 'The client will respond correctly to safety and emergency directions in at least 90% of opportunities across two settings and with two familiar adults for 4 consecutive weeks.'
+      }
+    ]
+  };
+  const programGoalCardTemplate = document.getElementById('programGoalCardTemplate');
+
+  function programGoalConfigurationIsComplete(card){
+    const selectors = [
+      '.program-baseline',
+      '.program-measurement-unit',
+      '.program-sto-one',
+      '.program-direction',
+      '.program-step',
+      '.program-duration',
+      '.program-count'
+    ];
+    return selectors.every(selector => card.querySelector(selector).value.trim() !== '');
+  }
+
+  function updateProgramGroupConfirmation(section){
+    const cards = [...section.querySelectorAll('.program-goal-card')];
+    const complete = cards.length > 0 && cards.every(card => {
+      const goals = [...card.querySelectorAll('.program-generated-sto-input, .program-generated-lto-input')];
+      return programGoalConfigurationIsComplete(card) && goals.length > 1 && goals.every(field => field.value.trim() !== '');
+    });
+    section.querySelector('.confirm-program-group').disabled = !complete;
+  }
+
+  function renderProgramGoals(card){
+    const configured = programGoalConfigurationIsComplete(card);
+    const preview = card.querySelector('.program-generated-goals');
+    const section = card.closest('.program-goal-subsection');
+    preview.hidden = !configured;
+    if(!configured){
+      updateProgramGroupConfirmation(section);
+      return;
+    }
+
+    const group = section.dataset.programGroup;
+    const definition = programGoalDefinitions[group].find(item => item.id === card.dataset.programGoalId);
+    const direction = card.querySelector('.program-direction').value;
+    const first = Number(card.querySelector('.program-sto-one').value);
+    const step = Number(card.querySelector('.program-step').value);
+    const duration = card.querySelector('.program-duration').value.trim();
+    const unit = card.querySelector('.program-measurement-unit').value.trim();
+    const count = Math.max(1, Math.min(10, Number(card.querySelector('.program-count').value)));
+    const list = card.querySelector('.program-generated-goal-list');
+    list.replaceChildren();
+
+    for(let index = 0; index < count; index += 1){
+      const calculatedValue = direction === 'Decrease'
+        ? Math.max(0, first - (step * index))
+        : first + (step * index);
+      const row = document.createElement('div');
+      row.className = 'generated-goal-row';
+      const label = document.createElement('strong');
+      label.textContent = `STO #${index + 1}:`;
+      const statement = document.createElement('textarea');
+      statement.className = 'field generated-goal-input program-generated-sto-input';
+      statement.rows = 1;
+      statement.setAttribute('aria-label', `${definition.name} STO #${index + 1}`);
+      statement.value = ensurePeriod(`The client will ${direction.toLowerCase()} ${definition.goalPhrase} to ${formatGoalValue(calculatedValue)} ${unit} for ${duration}`);
+      statement.addEventListener('input', () => updateProgramGroupConfirmation(section));
+      row.append(label, statement);
+      list.appendChild(row);
+    }
+    updateProgramGroupConfirmation(section);
+  }
+
+  function createProgramGoalCard(definition, section){
+    const card = programGoalCardTemplate.content.firstElementChild.cloneNode(true);
+    card.dataset.programGoalId = definition.id;
+    card.querySelector('.program-goal-name').textContent = definition.name;
+    card.querySelector('.program-baseline').value = definition.baseline;
+    card.querySelector('.program-measurement-unit').value = definition.measurementUnit;
+    card.querySelector('.program-sto-one').value = definition.stoOne;
+    card.querySelector('.program-direction').value = definition.direction;
+    card.querySelector('.program-step').value = definition.step;
+    card.querySelector('.program-duration').value = definition.duration;
+    card.querySelector('.program-count').value = definition.count;
+    const lto = card.querySelector('.program-generated-lto-input');
+    lto.value = definition.lto;
+    lto.setAttribute('aria-label', `${definition.name} Long-Term Objective`);
+    lto.addEventListener('input', () => updateProgramGroupConfirmation(section));
+    card.querySelectorAll('.program-goal-config-grid input, .program-goal-config-grid select').forEach(field => {
+      field.addEventListener('input', () => renderProgramGoals(card));
+      field.addEventListener('change', () => renderProgramGoals(card));
+    });
+    return card;
+  }
+
+  document.querySelectorAll('.program-goal-subsection').forEach(section => {
+    const group = section.dataset.programGroup;
+    const cards = section.querySelector('.program-goal-cards');
+    programGoalDefinitions[group].forEach(definition => {
+      const card = createProgramGoalCard(definition, section);
+      cards.appendChild(card);
+      renderProgramGoals(card);
+    });
+    const confirm = section.querySelector('.confirm-program-group');
+    confirm.addEventListener('click', () => {
+      section.querySelectorAll('.program-goal-fields').forEach(fieldset => fieldset.disabled = true);
+      confirm.textContent = `${section.querySelector('h2').textContent} locked`;
+      confirm.disabled = true;
+      section.classList.add('locked');
+    });
+    updateProgramGroupConfirmation(section);
+  });
 
   function updateHours(){
     const h1=Number(document.getElementById('h97153').value||0);
