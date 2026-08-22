@@ -131,6 +131,13 @@ textarea.generated-lto-input{height:54px;min-height:54px}
 .program-goal-card h3{font-size:16px;margin:0}
 .program-goal-config-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .program-goal-config-grid label{min-width:0}
+.program-measurement-control{display:grid;gap:8px}
+.program-other-unit-field[hidden]{display:none!important}
+.program-value-control{position:relative;display:block}
+.program-value-control .field{padding-right:32px}
+.program-value-suffix{position:absolute;right:12px;top:50%;transform:translateY(-35%);color:var(--muted);font-size:13px;font-weight:700;pointer-events:none}
+.program-value-suffix[hidden]{display:none!important}
+.program-unit-context{display:block;min-height:16px;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.35}
 .program-subsection-footer{display:flex;justify-content:flex-end;border-top:1px solid var(--border);padding-top:16px}
 .program-goal-fields:disabled{opacity:1}
 .program-goal-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
@@ -1151,13 +1158,34 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
               <fieldset class="stack section-fieldset program-goal-fields">
                 <div class="program-goal-config-grid">
                   <label class="small">Baseline (BL) Value
-                    <input type="number" min="0" step="any" class="field program-baseline" inputmode="decimal">
+                    <span class="program-value-control">
+                      <input type="number" min="0" step="any" class="field program-baseline" inputmode="decimal">
+                      <span class="program-value-suffix program-baseline-suffix" aria-hidden="true">%</span>
+                    </span>
+                    <span class="program-unit-context program-baseline-unit-context"></span>
                   </label>
-                  <label class="small">Measurement Unit
-                    <input class="field program-measurement-unit" list="goalMeasurementUnits" placeholder="Select or enter a unit">
-                  </label>
+                  <div class="program-measurement-control">
+                    <label class="small">Measurement Unit
+                      <select class="field program-measurement-unit">
+                        <option>% of opportunities</option>
+                        <option>Frequency / count</option>
+                        <option>Rate</option>
+                        <option>Duration</option>
+                        <option>Independent responses / session</option>
+                        <option>Trials</option>
+                        <option>Other</option>
+                      </select>
+                    </label>
+                    <label class="small program-other-unit-field" hidden>Specify measurement unit
+                      <input class="field program-other-unit-input" placeholder="Enter measurement unit">
+                    </label>
+                  </div>
                   <label class="small">STO #1 Value
-                    <input type="number" min="0" step="any" class="field program-sto-one" inputmode="decimal">
+                    <span class="program-value-control">
+                      <input type="number" min="0" step="any" class="field program-sto-one" inputmode="decimal">
+                      <span class="program-value-suffix program-sto-suffix" aria-hidden="true">%</span>
+                    </span>
+                    <span class="program-unit-context program-sto-unit-context"></span>
                   </label>
                   <label class="small">Direction
                     <select class="field program-direction"><option>Increase</option><option>Decrease</option></select>
@@ -2261,27 +2289,29 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         id: 'requestBreak',
         name: 'Request for Break',
         goalPhrase: 'independent requests for a break',
-        baseline: '1',
-        measurementUnit: 'independent requests / session',
-        stoOne: '2',
+        baseline: '10',
+        measurementUnit: '% of opportunities',
+        stoOne: '20',
         direction: 'Increase',
-        step: '1',
+        step: '15',
         duration: '4 consecutive weeks',
         count: '5',
-        lto: 'The client will independently request a break in at least 80% of relevant opportunities across two settings and with two familiar adults for 4 consecutive weeks.'
+        ltoValue: '80',
+        ltoContext: 'across two settings and with two familiar adults'
       },
       {
         id: 'requestHelp',
         name: 'Request for Help',
         goalPhrase: 'independent requests for help',
         baseline: '0',
-        measurementUnit: 'independent requests / session',
-        stoOne: '1',
+        measurementUnit: '% of opportunities',
+        stoOne: '20',
         direction: 'Increase',
-        step: '1',
+        step: '15',
         duration: '4 consecutive weeks',
         count: '5',
-        lto: 'The client will independently request help in at least 80% of relevant opportunities across two settings and with two familiar adults for 4 consecutive weeks.'
+        ltoValue: '80',
+        ltoContext: 'across two settings and with two familiar adults'
       }
     ],
     skills: [
@@ -2296,11 +2326,59 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         step: '10',
         duration: '4 consecutive weeks',
         count: '5',
-        lto: 'The client will respond correctly to safety and emergency directions in at least 90% of opportunities across two settings and with two familiar adults for 4 consecutive weeks.'
+        ltoValue: '90',
+        ltoContext: 'across two settings and with two familiar adults'
       }
     ]
   };
   const programGoalCardTemplate = document.getElementById('programGoalCardTemplate');
+
+  function getProgramGoalDefinition(card){
+    const section = card.closest('.program-goal-subsection');
+    return programGoalDefinitions[section.dataset.programGroup].find(item => item.id === card.dataset.programGoalId);
+  }
+
+  function getEffectiveProgramMeasurementUnit(card){
+    const selectedUnit = card.querySelector('.program-measurement-unit').value;
+    return selectedUnit === 'Other'
+      ? card.querySelector('.program-other-unit-input').value.trim()
+      : selectedUnit;
+  }
+
+  function formatProgramMeasurement(value, unit){
+    const formattedValue = formatGoalValue(Number(value));
+    return unit === '% of opportunities'
+      ? `${formattedValue}% of opportunities`
+      : `${formattedValue} ${unit}`.trim();
+  }
+
+  function buildProgramLto(card){
+    const definition = getProgramGoalDefinition(card);
+    const direction = card.querySelector('.program-direction').value.toLowerCase();
+    const duration = card.querySelector('.program-duration').value.trim();
+    const unit = getEffectiveProgramMeasurementUnit(card);
+    return ensurePeriod(`The client will ${direction} ${definition.goalPhrase} to ${formatProgramMeasurement(definition.ltoValue, unit)} ${definition.ltoContext} for ${duration}`);
+  }
+
+  function updateProgramMeasurementState(card, refreshLto = false){
+    const selectedUnit = card.querySelector('.program-measurement-unit').value;
+    const otherField = card.querySelector('.program-other-unit-field');
+    const otherInput = card.querySelector('.program-other-unit-input');
+    const isOther = selectedUnit === 'Other';
+    const isPercentage = selectedUnit === '% of opportunities';
+    otherField.hidden = !isOther;
+    otherInput.required = isOther;
+    card.querySelectorAll('.program-value-suffix').forEach(suffix => suffix.hidden = !isPercentage);
+    const effectiveUnit = getEffectiveProgramMeasurementUnit(card);
+    const unitContext = isPercentage ? 'of opportunities' : (effectiveUnit || 'Specify measurement unit');
+    card.querySelector('.program-baseline-unit-context').textContent = unitContext;
+    card.querySelector('.program-sto-unit-context').textContent = unitContext;
+    if(refreshLto){
+      const lto = card.querySelector('.program-generated-lto-input');
+      lto.value = buildProgramLto(card);
+      lto.dataset.userEdited = 'false';
+    }
+  }
 
   function programGoalConfigurationIsComplete(card){
     const selectors = [
@@ -2312,7 +2390,10 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       '.program-duration',
       '.program-count'
     ];
-    return selectors.every(selector => card.querySelector(selector).value.trim() !== '');
+    const fieldsComplete = selectors.every(selector => card.querySelector(selector).value.trim() !== '');
+    const otherUnitComplete = card.querySelector('.program-measurement-unit').value !== 'Other'
+      || card.querySelector('.program-other-unit-input').value.trim() !== '';
+    return fieldsComplete && otherUnitComplete;
   }
 
   function updateProgramGroupConfirmation(section){
@@ -2334,13 +2415,12 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       return;
     }
 
-    const group = section.dataset.programGroup;
-    const definition = programGoalDefinitions[group].find(item => item.id === card.dataset.programGoalId);
+    const definition = getProgramGoalDefinition(card);
     const direction = card.querySelector('.program-direction').value;
     const first = Number(card.querySelector('.program-sto-one').value);
     const step = Number(card.querySelector('.program-step').value);
     const duration = card.querySelector('.program-duration').value.trim();
-    const unit = card.querySelector('.program-measurement-unit').value.trim();
+    const unit = getEffectiveProgramMeasurementUnit(card);
     const count = Math.max(1, Math.min(10, Number(card.querySelector('.program-count').value)));
     const list = card.querySelector('.program-generated-goal-list');
     list.replaceChildren();
@@ -2357,7 +2437,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       statement.className = 'field generated-goal-input program-generated-sto-input';
       statement.rows = 1;
       statement.setAttribute('aria-label', `${definition.name} STO #${index + 1}`);
-      statement.value = ensurePeriod(`The client will ${direction.toLowerCase()} ${definition.goalPhrase} to ${formatGoalValue(calculatedValue)} ${unit} for ${duration}`);
+      statement.value = ensurePeriod(`The client will ${direction.toLowerCase()} ${definition.goalPhrase} to ${formatProgramMeasurement(calculatedValue, unit)} for ${duration}`);
       statement.addEventListener('input', () => updateProgramGroupConfirmation(section));
       row.append(label, statement);
       list.appendChild(row);
@@ -2377,12 +2457,30 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     card.querySelector('.program-duration').value = definition.duration;
     card.querySelector('.program-count').value = definition.count;
     const lto = card.querySelector('.program-generated-lto-input');
-    lto.value = definition.lto;
+    lto.dataset.userEdited = 'false';
     lto.setAttribute('aria-label', `${definition.name} Long-Term Objective`);
-    lto.addEventListener('input', () => updateProgramGroupConfirmation(section));
-    card.querySelectorAll('.program-goal-config-grid input, .program-goal-config-grid select').forEach(field => {
-      field.addEventListener('input', () => renderProgramGoals(card));
-      field.addEventListener('change', () => renderProgramGoals(card));
+    lto.addEventListener('input', () => {
+      lto.dataset.userEdited = 'true';
+      updateProgramGroupConfirmation(section);
+    });
+
+    const unitSelect = card.querySelector('.program-measurement-unit');
+    const otherUnit = card.querySelector('.program-other-unit-input');
+    unitSelect.addEventListener('change', () => {
+      updateProgramMeasurementState(card, true);
+      renderProgramGoals(card);
+    });
+    otherUnit.addEventListener('input', () => {
+      updateProgramMeasurementState(card, true);
+      renderProgramGoals(card);
+    });
+    card.querySelectorAll('.program-baseline, .program-sto-one, .program-direction, .program-step, .program-duration, .program-count').forEach(field => {
+      const update = () => {
+        if(lto.dataset.userEdited !== 'true') lto.value = buildProgramLto(card);
+        renderProgramGoals(card);
+      };
+      field.addEventListener('input', update);
+      field.addEventListener('change', update);
     });
     return card;
   }
@@ -2393,6 +2491,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     programGoalDefinitions[group].forEach(definition => {
       const card = createProgramGoalCard(definition, section);
       cards.appendChild(card);
+      updateProgramMeasurementState(card, true);
       renderProgramGoals(card);
     });
     const confirm = section.querySelector('.confirm-program-group');
