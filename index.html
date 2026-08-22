@@ -101,8 +101,12 @@ textarea.field{min-height:88px;resize:vertical}
 .behavior-clinical-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
 .behavior-goal-card{padding:20px;gap:18px}
 .behavior-goal-header{border-bottom:1px solid var(--border);padding-bottom:14px}
-.behavior-goal-header h2{font-size:19px}
+.behavior-goal-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;border:0;background:transparent;color:inherit;padding:0;text-align:left}
+.behavior-goal-heading-copy{display:grid;gap:5px;min-width:0}
+.goal-behavior-name{font-size:19px;font-weight:700}
+.behavior-goal-toggle .collapse-indicator{display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;border:1px solid var(--border);border-radius:8px;color:var(--accent);font-weight:750}
 .goal-baseline-summary{margin:5px 0 0;color:var(--muted);font-size:13px}
+.behavior-goal-body[hidden]{display:none!important}
 .goal-configuration-title{font-size:13px;font-weight:700;color:var(--text)}
 .goal-config-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .goal-config-grid label,.goal-full-field{min-width:0}
@@ -112,9 +116,8 @@ textarea.field{min-height:88px;resize:vertical}
 .generated-goal-list{display:grid;gap:0}
 .generated-goal-row{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:7px;background:#fff;border:0;border-top:1px solid var(--border);border-radius:0;padding:7px 10px}
 .generated-goal-row strong{font-size:12px;color:#4545b5;white-space:nowrap}
-.generated-goal-input{margin:0;min-height:46px;padding:6px 8px;border-radius:8px;font-size:12px;line-height:1.35;resize:vertical}
-.generated-lto-input{min-height:62px}
-.generated-goals-note{margin:0;border-top:1px solid var(--border);background:#f7f8fc;padding:8px 11px;font-size:11px;line-height:1.35}
+textarea.generated-goal-input{margin:0;height:38px;min-height:38px;padding:6px 8px;border-radius:8px;font-size:12px;line-height:1.35;resize:vertical}
+textarea.generated-lto-input{height:54px;min-height:54px}
 .goal-card-footer,.goal-section-footer{display:flex;justify-content:flex-end}
 .goal-card-footer{border-top:1px solid var(--border);padding-top:16px}
 .goal-fields:disabled{opacity:1}
@@ -1061,61 +1064,65 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <template id="behaviorGoalCardTemplate">
             <article class="card stack behavior-goal-card">
               <header class="behavior-goal-header">
-                <h2 class="goal-behavior-name"></h2>
-                <p class="goal-baseline-summary"><strong>Baseline:</strong> <span class="goal-baseline-value"></span></p>
+                <button type="button" class="behavior-goal-toggle" aria-expanded="true">
+                  <span class="behavior-goal-heading-copy">
+                    <span class="goal-behavior-name"></span>
+                    <span class="goal-baseline-summary"><strong>Baseline:</strong> <span class="goal-baseline-value"></span></span>
+                  </span>
+                  <span class="collapse-indicator" aria-hidden="true">-</span>
+                </button>
               </header>
 
-              <fieldset class="stack section-fieldset goal-fields">
-                <div class="goal-configuration-title">Goal Configuration</div>
-                <div class="goal-config-grid">
-                  <label class="small">STO #1 Value
-                    <input type="number" min="0" step="any" class="field goal-sto-one" inputmode="decimal">
-                  </label>
-                  <label class="small">Direction
-                    <select class="field goal-direction"><option>Decrease</option><option>Increase</option></select>
-                  </label>
-                  <label class="small">Step Between STOs
-                    <input type="number" min="0" step="any" class="field goal-step" inputmode="decimal">
-                  </label>
-                  <label class="small">Measurement Unit
-                    <input class="field goal-measurement-unit" list="goalMeasurementUnits" placeholder="Select or enter a unit">
-                  </label>
-                  <label class="small">Criterion Duration
-                    <input class="field goal-criterion-duration" placeholder="e.g., 4 consecutive weeks">
-                  </label>
-                  <label class="small">Number of STOs to Display
-                    <input type="number" min="1" max="10" step="1" class="field goal-count" inputmode="numeric">
-                  </label>
-                </div>
-
-                <section class="generated-goals" aria-live="polite">
-                  <div class="generated-goals-title">Generated Goals</div>
-                  <div class="generated-goal-list"></div>
-                  <div class="generated-goal-row generated-lto-row">
-                    <strong>LTO:</strong>
-                    <textarea class="field generated-goal-input generated-lto-input" rows="2" aria-label="Long-Term Objective"></textarea>
+              <div class="stack behavior-goal-body">
+                <fieldset class="stack section-fieldset goal-fields">
+                  <div class="goal-configuration-title">Goal Configuration</div>
+                  <div class="goal-config-grid">
+                    <label class="small">STO #1 Value
+                      <input type="number" min="0" step="any" class="field goal-sto-one" inputmode="decimal">
+                    </label>
+                    <label class="small">Direction
+                      <select class="field goal-direction"><option>Decrease</option><option>Increase</option></select>
+                    </label>
+                    <label class="small">Step Between STOs
+                      <input type="number" min="0" step="any" class="field goal-step" inputmode="decimal">
+                    </label>
+                    <label class="small">Measurement Unit
+                      <input class="field goal-measurement-unit" list="goalMeasurementUnits" placeholder="Select or enter a unit">
+                    </label>
+                    <label class="small">Criterion Duration
+                      <input class="field goal-criterion-duration" placeholder="e.g., 4 consecutive weeks">
+                    </label>
+                    <label class="small">Number of STOs to Display
+                      <input type="number" min="1" max="10" step="1" class="field goal-count" inputmode="numeric">
+                    </label>
                   </div>
-                  <p class="small muted generated-goals-note">All suggested values and generated goals can be reviewed and edited before final confirmation.</p>
-                </section>
-              </fieldset>
 
-              <footer class="goal-card-footer">
-                <button type="button" class="btn primary confirm-goal">Confirm &amp; Lock Goal</button>
-              </footer>
+                  <section class="generated-goals" aria-live="polite">
+                    <div class="generated-goals-title">Generated Goals</div>
+                    <div class="generated-goal-list"></div>
+                    <div class="generated-goal-row generated-lto-row">
+                      <strong>LTO:</strong>
+                      <textarea class="field generated-goal-input generated-lto-input" rows="2" aria-label="Long-Term Objective"></textarea>
+                    </div>
+                  </section>
+                </fieldset>
+
+                <footer class="goal-card-footer">
+                  <button type="button" class="btn primary confirm-goal">Confirm &amp; Lock Goal</button>
+                </footer>
+              </div>
             </article>
           </template>
         </section>
 
         <section class="page stack" data-page="8" hidden>
-          <div><h1>Replacement & Skill Acquisition</h1><p class="small muted">Atlas recommends candidates using confirmed profile data, functions and the Skill/Replacement Bank.</p></div>
-          <div class="warning"><strong class="small">Recommended set</strong><p class="small muted">Candidates are suggestions only. The final treatment plan remains a BCBA decision.</p></div>
+          <div><h1>Replacement & Skill Acquisition</h1><p class="small muted">Candidates are suggestions only. The final treatment plan remains a BCBA decision.</p></div>
           <div class="card stack">
-            <div class="between"><div><h2>Request for Break</h2><p class="small muted">Replacement · Communication</p></div><span class="badge">Recommended</span></div>
-            <p class="small">Suggested because Escape/Avoidance is confirmed for multiple target behaviors and independent break requests are limited.</p>
+            <div><h2>Request for Break</h2><p class="small muted">Replacement · Communication</p></div>
             <div class="grid2"><label class="small">Disposition<select class="field"><option>Select program</option><option>Reject</option><option>Edit</option></select></label><label class="small">Linked behavior / function<select class="field"><option>Elopement · Escape/Avoidance</option><option>Tantrum · Escape/Avoidance</option></select></label></div>
           </div>
-          <div class="card"><div class="between"><div><h2>Request for Help</h2><p class="small muted">Replacement · Functional communication</p></div><span class="badge">Recommended</span></div></div>
-          <div class="card"><div class="between"><div><h2>Safety Awareness & Emergency Response</h2><p class="small muted">Skill acquisition · Safety</p></div><span class="chip">Suggested</span></div></div>
+          <div class="card"><div><h2>Request for Help</h2><p class="small muted">Replacement · Functional communication</p></div></div>
+          <div class="card"><div><h2>Safety Awareness & Emergency Response</h2><p class="small muted">Skill acquisition · Safety</p></div></div>
           <div class="card stack">
             <h2>Teaching Procedure</h2>
             <p class="small muted">Not manually rewritten in the Intake. Atlas retrieves the bank procedure and individualizes it with confirmed communication mode, prompts, materials, age and context.</p>
@@ -2097,7 +2104,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       label.textContent = `STO #${index + 1}:`;
       const statement = document.createElement('textarea');
       statement.className = 'field generated-goal-input generated-sto-input';
-      statement.rows = 2;
+      statement.rows = 1;
       statement.setAttribute('aria-label', `STO #${index + 1} goal statement`);
       const mainCriterion = `The client will ${direction.toLowerCase()} ${definition.name} to ${formatGoalValue(calculatedValue)} ${measurementUnit} for ${criterionDuration}`;
       statement.value = ensurePeriod(mainCriterion);
@@ -2126,6 +2133,15 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     card.dataset.locked = 'false';
     card.querySelector('.goal-behavior-name').textContent = definition.name;
     card.querySelector('.goal-baseline-value').textContent = getBehaviorBaseline(input.value);
+    const goalToggle = card.querySelector('.behavior-goal-toggle');
+    const goalBody = card.querySelector('.behavior-goal-body');
+    const collapseIndicator = card.querySelector('.collapse-indicator');
+    goalToggle.addEventListener('click', () => {
+      const expanded = goalToggle.getAttribute('aria-expanded') === 'true';
+      goalToggle.setAttribute('aria-expanded', String(!expanded));
+      goalBody.hidden = expanded;
+      collapseIndicator.textContent = expanded ? '+' : '-';
+    });
     card.querySelector('.goal-sto-one').value = defaults.stoOne;
     card.querySelector('.goal-direction').value = defaults.direction;
     card.querySelector('.goal-step').value = defaults.step;
