@@ -124,6 +124,8 @@ textarea.generated-lto-input{height:54px;min-height:54px}
 .goal-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
 .behavior-goal-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
 #confirmGoalSection[hidden]{display:none!important}
+.behavior-goals-subsection{border-top:1px solid var(--border);padding-top:20px;margin-top:6px}
+.behavior-goals-subsection[hidden]{display:none!important}
 .program-goal-subsection{padding:20px;gap:18px}
 .program-goal-subsection-header{border-bottom:1px solid var(--border);padding-bottom:13px}
 .program-goal-cards{display:grid;gap:14px}
@@ -223,8 +225,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
     <div class="layout">
       <aside class="sidebar">
-        <div class="progress-row"><span>Intake progress</span><strong id="progressLabel">9%</strong></div>
-        <div class="track"><div class="fill" id="progressFill" style="width:9%"></div></div>
+        <div class="progress-row"><span>Intake progress</span><strong id="progressLabel">10%</strong></div>
+        <div class="track"><div class="fill" id="progressFill" style="width:10%"></div></div>
         <div class="nav">
           <button class="active" data-page-target="1"><span class="nav-text">Case Setup</span></button>
           <button data-page-target="2"><span class="nav-text">File Review</span></button>
@@ -232,11 +234,10 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <button data-page-target="4"><span class="nav-text">Observations &amp; Interview</span></button>
           <button data-page-target="5"><span class="nav-text">Maladaptive Behaviors</span></button>
           <button data-page-target="6"><span class="nav-text">Assessment Procedures</span></button>
-          <button data-page-target="7"><span class="nav-text">Behavior Goals</span></button>
-          <button data-page-target="8"><span class="nav-text">Replacement & Skills</span></button>
-          <button data-page-target="9"><span class="nav-text">Caregiver Training</span></button>
-          <button data-page-target="10"><span class="nav-text">Hours Requested</span></button>
-          <button data-page-target="11"><span class="nav-text">Final Review</span></button>
+          <button data-page-target="7"><span class="nav-text">Replacement & Skills</span></button>
+          <button data-page-target="8"><span class="nav-text">Caregiver Training</span></button>
+          <button data-page-target="9"><span class="nav-text">Hours Requested</span></button>
+          <button data-page-target="10"><span class="nav-text">Final Review</span></button>
         </div>
       </aside>
 
@@ -1114,8 +1115,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="card"><h2>Functional Formulation</h2><p class="small muted">Atlas presents the evidence; the BCBA selects the final hypothesized function.</p><label class="small">Hypothesized Function<select class="field"><option>Escape/Avoidance</option><option>Attention</option><option>Tangible</option><option>Automatic</option></select></label></div>
         </section>
 
-        <section class="page stack" data-page="7" hidden>
-          <div><h1>Behavior Reduction Goals</h1></div>
+        <section id="behaviorGoalsSubsection" class="stack behavior-goals-subsection" hidden>
+          <div><h2>Behavior Reduction Goals</h2></div>
           <div id="behaviorGoalCards" class="stack"></div>
           <div class="goal-section-footer">
             <button id="confirmGoalSection" type="button" class="btn primary" hidden>Confirm &amp; Lock Section</button>
@@ -1183,7 +1184,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           </template>
         </section>
 
-        <section class="page stack" data-page="8" hidden>
+        <section class="page stack" data-page="7" hidden>
           <div><h1>Replacement & Skill Acquisition</h1><p class="small muted">Candidates are suggestions only. The final treatment plan remains a BCBA decision.</p></div>
 
           <section id="replacementBehaviorGoals" class="card stack program-goal-subsection" data-program-group="replacement">
@@ -1278,7 +1279,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           </template>
         </section>
 
-        <section class="page stack" data-page="9" hidden>
+        <section class="page stack" data-page="8" hidden>
           <div><h1>Caregiver Training</h1><p class="small muted">Goals measure caregiver performance, not client behavior.</p></div>
           <div class="card"><div class="between"><div><h2>Participating caregiver</h2><p class="small muted">Reused from Patient Information</p></div><span class="badge">Primary caregiver</span></div></div>
           <section class="card stack">
@@ -1313,7 +1314,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           </template>
         </section>
 
-        <section class="page stack" data-page="10" hidden>
+        <section class="page stack" data-page="9" hidden>
           <div><h1>Hours Requested</h1><p class="small muted">Atlas may suggest a distribution, but the BCBA confirms the final clinical request.</p></div>
           <div class="grid3"><div class="kpi"><div class="small muted">97153</div><div class="value" id="m97153">30 h</div><div class="small muted">Direct therapy</div></div><div class="kpi"><div class="small muted">97155</div><div class="value" id="m97155">3 h</div><div class="small muted">Supervision</div></div><div class="kpi"><div class="small muted">97156</div><div class="value" id="m97156">1 h</div><div class="small muted">Caregiver training</div></div></div>
           <div class="card stack">
@@ -1379,7 +1380,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="card"><div class="between"><div><h2>Clinical Rationale</h2><p class="small muted">Generated from functional impairment, risk, targets, acquisition needs, routines and service model.</p></div><button class="btn">Edit</button></div><p class="small">The requested service intensity is supported by multiple prioritized behavior-reduction targets, substantial functional communication and adaptive deficits, safety risk, and the need for repeated intervention opportunities across daily routines and settings.</p></div>
         </section>
 
-        <section class="page stack" data-page="11" hidden>
+        <section class="page stack" data-page="10" hidden>
           <div><h1>Clinical Review & Final Confirmation</h1><p class="small muted">No new interview. Atlas resolves gaps, conflicts and derived sections before report generation.</p></div>
           <div class="grid3"><div class="kpi"><div class="small muted">Ready</div><div class="value">6</div><div class="small muted">review blocks</div></div><div class="kpi"><div class="small muted">Needs review</div><div class="value">1</div><div class="small muted">coordination item</div></div><div class="kpi"><div class="small muted">Blocking</div><div class="value">0</div><div class="small muted">validation errors</div></div></div>
           <div class="card stack">
@@ -1406,6 +1407,13 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
 <script>
 (() => {
+  const behaviorGoalsSubsection = document.getElementById('behaviorGoalsSubsection');
+  const maladaptiveBehaviorsPage = document.querySelector('[data-page="5"]');
+  if(behaviorGoalsSubsection && maladaptiveBehaviorsPage){
+    maladaptiveBehaviorsPage.appendChild(behaviorGoalsSubsection);
+    behaviorGoalsSubsection.hidden = false;
+  }
+
   let currentPage = 1;
   const pages = [...document.querySelectorAll('.page')];
   const navButtons = [...document.querySelectorAll('[data-page-target]')];
@@ -1417,7 +1425,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
   function showPage(page){
     currentPage = Math.max(1, Math.min(pages.length, Number(page)));
-    if(currentPage === 7) syncBehaviorGoalCards();
+    if(currentPage === 5) syncBehaviorGoalCards();
     pages.forEach(el => el.hidden = Number(el.dataset.page) !== currentPage);
     navButtons.forEach(btn => btn.classList.toggle('active', Number(btn.dataset.pageTarget) === currentPage));
     const progress = Math.round((currentPage/pages.length)*100);
