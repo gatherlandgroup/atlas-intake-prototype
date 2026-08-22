@@ -163,25 +163,25 @@ textarea.generated-lto-input{height:54px;min-height:54px}
 .caregiver-program-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
 .caregiver-program-fields:disabled{opacity:1}
 .caregiver-program-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
-.cpt-request-table{min-width:1000px;table-layout:fixed}
-.cpt-request-table th:nth-child(1){width:9%}
-.cpt-request-table th:nth-child(2){width:24%}
-.cpt-request-table th:nth-child(3){width:25%}
-.cpt-request-table th:nth-child(4){width:19%}
-.cpt-request-table th:nth-child(5){width:19%}
-.cpt-request-table th:nth-child(6){width:74px}
-.cpt-request-table td{vertical-align:top}
+.cpt-request-table{min-width:820px;table-layout:fixed}
+.cpt-request-table th:nth-child(1){width:11%}
+.cpt-request-table th:nth-child(2){width:43%}
+.cpt-request-table th:nth-child(3){width:17%}
+.cpt-request-table th:nth-child(4){width:29%}
+.cpt-request-table td{vertical-align:middle}
 .cpt-request-table .field{margin:0;border-radius:8px;padding:8px}
-.cpt-request-table textarea.field{height:72px;min-height:72px;font-size:12px;line-height:1.35}
-.cpt-table-header-input{width:100%;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:650;padding:0;outline:none}
-.cpt-table-header-input:focus{color:var(--text);box-shadow:0 2px 0 var(--accent)}
-.remove-cpt-row{padding:7px 9px;color:#9b2c2c}
+.cpt-hours-input{max-width:120px}
+.cpt-setting-select .multi-select-summary{margin:0;padding:8px 10px}
+.cpt-setting-options{grid-template-columns:repeat(3,max-content);gap:8px 12px}
+.cpt-setting-chips{min-height:22px;margin-top:6px;gap:5px}
+.cpt-setting-chips .chip{font-size:11px;padding:3px 7px}
+.cpt-request-card{min-width:0}
 .warning{background:var(--warning);border-left:4px solid #e6b84d;border-radius:12px;padding:13px 14px}
 .success{background:var(--success);border-radius:12px;padding:12px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
 .kpi .value{font-size:28px;font-weight:750;margin:4px 0}
 .accordion-body[hidden], .page[hidden]{display:none!important}
-.table-wrap{overflow:auto}
+.table-wrap{overflow:auto;min-width:0;max-width:100%}
 table{width:100%;border-collapse:collapse}
 th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top;font-size:13px}
 th{color:var(--muted);font-weight:600}
@@ -1315,69 +1315,85 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         </section>
 
         <section class="page stack" data-page="9" hidden>
-          <div><h1>Hours Requested</h1><p class="small muted">Atlas may suggest a distribution, but the BCBA confirms the final clinical request.</p></div>
-          <div class="grid3"><div class="kpi"><div class="small muted">97153</div><div class="value" id="m97153">30 h</div><div class="small muted">Direct therapy</div></div><div class="kpi"><div class="small muted">97155</div><div class="value" id="m97155">3 h</div><div class="small muted">Supervision</div></div><div class="kpi"><div class="small muted">97156</div><div class="value" id="m97156">1 h</div><div class="small muted">Caregiver training</div></div></div>
-          <div class="card stack">
-            <h2>Service Model & Weekly Distribution</h2>
-            <label class="small">Requested authorization period<select class="field"><option>26 weeks</option><option>Custom</option></select></label>
-            <div class="grid3"><label class="small">97153 hours / week<input id="h97153" type="number" class="field" value="30" min="0"></label><label class="small">97155 hours / week<input id="h97155" type="number" class="field" value="3" min="0"></label><label class="small">97156 hours / week<input id="h97156" type="number" class="field" value="1" min="0"></label></div>
-            <div class="grid2"><label class="small">Location by CPT<select class="field"><option>Home · Community · School</option><option>Home · Community</option><option>Home</option></select></label><label class="small">Rendering providers<select class="field"><option>Lead Analyst · Behavior Technician</option><option>Lead Analyst · BCaBA · Behavior Technician</option></select></label></div>
-          </div>
-          <section class="card stack">
-            <div class="between"><h2>CPT Service Request</h2><button id="addCptRow" type="button" class="btn">+ Add CPT Row</button></div>
+          <div><h1>Hours Requested</h1></div>
+          <section class="card cpt-request-card">
             <div class="table-wrap">
               <table class="cpt-request-table">
                 <thead><tr>
-                  <th><input class="cpt-table-header-input" value="CPT Code" aria-label="Edit CPT Code column heading"></th>
-                  <th><input class="cpt-table-header-input" value="Description of Service" aria-label="Edit Description of Service column heading"></th>
-                  <th><input class="cpt-table-header-input" value="Units / Hours Requested" aria-label="Edit Units and Hours Requested column heading"></th>
-                  <th><input class="cpt-table-header-input" value="Location" aria-label="Edit Location column heading"></th>
-                  <th><input class="cpt-table-header-input" value="Rendering Provider" aria-label="Edit Rendering Provider column heading"></th>
-                  <th><span class="small">Actions</span></th>
+                  <th scope="col">CPT Code</th>
+                  <th scope="col">Description of Service</th>
+                  <th scope="col">Hours Requested</th>
+                  <th scope="col">Setting</th>
                 </tr></thead>
-                <tbody id="cptRequestRows">
+                <tbody>
                   <tr>
-                    <td><input class="field cpt-code" value="97155" aria-label="CPT Code"></td>
-                    <td><textarea class="field" aria-label="Description of Service">Adaptive behavior treatment with protocol modification</textarea></td>
-                    <td><textarea class="field" aria-label="Units and Hours Requested">312 units / 78 hours total
-(12 units / 3 hours per week × 26 weeks)</textarea></td>
-                    <td><textarea class="field" aria-label="Location">Home and community; school</textarea></td>
-                    <td><textarea class="field" aria-label="Rendering Provider">Lead Analyst / BCaBA, as authorized</textarea></td>
-                    <td><button type="button" class="btn ghost remove-cpt-row" aria-label="Remove CPT 97155 row">Remove</button></td>
+                    <td><strong>97155</strong></td>
+                    <td>Adaptive behavior treatment with protocol modification</td>
+                    <td><input type="number" class="field cpt-hours-input" value="78" min="0" step="0.25" aria-label="97155 Hours Requested"></td>
+                    <td>
+                      <details class="multi-select cpt-setting-select">
+                        <summary class="field multi-select-summary cpt-setting-summary">Choose settings</summary>
+                        <div class="multi-select-options cpt-setting-options">
+                          <label><input type="checkbox" value="Home" checked> Home</label>
+                          <label><input type="checkbox" value="Community" checked> Community</label>
+                          <label><input type="checkbox" value="School" checked> School</label>
+                        </div>
+                      </details>
+                      <div class="flex cpt-setting-chips" aria-live="polite"></div>
+                    </td>
                   </tr>
                   <tr>
-                    <td><input class="field cpt-code" value="97156" aria-label="CPT Code"></td>
-                    <td><textarea class="field" aria-label="Description of Service">Family adaptive behavior treatment guidance</textarea></td>
-                    <td><textarea class="field" aria-label="Units and Hours Requested">104 units / 26 hours total
-(4 units / 1 hour per week × 26 weeks)</textarea></td>
-                    <td><textarea class="field" aria-label="Location">Home and comunity</textarea></td>
-                    <td><textarea class="field" aria-label="Rendering Provider">Lead Analyst / BCaBA, as authorized</textarea></td>
-                    <td><button type="button" class="btn ghost remove-cpt-row" aria-label="Remove CPT 97156 row">Remove</button></td>
+                    <td><strong>97156</strong></td>
+                    <td>Family adaptive behavior treatment guidance</td>
+                    <td><input type="number" class="field cpt-hours-input" value="26" min="0" step="0.25" aria-label="97156 Hours Requested"></td>
+                    <td>
+                      <details class="multi-select cpt-setting-select">
+                        <summary class="field multi-select-summary cpt-setting-summary">Choose settings</summary>
+                        <div class="multi-select-options cpt-setting-options">
+                          <label><input type="checkbox" value="Home" checked> Home</label>
+                          <label><input type="checkbox" value="Community" checked> Community</label>
+                          <label><input type="checkbox" value="School"> School</label>
+                        </div>
+                      </details>
+                      <div class="flex cpt-setting-chips" aria-live="polite"></div>
+                    </td>
                   </tr>
                   <tr>
-                    <td><input class="field cpt-code" value="97153" aria-label="CPT Code"></td>
-                    <td><textarea class="field" aria-label="Description of Service">Adaptive behavior treatment by protocol</textarea></td>
-                    <td><textarea class="field" aria-label="Units and Hours Requested">3,120 units / 780 hours total
-(120 units / 30 hours per week × 26 weeks)</textarea></td>
-                    <td><textarea class="field" aria-label="Location">Home and community; school</textarea></td>
-                    <td><textarea class="field" aria-label="Rendering Provider">Behavior Technician</textarea></td>
-                    <td><button type="button" class="btn ghost remove-cpt-row" aria-label="Remove CPT 97153 row">Remove</button></td>
+                    <td><strong>97153</strong></td>
+                    <td>Adaptive behavior treatment by protocol</td>
+                    <td><input type="number" class="field cpt-hours-input" value="780" min="0" step="0.25" aria-label="97153 Hours Requested"></td>
+                    <td>
+                      <details class="multi-select cpt-setting-select">
+                        <summary class="field multi-select-summary cpt-setting-summary">Choose settings</summary>
+                        <div class="multi-select-options cpt-setting-options">
+                          <label><input type="checkbox" value="Home" checked> Home</label>
+                          <label><input type="checkbox" value="Community" checked> Community</label>
+                          <label><input type="checkbox" value="School" checked> School</label>
+                        </div>
+                      </details>
+                      <div class="flex cpt-setting-chips" aria-live="polite"></div>
+                    </td>
                   </tr>
                   <tr>
-                    <td><input class="field cpt-code" value="97151" aria-label="CPT Code"></td>
-                    <td><textarea class="field" aria-label="Description of Service">Reassessment</textarea></td>
-                    <td><textarea class="field" aria-label="Units and Hours Requested">18 units / 4.5 hours</textarea></td>
-                    <td><textarea class="field" aria-label="Location">Home, School, and community</textarea></td>
-                    <td><textarea class="field" aria-label="Rendering Provider">Lead Analyst</textarea></td>
-                    <td><button type="button" class="btn ghost remove-cpt-row" aria-label="Remove CPT 97151 row">Remove</button></td>
+                    <td><strong>97151</strong></td>
+                    <td>Reassessment</td>
+                    <td><input type="number" class="field cpt-hours-input" value="4.5" min="0" step="0.25" aria-label="97151 Hours Requested"></td>
+                    <td>
+                      <details class="multi-select cpt-setting-select">
+                        <summary class="field multi-select-summary cpt-setting-summary">Choose settings</summary>
+                        <div class="multi-select-options cpt-setting-options">
+                          <label><input type="checkbox" value="Home" checked> Home</label>
+                          <label><input type="checkbox" value="Community" checked> Community</label>
+                          <label><input type="checkbox" value="School" checked> School</label>
+                        </div>
+                      </details>
+                      <div class="flex cpt-setting-chips" aria-live="polite"></div>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </section>
-          <div class="card stack"><div class="between"><div><h2>Weekly Schedule</h2><p class="small muted">Direct schedule must reconcile exactly with 97153.</p></div><button class="btn">Auto-distribute</button></div><div class="table-wrap"><table><thead><tr><th>Day</th><th>Direct hours</th><th>Primary setting</th></tr></thead><tbody><tr><td>Monday</td><td>6</td><td>Home</td></tr><tr><td>Tuesday</td><td>6</td><td>Home / Community</td></tr><tr><td>Wednesday</td><td>6</td><td>Home</td></tr><tr><td>Thursday</td><td>6</td><td>Home / Community</td></tr><tr><td>Friday</td><td>6</td><td>Home</td></tr></tbody></table></div></div>
-          <div id="hoursValidation" class="warning"><strong>34 weekly treatment hours</strong><div class="small muted">Current request reconciles across selected treatment CPTs.</div></div>
-          <div class="card"><div class="between"><div><h2>Clinical Rationale</h2><p class="small muted">Generated from functional impairment, risk, targets, acquisition needs, routines and service model.</p></div><button class="btn">Edit</button></div><p class="small">The requested service intensity is supported by multiple prioritized behavior-reduction targets, substantial functional communication and adaptive deficits, safety risk, and the need for repeated intervention opportunities across daily routines and settings.</p></div>
         </section>
 
         <section class="page stack" data-page="10" hidden>
@@ -2851,48 +2867,23 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     card.querySelector('.caregiver-program-name').focus();
   });
 
-  function updateHours(){
-    const h1=Number(document.getElementById('h97153').value||0);
-    const h2=Number(document.getElementById('h97155').value||0);
-    const h3=Number(document.getElementById('h97156').value||0);
-    const total=h1+h2+h3;
-    document.getElementById('m97153').textContent=h1+' h';
-    document.getElementById('m97155').textContent=h2+' h';
-    document.getElementById('m97156').textContent=h3+' h';
-    const box=document.getElementById('hoursValidation');
-    if(total>40){
-      box.innerHTML=`<strong>${total} weekly treatment hours</strong><div class="small muted">The request exceeds the configured weekly threshold. Atlas activates the EPSDT Medical Necessity Justification workflow.</div>`;
-    } else {
-      box.innerHTML=`<strong>${total} weekly treatment hours</strong><div class="small muted">Current request reconciles across selected treatment CPTs.</div>`;
-    }
-  }
-  ['h97153','h97155','h97156'].forEach(id=>document.getElementById(id).addEventListener('input',updateHours));
-  const cptRequestRows = document.getElementById('cptRequestRows');
-  const addCptRow = document.getElementById('addCptRow');
-
-  function setupCptRow(row){
-    const remove = row.querySelector('.remove-cpt-row');
-    remove.addEventListener('click', () => row.remove());
-    row.querySelector('.cpt-code').addEventListener('input', event => {
-      remove.setAttribute('aria-label', `Remove CPT ${event.target.value || 'new'} row`);
-    });
+  function updateCptSettings(selector){
+    const selected = [...selector.querySelectorAll('input:checked')].map(input => input.value);
+    const summary = selector.querySelector('.cpt-setting-summary');
+    const chips = selector.nextElementSibling;
+    summary.textContent = selected.length ? `${selected.length} setting${selected.length === 1 ? '' : 's'} selected` : 'Choose settings';
+    chips.replaceChildren(...selected.map(setting => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = setting;
+      return chip;
+    }));
   }
 
-  cptRequestRows.querySelectorAll('tr').forEach(setupCptRow);
-  addCptRow.addEventListener('click', () => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td><input class="field cpt-code" aria-label="CPT Code" placeholder="Code"></td>
-      <td><textarea class="field" aria-label="Description of Service" placeholder="Enter service description"></textarea></td>
-      <td><textarea class="field" aria-label="Units and Hours Requested" placeholder="Enter requested units and hours"></textarea></td>
-      <td><textarea class="field" aria-label="Location" placeholder="Enter service location"></textarea></td>
-      <td><textarea class="field" aria-label="Rendering Provider" placeholder="Enter rendering provider"></textarea></td>
-      <td><button type="button" class="btn ghost remove-cpt-row" aria-label="Remove new CPT row">Remove</button></td>`;
-    cptRequestRows.appendChild(row);
-    setupCptRow(row);
-    row.querySelector('.cpt-code').focus();
+  document.querySelectorAll('.cpt-setting-select').forEach(selector => {
+    selector.querySelectorAll('input').forEach(input => input.addEventListener('change', () => updateCptSettings(selector)));
+    updateCptSettings(selector);
   });
-  updateHours();
   showPage(1);
 })();
 </script>
