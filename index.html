@@ -92,7 +92,7 @@ textarea.field{min-height:88px;resize:vertical}
 .intensity-key div{font-size:12px;line-height:1.4;color:var(--muted)}
 .behavior-baseline-abc.confirmed:disabled{opacity:1}
 .behavior-clinical-table{min-width:1080px;table-layout:fixed}
-.behavior-clinical-table th:first-child{width:25%}
+.behavior-clinical-table th:first-child{width:40%}
 .behavior-clinical-table textarea{min-height:150px}
 .baseline-fields{display:grid;gap:9px}
 .baseline-fields .field{margin-top:4px}
@@ -142,6 +142,25 @@ textarea.generated-lto-input{height:54px;min-height:54px}
 .program-goal-fields:disabled{opacity:1}
 .program-goal-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
 .program-goal-subsection.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
+.observation-date-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.baseline-observations{display:grid;gap:10px}
+.baseline-observation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.baseline-observation-item{min-width:0}
+.observation-date-reference{display:block;min-height:16px;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.35}
+.suggested-baseline-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(2,minmax(0,.8fr));gap:9px;padding-top:10px;border-top:1px solid var(--border)}
+.program-baseline-observations{grid-column:1/-1;display:grid;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:#fff}
+.program-baseline-observations-title,.caregiver-programs-title{font-size:13px;font-weight:750}
+.caregiver-program-list{display:grid;gap:14px}
+.caregiver-program-card{padding:16px}
+.caregiver-program-config{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.caregiver-program-name-field{grid-column:span 2}
+.caregiver-baseline-title{grid-column:1/-1;font-size:13px;font-weight:750;border-top:1px solid var(--border);padding-top:12px}
+.caregiver-suggested-baseline-field{grid-column:1/-1;max-width:340px}
+.caregiver-suggested-baseline-field,.caregiver-count-field{align-self:end}
+.caregiver-program-footer,.caregiver-section-actions{display:flex;justify-content:flex-end;border-top:1px solid var(--border);padding-top:14px}
+.caregiver-program-card.locked{border-color:#b9dfc5;box-shadow:0 0 0 2px rgba(59,145,85,.08)}
+.caregiver-program-fields:disabled{opacity:1}
+.caregiver-program-fields:disabled .field{background:#f7f8fc;color:var(--muted)}
 .warning{background:var(--warning);border-left:4px solid #e6b84d;border-radius:12px;padding:13px 14px}
 .success{background:var(--success);border-radius:12px;padding:12px}
 .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
@@ -165,9 +184,11 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   .sidebar{border-right:0;border-bottom:1px solid var(--border)}
   .nav{grid-template-columns:repeat(2,1fr)}
   .nav button{font-size:12px}
-  .grid2,.grid3,.checklist,.goal-config-grid,.program-goal-config-grid{grid-template-columns:1fr}
+  .grid2,.grid3,.checklist,.goal-config-grid,.program-goal-config-grid,.observation-date-grid,.baseline-observation-grid,.suggested-baseline-row,.caregiver-program-config{grid-template-columns:1fr}
+  .caregiver-program-name-field{grid-column:auto}
+  .caregiver-baseline-title,.caregiver-suggested-baseline-field{grid-column:auto;max-width:none}
 }
-@media(min-width:901px) and (max-width:1100px){.goal-config-grid,.program-goal-config-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:901px) and (max-width:1100px){.goal-config-grid,.program-goal-config-grid,.caregiver-program-config{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -195,7 +216,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <button class="active" data-page-target="1"><span class="nav-text">Case Setup</span></button>
           <button data-page-target="2"><span class="nav-text">File Review</span></button>
           <button data-page-target="3"><span class="nav-text">Background Information</span></button>
-          <button data-page-target="4"><span class="nav-text">Clinical Interview</span></button>
+          <button data-page-target="4"><span class="nav-text">Observations &amp; Interview</span></button>
           <button data-page-target="5"><span class="nav-text">Maladaptive Behaviors</span></button>
           <button data-page-target="6"><span class="nav-text">Assessment Procedures</span></button>
           <button data-page-target="7"><span class="nav-text">Behavior Goals</span></button>
@@ -923,7 +944,15 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         </section>
 
         <section class="page stack" data-page="4" hidden>
-          <div><h1>Clinical Interview</h1></div>
+          <div><h1>Observations &amp; Interview</h1></div>
+          <section class="card stack observation-dates-section">
+            <h2>Observation Dates</h2>
+            <div class="observation-date-grid">
+              <label class="small">Observation 1 Date<input id="observationDate1" type="date" class="field observation-date-input" data-observation-index="1"></label>
+              <label class="small">Observation 2 Date<input id="observationDate2" type="date" class="field observation-date-input" data-observation-index="2"></label>
+              <label class="small">Observation 3 Date<input id="observationDate3" type="date" class="field observation-date-input" data-observation-index="3"></label>
+            </div>
+          </section>
           <div class="card">
             <label class="small"><input id="interviewNotCompleted" type="checkbox"> Interview was not completed</label>
           </div>
@@ -1010,10 +1039,18 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
                     <thead><tr><th>Baseline</th><th>Antecedent</th><th>Behavior</th><th>Consequence</th></tr></thead>
                     <tbody><tr>
                       <td>
-                        <div class="baseline-fields">
-                          <label class="small">Value<input class="field baseline-value" placeholder="e.g., 52"></label>
-                          <label class="small">Unit<input class="field baseline-unit" placeholder="e.g., occurrences"></label>
-                          <label class="small">Timeframe<input class="field baseline-timeframe" placeholder="e.g., week"></label>
+                        <div class="baseline-observations">
+                          <strong class="small">Baseline Observations</strong>
+                          <div class="baseline-observation-grid">
+                            <label class="small baseline-observation-item">Observation 1<input type="number" step="any" class="field baseline-observation-value" data-observation-index="1"><span class="observation-date-reference" data-observation-index="1"></span></label>
+                            <label class="small baseline-observation-item">Observation 2<input type="number" step="any" class="field baseline-observation-value" data-observation-index="2"><span class="observation-date-reference" data-observation-index="2"></span></label>
+                            <label class="small baseline-observation-item">Observation 3<input type="number" step="any" class="field baseline-observation-value" data-observation-index="3"><span class="observation-date-reference" data-observation-index="3"></span></label>
+                          </div>
+                          <div class="suggested-baseline-row">
+                            <label class="small">Suggested Baseline<input type="number" step="any" class="field baseline-suggested-value"></label>
+                            <label class="small">Unit<input class="field baseline-unit" placeholder="e.g., occurrences"></label>
+                            <label class="small">Timeframe<input class="field baseline-timeframe" placeholder="e.g., week"></label>
+                          </div>
                         </div>
                       </td>
                       <td><textarea class="field antecedent-field" aria-label="Antecedent" placeholder="Describe the events or conditions immediately preceding the behavior"></textarea></td>
@@ -1157,13 +1194,27 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
               <h3 class="program-goal-name"></h3>
               <fieldset class="stack section-fieldset program-goal-fields">
                 <div class="program-goal-config-grid">
-                  <label class="small">Baseline (BL) Value
-                    <span class="program-value-control">
-                      <input type="number" min="0" step="any" class="field program-baseline" inputmode="decimal">
-                      <span class="program-value-suffix program-baseline-suffix" aria-hidden="true">%</span>
-                    </span>
-                    <span class="program-unit-context program-baseline-unit-context"></span>
-                  </label>
+                  <section class="program-baseline-observations">
+                    <div class="program-baseline-observations-title">Baseline Observations</div>
+                    <div class="baseline-observation-grid">
+                      <label class="small baseline-observation-item">Observation 1
+                        <span class="program-value-control"><input type="number" min="0" step="any" class="field program-baseline-observation" data-observation-index="1" inputmode="decimal"><span class="program-value-suffix" aria-hidden="true">%</span></span>
+                        <span class="observation-date-reference" data-observation-index="1"></span><span class="program-unit-context program-baseline-unit-context"></span>
+                      </label>
+                      <label class="small baseline-observation-item">Observation 2
+                        <span class="program-value-control"><input type="number" min="0" step="any" class="field program-baseline-observation" data-observation-index="2" inputmode="decimal"><span class="program-value-suffix" aria-hidden="true">%</span></span>
+                        <span class="observation-date-reference" data-observation-index="2"></span><span class="program-unit-context program-baseline-unit-context"></span>
+                      </label>
+                      <label class="small baseline-observation-item">Observation 3
+                        <span class="program-value-control"><input type="number" min="0" step="any" class="field program-baseline-observation" data-observation-index="3" inputmode="decimal"><span class="program-value-suffix" aria-hidden="true">%</span></span>
+                        <span class="observation-date-reference" data-observation-index="3"></span><span class="program-unit-context program-baseline-unit-context"></span>
+                      </label>
+                    </div>
+                    <label class="small">Suggested Baseline
+                      <span class="program-value-control"><input type="number" min="0" step="any" class="field program-suggested-baseline" inputmode="decimal"><span class="program-value-suffix" aria-hidden="true">%</span></span>
+                      <span class="program-unit-context program-baseline-unit-context"></span>
+                    </label>
+                  </section>
                   <div class="program-measurement-control">
                     <label class="small">Measurement Unit
                       <select class="field program-measurement-unit">
@@ -1217,12 +1268,36 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         <section class="page stack" data-page="9" hidden>
           <div><h1>Caregiver Training</h1><p class="small muted">Goals measure caregiver performance, not client behavior.</p></div>
           <div class="card"><div class="between"><div><h2>Participating caregiver</h2><p class="small muted">Reused from Patient Information</p></div><span class="badge">Primary caregiver</span></div></div>
-          <div class="card stack">
-            <div class="between"><div><h2>Communication-Support Fidelity</h2><p class="small muted">Caregiver will create and reinforce opportunities for functional requests according to the treatment protocol.</p></div><label><input type="checkbox" checked> Select</label></div>
-            <div class="grid3"><label class="small">Measurement<select class="field"><option>Procedural fidelity</option><option>Accuracy</option><option>Frequency</option></select></label><label class="small">Baseline<input type="number" class="field" value="18"></label><label class="small">Unit<select class="field"><option>% fidelity</option></select></label></div>
-          </div>
-          <div class="card"><div class="between"><div><h2>Differential Reinforcement Implementation</h2><p class="small muted">Caregiver implements the selected reinforcement procedure with procedural fidelity.</p></div><label><input type="checkbox" checked> Select</label></div></div>
+          <section class="card stack">
+            <div class="between"><h2>Training Programs</h2><button id="addCaregiverProgram" type="button" class="btn">+ Add Program</button></div>
+            <div id="caregiverProgramCards" class="caregiver-program-list"></div>
+          </section>
           <div class="card stack"><h2>Training Procedure</h2><p class="small muted">Atlas suggests BST components appropriate to the selected caregiver goal.</p><div class="flex"><label><input type="checkbox" checked> Instruction</label><label><input type="checkbox" checked> Modeling</label><label><input type="checkbox" checked> Rehearsal / role-play</label><label><input type="checkbox" checked> Performance feedback</label><label><input type="checkbox" checked> Treatment-integrity monitoring</label></div></div>
+
+          <template id="caregiverProgramCardTemplate">
+            <article class="card alt stack caregiver-program-card">
+              <fieldset class="stack section-fieldset caregiver-program-fields">
+                <div class="caregiver-program-config">
+                  <label class="small caregiver-program-name-field">Program name<input class="field caregiver-program-name" placeholder="Enter program name"></label>
+                  <label class="small caregiver-count-field">Number of STOs to Display<input type="number" min="1" max="10" step="1" class="field caregiver-goal-count" inputmode="numeric"></label>
+                  <div class="caregiver-baseline-title">Baseline Observations</div>
+                  <label class="small">Observation 1 BL<input type="number" min="0" step="any" class="field caregiver-observation-value" data-observation-index="1"><span class="observation-date-reference" data-observation-index="1"></span></label>
+                  <label class="small">Observation 2 BL<input type="number" min="0" step="any" class="field caregiver-observation-value" data-observation-index="2"><span class="observation-date-reference" data-observation-index="2"></span></label>
+                  <label class="small">Observation 3 BL<input type="number" min="0" step="any" class="field caregiver-observation-value" data-observation-index="3"><span class="observation-date-reference" data-observation-index="3"></span></label>
+                  <label class="small caregiver-suggested-baseline-field">Suggested Baseline<input type="number" min="0" step="any" class="field caregiver-suggested-baseline"></label>
+                </div>
+                <section class="generated-goals caregiver-generated-goals" aria-live="polite">
+                  <div class="generated-goals-title">Generated Goals</div>
+                  <div class="generated-goal-list caregiver-generated-goal-list"></div>
+                  <div class="generated-goal-row">
+                    <strong>LTO:</strong>
+                    <textarea class="field generated-goal-input generated-lto-input caregiver-generated-lto" rows="2" aria-label="Caregiver training LTO"></textarea>
+                  </div>
+                </section>
+              </fieldset>
+              <footer class="caregiver-program-footer"><button type="button" class="btn primary confirm-caregiver-program">Confirm &amp; Lock Program</button></footer>
+            </article>
+          </template>
         </section>
 
         <section class="page stack" data-page="10" hidden>
@@ -1244,7 +1319,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
           <div class="grid3"><div class="kpi"><div class="small muted">Ready</div><div class="value">6</div><div class="small muted">review blocks</div></div><div class="kpi"><div class="small muted">Needs review</div><div class="value">1</div><div class="small muted">coordination item</div></div><div class="kpi"><div class="small muted">Blocking</div><div class="value">0</div><div class="small muted">validation errors</div></div></div>
           <div class="card stack">
             <div class="between"><div><strong class="small">Patient identity, CDE, diagnoses, caregiver and records</strong><p class="small muted">No unresolved information conflicts.</p></div><span class="badge">Confirmed</span></div>
-            <hr><div class="between"><div><strong class="small">Background and Clinical Interview</strong><p class="small muted">Extracted and current information confirmed.</p></div><span class="badge">Confirmed</span></div>
+            <hr><div class="between"><div><strong class="small">Background, Observations and Interview</strong><p class="small muted">Extracted and current information confirmed.</p></div><span class="badge">Confirmed</span></div>
             <hr><div class="between"><div><strong class="small">Selected behaviors, functions, baselines and interventions</strong><p class="small muted">Review target-by-target.</p></div><button class="btn">Review</button></div>
             <hr><div class="between"><div><strong class="small">Replacement / skill programs and teaching procedures</strong><p class="small muted">Each selected program has a measurement method and Teaching Procedure.</p></div><span class="badge">Confirmed</span></div>
             <hr><div class="between"><div><strong class="small">Caregiver goals and training procedures</strong><p class="small muted">Goals measure caregiver performance.</p></div><span class="badge">Confirmed</span></div>
@@ -1314,11 +1389,39 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     updateClinicalInterviewAvailability();
   }
 
+  const observationDateInputs = [...document.querySelectorAll('.observation-date-input')];
+
+  function formatObservationDate(value){
+    if(!value) return 'Date not entered';
+    const date = new Date(`${value}T00:00:00`);
+    if(Number.isNaN(date.getTime())) return 'Date not entered';
+    return date.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'});
+  }
+
+  function updateObservationDateReferences(scope = document){
+    scope.querySelectorAll('.observation-date-reference').forEach(reference => {
+      const dateInput = document.querySelector(`.observation-date-input[data-observation-index="${reference.dataset.observationIndex}"]`);
+      reference.textContent = formatObservationDate(dateInput?.value || '');
+    });
+  }
+
+  function calculateSuggestedBaseline(inputs){
+    const values = inputs
+      .filter(input => input.value.trim() !== '')
+      .map(input => Number(input.value))
+      .filter(Number.isFinite);
+    if(!values.length) return '';
+    return formatGoalValue(values.reduce((sum, value) => sum + value, 0) / values.length);
+  }
+
+  observationDateInputs.forEach(input => input.addEventListener('change', () => updateObservationDateReferences()));
+  updateObservationDateReferences();
+
   const behaviorDefinitions = {
     selfInjury: {
       name: 'Self-Injurious Behavior',
       intensity: '04',
-      baseline: {value: '52', unit: 'occurrences', timeframe: 'week'},
+      baseline: {observations: ['48', '52', '56'], value: '52', unit: 'occurrences', timeframe: 'week'},
       antecedent: 'Non-preferred demands, interruption of preferred activities, or transitions away from preferred routines.',
       behavior: 'The client strikes their own head or body with an open or closed hand.',
       consequence: 'Adults block for safety, redirect the client, and may pause the task while support is provided.',
@@ -1336,7 +1439,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     elopement: {
       name: 'Elopement',
       intensity: '04',
-      baseline: {value: '8', unit: 'occurrences', timeframe: 'week'},
+      baseline: {observations: ['7', '8', '9'], value: '8', unit: 'occurrences', timeframe: 'week'},
       antecedent: 'Transitions, reduced access to preferred activities, or changes in the level of adult supervision.',
       behavior: 'The client moves more than six feet away from the supervising adult or designated area without permission.',
       consequence: 'Adults follow, block access to unsafe areas, and guide the client back to the designated location.',
@@ -1354,7 +1457,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     tantrum: {
       name: 'Tantrum',
       intensity: '03',
-      baseline: {value: '35', unit: '% of opportunities', timeframe: 'across observed sessions'},
+      baseline: {observations: ['30', '35', '40'], value: '35', unit: '% of opportunities', timeframe: 'across observed sessions'},
       antecedent: 'Denied or delayed access, transitions, and presentation of non-preferred demands.',
       behavior: 'The client cries, yells, or drops to the floor for longer than 10 seconds.',
       consequence: 'Adults provide redirection or reassurance; demands or access to preferred items may be delayed.',
@@ -1420,6 +1523,19 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     const functionSelector = card.querySelector('.behavior-function-selector');
     const functionInputs = [...card.querySelectorAll('.behavior-function-option')];
     const confirmBehavior = card.querySelector('.confirm-behavior');
+    const observationFields = [...card.querySelectorAll('.baseline-observation-value')];
+    const suggestedBaseline = card.querySelector('.baseline-suggested-value');
+
+    suggestedBaseline.dataset.userEdited = 'false';
+    observationFields.forEach(field => field.addEventListener('input', () => {
+      if(suggestedBaseline.dataset.userEdited !== 'true'){
+        suggestedBaseline.value = calculateSuggestedBaseline(observationFields);
+      }
+    }));
+    suggestedBaseline.addEventListener('input', () => {
+      suggestedBaseline.dataset.userEdited = 'true';
+    });
+    updateObservationDateReferences(card);
 
     intensity.value = definition.intensity;
     intensity.setAttribute('aria-label', `${definition.name} intensity`);
@@ -1434,7 +1550,11 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       confirmIntensity.textContent = 'Intensity confirmed';
       confirmIntensity.disabled = true;
       baselineFields.disabled = false;
-      card.querySelector('.baseline-value').value = definition.baseline.value;
+      observationFields.forEach((field, index) => {
+        field.value = definition.baseline.observations[index] || '';
+      });
+      suggestedBaseline.value = definition.baseline.value;
+      suggestedBaseline.dataset.userEdited = 'false';
       card.querySelector('.baseline-unit').value = definition.baseline.unit;
       card.querySelector('.baseline-timeframe').value = definition.baseline.timeframe;
       card.querySelector('.antecedent-field').value = definition.antecedent;
@@ -2134,7 +2254,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   function getBehaviorBaseline(behaviorId){
     const definition = behaviorDefinitions[behaviorId];
     const clinicalCard = behaviorClinicalCards?.querySelector(`[data-behavior-id="${behaviorId}"]`);
-    const value = clinicalCard?.querySelector('.baseline-value')?.value.trim() || definition.baseline.value;
+    const value = clinicalCard?.querySelector('.baseline-suggested-value')?.value.trim() || definition.baseline.value;
     const unit = clinicalCard?.querySelector('.baseline-unit')?.value.trim() || definition.baseline.unit;
     const timeframe = clinicalCard?.querySelector('.baseline-timeframe')?.value.trim() || definition.baseline.timeframe;
     return `${value} ${unit} / ${timeframe}`;
@@ -2289,7 +2409,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         id: 'requestBreak',
         name: 'Request for Break',
         goalPhrase: 'independent requests for a break',
-        baseline: '10',
+        observations: ['5', '10', '15'],
+        suggestedBaseline: '10',
         measurementUnit: '% of opportunities',
         stoOne: '20',
         direction: 'Increase',
@@ -2303,7 +2424,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         id: 'requestHelp',
         name: 'Request for Help',
         goalPhrase: 'independent requests for help',
-        baseline: '0',
+        observations: ['0', '0', '0'],
+        suggestedBaseline: '0',
         measurementUnit: '% of opportunities',
         stoOne: '20',
         direction: 'Increase',
@@ -2319,7 +2441,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
         id: 'safetyResponse',
         name: 'Safety Awareness & Emergency Response',
         goalPhrase: 'correct responses to safety and emergency directions',
-        baseline: '25',
+        observations: ['20', '25', '30'],
+        suggestedBaseline: '25',
         measurementUnit: '% of opportunities',
         stoOne: '40',
         direction: 'Increase',
@@ -2371,7 +2494,9 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     card.querySelectorAll('.program-value-suffix').forEach(suffix => suffix.hidden = !isPercentage);
     const effectiveUnit = getEffectiveProgramMeasurementUnit(card);
     const unitContext = isPercentage ? 'of opportunities' : (effectiveUnit || 'Specify measurement unit');
-    card.querySelector('.program-baseline-unit-context').textContent = unitContext;
+    card.querySelectorAll('.program-baseline-unit-context').forEach(context => {
+      context.textContent = unitContext;
+    });
     card.querySelector('.program-sto-unit-context').textContent = unitContext;
     if(refreshLto){
       const lto = card.querySelector('.program-generated-lto-input');
@@ -2382,7 +2507,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
   function programGoalConfigurationIsComplete(card){
     const selectors = [
-      '.program-baseline',
+      '.program-suggested-baseline',
       '.program-measurement-unit',
       '.program-sto-one',
       '.program-direction',
@@ -2391,9 +2516,11 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       '.program-count'
     ];
     const fieldsComplete = selectors.every(selector => card.querySelector(selector).value.trim() !== '');
+    const observationsComplete = [...card.querySelectorAll('.program-baseline-observation')]
+      .every(field => field.value.trim() !== '');
     const otherUnitComplete = card.querySelector('.program-measurement-unit').value !== 'Other'
       || card.querySelector('.program-other-unit-input').value.trim() !== '';
-    return fieldsComplete && otherUnitComplete;
+    return fieldsComplete && observationsComplete && otherUnitComplete;
   }
 
   function updateProgramGroupConfirmation(section){
@@ -2449,7 +2576,13 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     const card = programGoalCardTemplate.content.firstElementChild.cloneNode(true);
     card.dataset.programGoalId = definition.id;
     card.querySelector('.program-goal-name').textContent = definition.name;
-    card.querySelector('.program-baseline').value = definition.baseline;
+    const observationFields = [...card.querySelectorAll('.program-baseline-observation')];
+    const suggestedBaseline = card.querySelector('.program-suggested-baseline');
+    observationFields.forEach((field, index) => {
+      field.value = definition.observations[index] || '';
+    });
+    suggestedBaseline.value = definition.suggestedBaseline;
+    suggestedBaseline.dataset.userEdited = 'false';
     card.querySelector('.program-measurement-unit').value = definition.measurementUnit;
     card.querySelector('.program-sto-one').value = definition.stoOne;
     card.querySelector('.program-direction').value = definition.direction;
@@ -2466,6 +2599,16 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 
     const unitSelect = card.querySelector('.program-measurement-unit');
     const otherUnit = card.querySelector('.program-other-unit-input');
+    observationFields.forEach(field => field.addEventListener('input', () => {
+      if(suggestedBaseline.dataset.userEdited !== 'true'){
+        suggestedBaseline.value = calculateSuggestedBaseline(observationFields);
+      }
+      renderProgramGoals(card);
+    }));
+    suggestedBaseline.addEventListener('input', () => {
+      suggestedBaseline.dataset.userEdited = 'true';
+      renderProgramGoals(card);
+    });
     unitSelect.addEventListener('change', () => {
       updateProgramMeasurementState(card, true);
       renderProgramGoals(card);
@@ -2474,7 +2617,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       updateProgramMeasurementState(card, true);
       renderProgramGoals(card);
     });
-    card.querySelectorAll('.program-baseline, .program-sto-one, .program-direction, .program-step, .program-duration, .program-count').forEach(field => {
+    card.querySelectorAll('.program-sto-one, .program-direction, .program-step, .program-duration, .program-count').forEach(field => {
       const update = () => {
         if(lto.dataset.userEdited !== 'true') lto.value = buildProgramLto(card);
         renderProgramGoals(card);
@@ -2482,6 +2625,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       field.addEventListener('input', update);
       field.addEventListener('change', update);
     });
+    updateObservationDateReferences(card);
     return card;
   }
 
@@ -2502,6 +2646,136 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       section.classList.add('locked');
     });
     updateProgramGroupConfirmation(section);
+  });
+
+  const caregiverProgramDefinitions = [
+    {
+      name: 'Communication-Support Fidelity',
+      observations: ['15', '20', '19'],
+      suggestedBaseline: '18',
+      count: '3'
+    },
+    {
+      name: 'Differential Reinforcement Implementation',
+      observations: ['20', '25', '30'],
+      suggestedBaseline: '25',
+      count: '3'
+    },
+    {
+      name: 'Data Collection & Reporting Accuracy',
+      observations: ['35', '40', '45'],
+      suggestedBaseline: '40',
+      count: '3'
+    }
+  ];
+  const caregiverProgramCards = document.getElementById('caregiverProgramCards');
+  const caregiverProgramCardTemplate = document.getElementById('caregiverProgramCardTemplate');
+  const addCaregiverProgram = document.getElementById('addCaregiverProgram');
+
+  function caregiverProgramIsComplete(card){
+    const required = [
+      card.querySelector('.caregiver-program-name'),
+      card.querySelector('.caregiver-suggested-baseline'),
+      card.querySelector('.caregiver-goal-count'),
+      ...card.querySelectorAll('.caregiver-observation-value')
+    ];
+    return required.every(field => field.value.trim() !== '');
+  }
+
+  function updateCaregiverProgramConfirmation(card){
+    const goals = [...card.querySelectorAll('.caregiver-generated-sto, .caregiver-generated-lto')];
+    const goalsComplete = goals.length > 1 && goals.every(field => field.value.trim() !== '');
+    card.querySelector('.confirm-caregiver-program').disabled = !caregiverProgramIsComplete(card) || !goalsComplete;
+  }
+
+  function renderCaregiverProgramGoals(card){
+    const configured = caregiverProgramIsComplete(card);
+    const preview = card.querySelector('.caregiver-generated-goals');
+    preview.hidden = !configured;
+    if(!configured){
+      updateCaregiverProgramConfirmation(card);
+      return;
+    }
+
+    const programName = card.querySelector('.caregiver-program-name').value.trim();
+    const baseline = Number(card.querySelector('.caregiver-suggested-baseline').value);
+    const count = Math.max(1, Math.min(10, Number(card.querySelector('.caregiver-goal-count').value)));
+    const stoTarget = Math.max(baseline, 80);
+    const step = (stoTarget - baseline) / count;
+    const list = card.querySelector('.caregiver-generated-goal-list');
+    list.replaceChildren();
+
+    for(let index = 0; index < count; index += 1){
+      const value = Math.min(100, baseline + (step * (index + 1)));
+      const row = document.createElement('div');
+      row.className = 'generated-goal-row';
+      const label = document.createElement('strong');
+      label.textContent = `STO #${index + 1}:`;
+      const statement = document.createElement('textarea');
+      statement.className = 'field generated-goal-input caregiver-generated-sto';
+      statement.rows = 1;
+      statement.setAttribute('aria-label', `${programName} STO #${index + 1}`);
+      statement.value = ensurePeriod(`The caregiver will demonstrate ${programName} at or above ${formatGoalValue(value)}% fidelity for 4 consecutive weeks`);
+      statement.addEventListener('input', () => updateCaregiverProgramConfirmation(card));
+      row.append(label, statement);
+      list.appendChild(row);
+    }
+
+    const lto = card.querySelector('.caregiver-generated-lto');
+    lto.value = ensurePeriod(`The caregiver will demonstrate ${programName} at or above ${formatGoalValue(Math.max(stoTarget, 90))}% fidelity across two settings for 4 consecutive weeks`);
+    updateCaregiverProgramConfirmation(card);
+  }
+
+  function createCaregiverProgramCard(definition = {}){
+    const card = caregiverProgramCardTemplate.content.firstElementChild.cloneNode(true);
+    const programName = card.querySelector('.caregiver-program-name');
+    const observationFields = [...card.querySelectorAll('.caregiver-observation-value')];
+    const suggestedBaseline = card.querySelector('.caregiver-suggested-baseline');
+    const goalCount = card.querySelector('.caregiver-goal-count');
+    const confirm = card.querySelector('.confirm-caregiver-program');
+
+    programName.value = definition.name || '';
+    observationFields.forEach((field, index) => {
+      field.value = definition.observations?.[index] || '';
+    });
+    suggestedBaseline.value = definition.suggestedBaseline || '';
+    suggestedBaseline.dataset.userEdited = 'false';
+    goalCount.value = definition.count || '3';
+
+    observationFields.forEach(field => field.addEventListener('input', () => {
+      if(suggestedBaseline.dataset.userEdited !== 'true'){
+        suggestedBaseline.value = calculateSuggestedBaseline(observationFields);
+      }
+      renderCaregiverProgramGoals(card);
+    }));
+    suggestedBaseline.addEventListener('input', () => {
+      suggestedBaseline.dataset.userEdited = 'true';
+      renderCaregiverProgramGoals(card);
+    });
+    [programName, goalCount].forEach(field => {
+      field.addEventListener('input', () => renderCaregiverProgramGoals(card));
+      field.addEventListener('change', () => renderCaregiverProgramGoals(card));
+    });
+    card.querySelector('.caregiver-generated-lto').addEventListener('input', () => updateCaregiverProgramConfirmation(card));
+    confirm.addEventListener('click', () => {
+      card.querySelector('.caregiver-program-fields').disabled = true;
+      confirm.textContent = 'Program locked';
+      confirm.disabled = true;
+      card.classList.add('locked');
+    });
+
+    updateObservationDateReferences(card);
+    renderCaregiverProgramGoals(card);
+    return card;
+  }
+
+  caregiverProgramDefinitions.forEach(definition => {
+    caregiverProgramCards.appendChild(createCaregiverProgramCard(definition));
+  });
+  addCaregiverProgram.addEventListener('click', () => {
+    const card = createCaregiverProgramCard();
+    caregiverProgramCards.appendChild(card);
+    card.querySelector('.caregiver-program-name').focus();
   });
 
   function updateHours(){
